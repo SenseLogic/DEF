@@ -53,11 +53,11 @@ It uses a consistent indentation scheme where each level is indented by a fixed 
 }
 ```
 
-## Supported data Types
+## Supported data types
 
 * **Constants**: undefined, null, false, true, NaN, Infinity, -Infinity
 * **Numbers**: decimal integers and reals, hexadecimal naturals
-* **Strings**: quoted or unquoted multiline texts
+* **Strings**: quoted and unquoted multiline texts
 * **Arrays**: ordered collections
 * **Objects**: key-value collections using strings as keys
 * **Maps**: key-value collections
