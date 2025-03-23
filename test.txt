@@ -1,0 +1,1489 @@
+undefined
+~~~
+undefined
+~~~
+null
+~~~
+null
+~~~
+true
+~~~
+true
+~~~
+false
+~~~
+false
+~~~
+42
+~~~
+42
+~~~
+-123
+~~~
+-123
+~~~
+3.14159
+~~~
+3.14159
+~~~
+-1.23456e-7
+~~~
+-1.23456e-7
+~~~
+0xFF
+~~~
+0xFF
+~~~
+NaN
+~~~
+NaN
+~~~
+Infinity
+~~~
+Infinity
+~~~
+-Infinity
+~~~
+-Infinity
+~~~
+{
+    actual-number
+        42
+    string-number
+        42¨
+    actual-float
+        3.14159
+    string-float
+        3.14159¨
+    actual-hex
+        0xFF
+    string-hex
+        0xFF¨
+}
+~~~
+{
+    "actual-number": 42,
+    "string-number": "42",
+    "actual-float": 3.14159,
+    "string-float": "3.14159",
+    "actual-hex": 255,
+    "string-hex": "0xFF"
+}
+~~~
+¨
+~~~
+""
+~~~
+Simple string
+~~~
+"Simple string"
+~~~
+String with "quotes" inside
+~~~
+"String with \"quotes\" inside"
+~~~
+String with `backticks` inside
+~~~
+"String with `backticks` inside"
+~~~
+String with ´ticks´ inside
+~~~
+"String with ´ticks´ inside"
+~~~
+String with backslash \\ inside
+~~~
+"String with backslash \\ inside"
+~~~
+One trailing space ¨
+~~~
+"One trailing space "
+~~~
+Multiple trailing spaces    ¨
+~~~
+"Multiple trailing spaces    "
+~~~
+Multiple    \
+trailing    \
+spaces    ¨
+~~~
+"Multiple    trailing    spaces    "
+~~~
+"Multiple    \
+trailing    ¨
+spaces    ¨"
+~~~
+"Multiple    trailing    \nspaces    ¨"
+~~~
+"    Multiple    \
+    trailing    ¨
+    spaces    ¨"
+~~~
+"    Multiple        trailing    \n    spaces    ¨"
+~~~
+[
+        Multiple    \
+        trailing    \
+        spaces    ¨
+    "    Multiple    \
+        trailing    ¨
+        spaces    "
+    "    Multiple    \
+        trailing    ¨
+        spaces    ¨"
+]
+~~~
+[
+    "    Multiple        trailing        spaces    ",
+    "    Multiple        trailing    \n    spaces    ",
+    "    Multiple        trailing    \n    spaces    ¨"
+]
+~~~
+Single line \
+continued on next line
+~~~
+"Single line continued on next line"
+~~~
+"Line 1
+Line 2
+Line 3"
+~~~
+"Line 1\nLine 2\nLine 3"
+~~~
+"Line 1
+
+Line 2
+
+Line 3"
+~~~
+"Line 1\n\nLine 2\n\nLine 3"
+~~~
+"Line 1
+
+    Line 2
+
+Line 3"
+~~~
+"Line 1\n\n    Line 2\n\nLine 3"
+~~~
+[
+    Line 1\
+        \
+        Line 2\
+        \
+    Line 3
+    Line 1\
+    \
+        Line 2\n\
+    \n\
+    Line 3
+    "Line 1
+
+        Line 2
+
+    Line 3"
+]
+~~~
+[
+    "Line 1        Line 2    Line 3",
+    "Line 1    Line 2\n\nLine 3",
+    "Line 1\n\n    Line 2\n\nLine 3"
+]
+~~~
+"English text
+¨fr:Texte français
+¨de:Deutscher Text
+¨es:Texto español
+¨it:Testo italiano
+¨pt:Texto português
+¨ja:日本語テキスト
+¨ko:한국어 텍스트"
+~~~
+"English text\n¨fr:Texte français\n¨de:Deutscher Text\n¨es:Texto español\n¨it:Testo italiano\n¨pt:Texto português\n¨ja:日本語テキスト\n¨ko:한국어 텍스트"
+~~~
+"Fruit list:
+* Banana
+* Kiwi
+* Orange
+¨fr:Liste de fruits :
+* Banane
+* Kiwi
+* Orange
+¨de:Obstliste:
+* Banane
+* Kiwi
+* Orange
+¨es:Lista de frutas:
+* Plátano
+* Kiwi
+* Naranja
+¨it:Elenco di frutta:
+* Banana
+* Kiwi
+* Arancia
+¨pt:Lista de frutas:
+* Banana
+* Kiwi
+* Laranja
+¨ja:果物リスト：
+* バナナ
+* キウイ
+* オレンジ
+¨ko:과일 목록:
+* 바나나
+* 키위
+* 오렌지"
+~~~
+"Fruit list:\n* Banana\n* Kiwi\n* Orange\n¨fr:Liste de fruits :\n* Banane\n* Kiwi\n* Orange\n¨de:Obstliste:\n* Banane\n* Kiwi\n* Orange\n¨es:Lista de frutas:\n* Plátano\n* Kiwi\n* Naranja\n¨it:Elenco di frutta:\n* Banana\n* Kiwi\n* Arancia\n¨pt:Lista de frutas:\n* Banana\n* Kiwi\n* Laranja\n¨ja:果物リスト：\n* バナナ\n* キウイ\n* オレンジ\n¨ko:과일 목록:\n* 바나나\n* 키위\n* 오렌지"
+~~~
+"String with escaped \"quotes\" and \\ backslashes"
+~~~
+"String with escaped \"quotes\" and \\ backslashes"
+~~~
+`String with escaped \`backticks\` and \\ backslashes`
+~~~
+"String with escaped `backticks` and \\ backslashes"
+~~~
+´String with escaped \´ticks\´ and \\ backslashes´
+~~~
+"String with escaped ´ticks´ and \\ backslashes"
+~~~
+"This is a simple quoted string"
+~~~
+"This is a simple quoted string"
+~~~
+`This is a backtick quoted string`
+~~~
+"This is a backtick quoted string"
+~~~
+´This is a tick quoted string´
+~~~
+"This is a tick quoted string"
+~~~
+"First line \
+second line \
+third line"
+~~~
+"First line second line third line"
+~~~
+"First line    \
+second line    ¨
+third line"
+~~~
+"First line    second line    \nthird line"
+~~~
+"Start \
+  indented    ¨\
+normal line\
+ slight indent \
+   more indent"
+~~~
+"Start   indented    ¨normal line slight indent    more indent"
+~~~
+[
+    Single space ¨
+    Double spaces  ¨
+    Triple spaces   ¨
+]
+~~~
+[
+    "Single space ",
+    "Double spaces  ",
+    "Triple spaces   "
+]
+~~~
+[
+    ""
+    ``
+    ´´
+]
+~~~
+[
+    "",
+    "",
+    ""
+]
+~~~
+"Line one
+    Indented line
+        More indented
+    Back to less indent
+Normal indent"
+~~~
+"Line one\n    Indented line\n        More indented\n    Back to less indent\nNormal indent"
+~~~
+"Line one    \
+ Line two     \
+  Line three      ¨
+   Line four       \
+    Line five"
+~~~
+"Line one     Line two       Line three      \n   Line four           Line five"
+~~~
+{
+    emoji
+        "😀 😂 🤣 😊 🥰"
+    international
+        "こんにちは 你好 مرحبا Привет"
+    symbols
+        "★ ☀ ♫ ⚽ ♠ ⌛"
+}
+~~~
+{
+    "emoji": "😀 😂 🤣 😊 🥰",
+    "international": "こんにちは 你好 مرحبا Привет",
+    "symbols": "★ ☀ ♫ ⚽ ♠ ⌛"
+}
+~~~
+{
+    no-quotes
+        Text with "double quotes", `backticks`, and ´ticks´
+    escaped-quotes
+        \"Text with "double quotes", `backticks`, and ´ticks´"
+    all-quotes
+        "Text with "double quotes", `backticks`, and ´ticks´"
+    nested-quotes
+        `Text with "double "nested" quotes" and ´ticks´`
+}
+~~~
+{
+    "no-quotes": "Text with \"double quotes\", `backticks`, and ´ticks´",
+    "escaped-quotes": "\"Text with \"double quotes\", `backticks`, and ´ticks´\"",
+    "all-quotes": "Text with \"double quotes\", `backticks`, and ´ticks´",
+    "nested-quotes": "Text with \"double \"nested\" quotes\" and ´ticks´"
+}
+~~~
+"String with \t tab, \n newline, \\ backslash, and \" quote"
+~~~
+"String with \t tab, \n newline, \\ backslash, and \" quote"
+~~~
+"First line\nSecond line\tTabbed\rCarriage return"
+~~~
+"First line\nSecond line\tTabbed\rCarriage return"
+~~~
+ 42
+~~~
+" 42"
+~~~
+    42
+~~~
+"    42"
+~~~
+[
+]
+~~~
+[]
+~~~
+[
+    1
+    2
+    3
+]
+~~~
+[
+    1,
+    2,
+    3
+]
+~~~
+[
+    a
+    b
+    c
+]
+~~~
+[
+    "a",
+    "b",
+    "c"
+]
+~~~
+[
+    null
+    undefined
+    true
+    42
+    "string"
+]
+~~~
+[
+    null,
+    undefined,
+    true,
+    42,
+    "string"
+]
+~~~
+[
+    [
+        1
+        2
+    ]
+    [
+        3
+        4
+    ]
+]
+~~~
+[
+    [
+        1,
+        2
+    ],
+    [
+        3,
+        4
+    ]
+]
+~~~
+[
+    [
+        [
+            [
+                "deep array"
+            ]
+        ]
+    ]
+]
+~~~
+[
+    [
+        [
+            [
+                "deep array"
+            ]
+        ]
+    ]
+]
+~~~
+[
+    1
+    "string"
+    true
+    null
+    [
+        nested
+        array
+    ]
+    {
+        nested
+            object
+    }
+    (
+        nested
+            map
+    )
+]
+~~~
+[
+    1,
+    "string",
+    true,
+    null,
+    [
+        "nested",
+        "array"
+    ],
+    {
+        nested: "object"
+    },
+    new Map([
+        ["nested", "map"]
+    ])
+]
+~~~
+{
+}
+~~~
+{}
+~~~
+{
+    a
+        1
+    b
+        2
+    c
+        3
+}
+~~~
+{
+    a: 1,
+    b: 2,
+    c: 3
+}
+~~~
+{
+    string key
+        "string value"
+    number key
+        42
+    boolean key
+        true
+    null key
+        null
+}
+~~~
+{
+    "string key": "string value",
+    "number key": 42,
+    "boolean key": true,
+    "null key": null
+}
+~~~
+{
+    level-one
+        {
+            level-two
+                "value"
+        }
+}
+~~~
+{
+    "level-one": {
+        "level-two": "value"
+    }
+}
+~~~
+{
+    deep nesting
+        {
+            level one
+                {
+                    level two
+                        {
+                            level three
+                                "deep value"
+                        }
+                }
+        }
+}
+~~~
+{
+    "deep nesting": {
+        "level one": {
+            "level two": {
+                "level three": "deep value"
+            }
+        }
+    }
+}
+~~~
+{
+    array field
+        [
+            1
+            2
+            3
+        ]
+    string field
+        "string value"
+    number field
+        42
+    boolean field
+        true
+    null field
+        null
+    object field
+        {
+            nested
+                object
+        }
+    map field
+        (
+            key
+                value
+        )
+}
+~~~
+{
+    "array field": [
+        1,
+        2,
+        3
+    ],
+    "string field": "string value",
+    "number field": 42,
+    "boolean field": true,
+    "null field": null,
+    "object field": {
+        nested: "object"
+    },
+    "map field": new Map([
+        ["key", "value"]
+    ])
+}
+~~~
+{
+    mixed
+        [
+            {
+                inner object
+                    "value"
+            }
+            (
+                "inner map key"
+                    42
+            )
+        ]
+}
+~~~
+{
+    "mixed": [
+        {
+            "inner object": "value"
+        },
+        new Map([
+            ["inner map key", 42]
+        ])
+    ]
+}
+~~~
+{
+    null-like
+        null¨
+    array-of-empties
+        [
+            ¨
+            ""
+            ``
+            ´´
+        ]
+    true-like
+        true¨
+    diaeresis-escape
+        "Text with escaped diaeresis \¨"
+}
+~~~
+{
+    "null-like": "null",
+    "array-of-empties": [
+        "",
+        "",
+        "",
+        ""
+    ],
+    "true-like": "true",
+    "diaeresis-escape": "Text with escaped diaeresis ¨"
+}
+~~~
+{
+    key with spaces
+        value
+    key-with-dashes
+        value
+    key_with_underscores
+        value
+    key.with.dots
+        value
+    123
+        numeric key
+    true
+        boolean key
+    null
+        null key
+}
+~~~
+{
+    "key with spaces": "value",
+    "key-with-dashes": "value",
+    "key_with_underscores": "value",
+    "key.with.dots": "value",
+    "123": "numeric key",
+    "true": "boolean key",
+    "null": "null key"
+}
+~~~
+{
+    english
+        "This is English text
+         with multiple lines"
+    french
+        `Ceci est du texte français
+         avec plusieurs lignes`
+    spanish
+        ´Este es texto en español
+         con múltiples líneas´
+}
+~~~
+{
+    "english": "This is English text\n with multiple lines",
+    "french": "Ceci est du texte français\n avec plusieurs lignes",
+    "spanish": "Este es texto en español\n con múltiples líneas"
+}
+~~~
+{
+    meta
+        {
+            type
+                test
+            complexity
+                high
+        }
+    data
+        [
+            {
+                id
+                    1
+                labels
+                    [
+                        primary
+                        secondary
+                    ]
+                content
+                    "Multi-line
+                    content with
+                    indentation preserved"
+            }
+            {
+                id
+                    2
+                labels
+                    [
+                        tertiary
+                    ]
+                content
+                    "Line with continuation \
+                    and preserved spaces    ¨
+                    final line"
+            }
+        ]
+}
+~~~
+{
+    "meta": {
+        "type": "test",
+        "complexity": "high"
+    },
+    "data": [
+        {
+            "id": 1,
+            "labels": [
+                "primary",
+                "secondary"
+            ],
+            "content": "Multi-line\ncontent with\nindentation preserved"
+        },
+        {
+            "id": 2,
+            "labels": [
+                "tertiary"
+            ],
+            "content": "Line with continuation and preserved spaces    \nfinal line"
+        }
+    ]
+}
+~~~
+(
+)
+~~~
+new Map()
+~~~
+(
+    a
+        1
+    b
+        2
+    c
+        3
+)
+~~~
+new Map([
+    ["a", 1],
+    ["b", 2],
+    ["c", 3]
+])
+~~~
+(
+    "string key"
+        "string value"
+    42
+        "number value"
+    true
+        "boolean value"
+    null
+        "null value"
+)
+~~~
+new Map([
+    ["string key", "string value"],
+    [42, "number value"],
+    [true, "boolean value"],
+    [null, "null value"]
+])
+~~~
+(
+    [
+        1
+        2
+    ]
+        "array key"
+)
+~~~
+new Map([
+    [
+        [
+            1,
+            2
+        ],
+        "array key"
+    ]
+])
+~~~
+(
+    {
+        nested
+            key
+    }
+        "object key"
+)
+~~~
+new Map([
+    [
+        {
+            nested: "key"
+        },
+        "object key"
+    ]
+])
+~~~
+(
+    (
+        inner
+            map
+    )
+        "map key"
+)
+~~~
+new Map([
+    [
+        new Map([
+            ["inner", "map"]
+        ]),
+        "map key"
+    ]
+])
+~~~
+(
+    outer
+        (
+            inner
+                "value"
+        )
+)
+~~~
+new Map([
+    ["outer", new Map([
+        ["inner", "value"]
+    ])]
+])
+~~~
+(
+    (
+        (
+            (
+                map key
+                    map value
+            )
+                map value
+        )
+            map value
+    )
+        map value
+)
+~~~
+new Map(
+    [
+        [
+            new Map(
+                [
+                    [
+                        new Map(
+                            [
+                                [
+                                    new Map(
+                                        [
+                                            [
+                                                "map key",
+                                                "map value"
+                                            ]
+                                        ]
+                                    ),
+                                    "map value"
+                                ]
+                            ]
+                        ),
+                        "map value"
+                    ]
+                ]
+            ),
+            "map value"
+        ]
+    ]
+)
+~~~
+(
+    "string key"
+        "string value"
+    42
+        42
+    true
+        false
+    null
+        undefined
+    [
+        1
+        2
+        3
+    ]
+        [
+            4
+            5
+            6
+        ]
+    {
+        object
+            key
+    }
+        {
+            object
+                value
+        }
+    (
+        map
+            key
+    )
+        (
+            map
+                value
+        )
+)
+~~~
+new Map(
+    [
+        [
+            "string key",
+            "string value"
+        ],
+        [
+            42,
+            42
+        ],
+        [
+            true,
+            false
+        ],
+        [
+            null,
+            undefined
+        ],
+        [
+            [
+                1,
+                2,
+                3
+            ],
+            [
+                4,
+                5,
+                6
+            ]
+        ],
+        [
+            {
+                object: "key"
+            },
+            {
+                object: "value"
+            }
+        ],
+        [
+            new Map(
+                [
+                    [
+                        "map",
+                        "key"
+                    ]
+                ]
+                ),
+            new Map(
+                [
+                    [
+                        "map",
+                        "value"
+                    ]
+                ]
+                )
+        ]
+    ]
+    )
+~~~
+(
+    [
+        {
+            complex
+                array object
+        }
+        (
+            inner
+                array map
+        )
+    ]
+        (
+            {
+                complex
+                    value object
+            }
+                [
+                    nested value array
+                ]
+        )
+)
+~~~
+new Map([
+    [
+        [
+            {
+                complex: "array object"
+            },
+            new Map([
+                ["inner", "array map"]
+            ])
+        ],
+        new Map([
+            [
+                {
+                    complex: "value object"
+                },
+                [
+                    "nested value array"
+                ]
+            ]
+        ])
+    ]
+])
+~~~
+(
+    {
+        complex
+            key1
+    }
+        "value1"
+    [
+        complex
+        key2
+    ]
+        "value2"
+    (
+        sub
+            map
+    )
+        "value3"
+)
+~~~
+new Map([
+    [
+        {
+            "complex": "key1"
+        },
+        "value1"
+    ],
+    [
+        [
+            "complex",
+            "key2"
+        ],
+        "value2"
+    ],
+    [
+        new Map([
+            ["sub", "map"]
+        ]),
+        "value3"
+    ]
+])
+~~~
+[
+    [
+        [
+            [
+                {
+                    deep
+                        [
+                            (
+                                key
+                                    value
+                            )
+                        ]
+                }
+            ]
+        ]
+    ]
+]
+~~~
+[
+    [
+        [
+            [
+                {
+                    "deep": [
+                        new Map([
+                            ["key", "value"]
+                        ])
+                    ]
+                }
+            ]
+        ]
+    ]
+]
+~~~
+{
+    name
+        DEF
+    version
+        1.0¨
+    description
+        Data exchange format.
+    author
+        {
+            name
+                Ecstatic Coder
+            email
+                ecstatic.coder@gmail.com
+        }
+    features
+        [
+            Simple, parseable syntax based on indentation.
+            Compact representation for complex data structures.
+            Supports all JSON data types and more.
+            Flexible multiline string handling.
+        ]
+    examples
+        {
+            constants
+                [
+                    undefined
+                    null
+                    false
+                    true
+                    NaN
+                    -Infinity
+                    Infinity
+                ]
+            numbers
+                [
+                    0
+                    -1
+                    42
+                    0xFF
+                    3.14159
+                    -1.23456e-7
+                ]
+            strings
+                {
+                    unquoted string
+                        Single-line strings don't need quotes.
+                    unquoted string starting and ending with spaces
+                            Unquoted strings can start and end with spaces.    ¨
+                    unquoted multiline string
+                        A backslash escapes the next character.\\\
+                        A trailing backslash makes the line continue \
+                        over the next line. \
+                            Starting spaces are kept. \
+                        Ending spaces are not kept unless followed by a backspace \
+                        or a diaeresis.    ¨
+                    unquoted empty string
+
+                    unquoted empty string with a trailing diaeresis
+                        ¨
+                    unquoted constant-like string with a trailing diaeresis
+                        null¨
+                    unquoted number-like string with a trailing diaeresis
+                        1.0¨
+                    double-quoted multiline string
+                        "Lines are joined using line breaks.
+                        A backslash escapes the next character.\"
+                        A trailing backslash makes the line continue \
+                        over the next line.
+                            Starting spaces are kept.
+                        Ending spaces are not kept unless followed by a backspace \
+                        or a diaeresis.    ¨
+                        "Non-ending" double-quotes don't have to be escaped."
+                    double-quoted empty string
+                        ""
+                    backticked multiline string
+                        `Lines are joined using line breaks.
+                        A backslash escapes the next character.\`
+                        A trailing backslash makes the line continue \
+                        over the next line.
+                            Starting spaces are kept.
+                        Ending spaces are not kept unless followed by a backspace \
+                        or a diaeresis.    ¨
+                        `Non-ending` backticks don't have to be escaped.`
+                    backticked empty string
+                        ``
+                    ticked multiline string
+                        ´Lines are joined using line breaks.
+                        A backslash escapes the next character.\´
+                        A trailing backslash makes the line continue \
+                        over the next line.
+                            Starting spaces are kept.
+                        Ending spaces are not kept unless followed by a backspace
+                        or a diaeresis.    ¨
+                        ´Non-ending´ ticks don't have to be escaped.´
+                    ticked empty string
+                        ´´
+                }
+            collections
+                {
+                    array of values
+                        [
+                            null
+                            0
+                            one
+                            2.0¨
+                            "3"
+                            `4`
+                            ´5´
+                        ]
+                    array of empty strings
+                        [
+
+                            ¨
+                            ""
+                            ``
+                            ´´
+                        ]
+                    object of key/value pairs (where keys are coerced to strings)
+                        {
+                            key
+                                value
+                            other key
+                                other value
+                            123
+                                null
+                            undefined
+                                not found
+                            keys
+                                [
+                                    array value 1
+                                    array value 2
+                                ]
+                            are converted
+                                {
+                                    object key 1
+                                        object value 1
+                                    object key 2
+                                        object value 2
+                                }
+                            to strings
+                                (
+                                    map key 1
+                                        map value 1
+                                    map key 2
+                                        map value 2
+                                )
+                        }
+                    map of key/value pairs (where keys can be of any type)
+                        (
+                            key
+                                value
+                            other key
+                                other value
+                            123
+                                null
+                            undefined
+                                not found
+                            [
+                                array value 1
+                                array value 2
+                            ]
+                                (
+                                    map key 1
+                                        map value 1
+                                    map key 2
+                                        map value 2
+                                )
+                            {
+                                object key 1
+                                    object value 1
+                                object key 2
+                                    object value 2
+                            }
+                                [
+                                    array value 1
+                                    array value 2
+                                ]
+                            (
+                                map key 1
+                                    map value 1
+                                map key 2
+                                    map value 2
+                            )
+                                {
+                                    object key 1
+                                        object value 1
+                                    object key 2
+                                        object value 2
+                                }
+                        )
+                }
+        }
+}
+~~~
+{
+    "name": "DEF",
+    "version": "1.0",
+    "description": "Data exchange format.",
+    "author": {
+        "name": "Ecstatic Coder",
+        "email": "ecstatic.coder@gmail.com"
+    },
+    "features": [
+        "Simple, parseable syntax based on indentation.",
+        "Compact representation for complex data structures.",
+        "Supports all JSON data types and more.",
+        "Flexible multiline string handling."
+    ],
+    "examples": {
+        "constants": [
+            undefined,
+            null,
+            false,
+            true,
+            NaN,
+            -Infinity,
+            Infinity
+        ],
+        "numbers": [
+            0,
+            -1,
+            42,
+            255,
+            3.14159,
+            -1.23456e-7
+        ],
+        "strings": {
+            "unquoted string": "Single-line strings don't need quotes.",
+            "unquoted string starting and ending with spaces": "    Unquoted strings can start and end with spaces.    ",
+            "unquoted multiline string": "A backslash escapes the next character.\\A trailing backslash makes the line continue over the next line.     Starting spaces are kept. Ending spaces are not kept unless followed by a backspace or a diaeresis.    ",
+            "unquoted empty string": "",
+            "unquoted empty string with a trailing diaeresis": "",
+            "unquoted constant-like string with a trailing diaeresis": "null",
+            "unquoted number-like string with a trailing diaeresis": "1.0",
+            "double-quoted multiline string": "Lines are joined using line breaks.\nA backslash escapes the next character.\"\nA trailing backslash makes the line continue over the next line.\n    Starting spaces are kept.\nEnding spaces are not kept unless followed by a backspace or a diaeresis.    \n\"Non-ending\" double-quotes don't have to be escaped.",
+            "double-quoted empty string": "",
+            "backticked multiline string": "Lines are joined using line breaks.\nA backslash escapes the next character.`\nA trailing backslash makes the line continue over the next line.\n    Starting spaces are kept.\nEnding spaces are not kept unless followed by a backspace or a diaeresis.    \n`Non-ending` backticks don't have to be escaped.",
+            "backticked empty string": "",
+            "ticked multiline string": "Lines are joined using line breaks.\nA backslash escapes the next character.´\nA trailing backslash makes the line continue over the next line.\n    Starting spaces are kept.\nEnding spaces are not kept unless followed by a backspace\nor a diaeresis.    \n´Non-ending´ ticks don't have to be escaped.",
+            "ticked empty string": ""
+        },
+        "collections": {
+            "array of values": [
+                null,
+                0,
+                "one",
+                "2.0",
+                "3",
+                "4",
+                "5"
+            ],
+            "array of empty strings": [
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "object of key/value pairs (where keys are coerced to strings)":
+                {
+                    "key": "value",
+                    "other key": "other value",
+                    "123": null,
+                    "undefined": "not found",
+                    "keys": [
+                      "array value 1",
+                      "array value 2"
+                    ],
+                    "are converted": {
+                      "object key 1": "object value 1",
+                      "object key 2": "object value 2"
+                    },
+                    "to strings":
+                        new Map(
+                            [
+                                ["map key 1", "map value 1"],
+                                ["map key 2", "map value 2"]
+                            ]
+                            )
+
+                },
+            "map of key/value pairs (where keys can be of any type)":
+                new Map(
+                    [
+                        [
+                            "key",
+                            "value"
+                        ],
+                        [
+                            "other key",
+                            "other value"
+                        ],
+                        [
+                            123,
+                            null
+                        ],
+                        [
+                            undefined,
+                            "not found"
+                        ],
+                        [
+                            [
+                                "array value 1",
+                                "array value 2"
+                            ],
+                            new Map(
+                                [
+                                    [
+                                        "map key 1",
+                                        "map value 1"
+                                    ],
+                                    [
+                                        "map key 2",
+                                        "map value 2"
+                                    ]
+                                ]
+                                )
+                        ],
+                        [
+                            {
+                                "object key 1": "object value 1",
+                                "object key 2": "object value 2"
+                            },
+                            [
+                                "array value 1",
+                                "array value 2"
+                            ]
+                        ],
+                        [
+                            new Map(
+                                [
+                                    [
+                                        "map key 1",
+                                        "map value 1"
+                                    ],
+                                    [
+                                        "map key 2",
+                                        "map value 2"
+                                    ]
+                                ]
+                                ),
+                            {
+                                "object key 1": "object value 1",
+                                "object key 2": "object value 2"
+                            }
+                        ]
+                    ]
+                    )
+        }
+    }
+}
+~~~
