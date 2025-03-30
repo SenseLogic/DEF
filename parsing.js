@@ -53,7 +53,7 @@ function getUnescapedText(
     tokenArray
     )
 {
-    let unescapedText = "";
+    let unescapedText = '';
 
     for ( let token of tokenArray )
     {
@@ -125,12 +125,12 @@ function throwParsingError(
         = message
           + '\nText:\n'
           + context.text
-          + '\nLine ' + context.lineIndex + " @ " + level;
+          + '\nLine ' + context.lineIndex + ' @ ' + level;
 
     if ( context.lineIndex > 0
          && context.lineIndex <= context.lineArray.length )
     {
-        message += " : " + context.lineArray[ context.lineIndex - 1 ];
+        message += ' : ' + context.lineArray[ context.lineIndex - 1 ];
     }
 
     throw new Error( message );
@@ -151,7 +151,7 @@ function parseDefLine(
     if ( lineSpaceCount < levelSpaceCount
          && trimmedLine !== '' )
     {
-        throwParsingError( "Invalid DEF line", context, level );
+        throwParsingError( 'Invalid DEF line', context, level );
     }
 
     line = line.slice( levelSpaceCount ).trimEnd();
@@ -199,7 +199,7 @@ function parseDefUnquotedString(
         }
     }
 
-    throwParsingError( "Invalid DEF unquoted string", context, level );
+    throwParsingError( 'Invalid DEF unquoted string', context, level );
 }
 
 // ~~
@@ -255,7 +255,7 @@ function parseDefQuotedString(
         }
     }
 
-    throwParsingError( "Invalid DEF quoted string", context, level );
+    throwParsingError( 'Invalid DEF quoted string', context, level );
 }
 
 // ~~
@@ -286,7 +286,7 @@ function parseDefArray(
         }
     }
 
-    throwParsingError( "Invalid DEF array", context, level );
+    throwParsingError( 'Invalid DEF array', context, level );
 }
 
 // ~~
@@ -327,7 +327,7 @@ function parseDefObject(
         }
     }
 
-    throwParsingError( "Invalid DEF object", context, level );
+    throwParsingError( 'Invalid DEF object', context, level );
 }
 
 // ~~
@@ -360,7 +360,7 @@ function parseDefMap(
         }
     }
 
-    throwParsingError( "Invalid DEF map", context, level );
+    throwParsingError( 'Invalid DEF map', context, level );
 }
 
 // ~~
@@ -449,7 +449,7 @@ function parseDefValue(
     }
     else
     {
-        throwParsingError( "Invalid DEF value", context, level );
+        throwParsingError( 'Invalid DEF value', context, level );
     }
 }
 
@@ -467,7 +467,7 @@ export function parseDefText(
         {
             text,
             lineArray,
-            lineIndex : 0,
+            lineIndex: 0,
             levelSpaceCount
         };
 

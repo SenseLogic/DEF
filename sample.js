@@ -6,11 +6,11 @@ import { buildDefText, getDumpText, parseDefText } from './index.js';
 
 let object =
     {
-        name: "John Doe",
+        name: 'John Doe',
         age: 30,
-        skills: [ "JavaScript", "TypeScript", "Node.js" ]
+        skills: [ 'JavaScript', 'TypeScript', 'Node.js' ]
     };
-    
+
 let text = buildDefText( object );
 console.log( text );
 /*
@@ -42,24 +42,24 @@ let map = new Map();
 
 map.set(
     [
-        "first",
-        "key"
+        'first',
+        'key'
     ],
     {
-        first: "value",
-        second: "value"
+        first: 'value',
+        second: 'value'
     }
     );
 
 map.set(
     [
-        "second",
-        "key"
+        'second',
+        'key'
     ],
     {
-        first: "value",
-        second: "value",
-        third: "value"
+        first: 'value',
+        second: 'value',
+        third: 'value'
     }
     );
 

@@ -1,7 +1,7 @@
 {
     "name": "senselogic-def",
     "description": "Data exchange format.",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "author": "Eric Pelzer <ecstatic.coder@gmail.com>",
     "license": "LGPL-3.0-only",
     "repository": {
@@ -15,12 +15,13 @@
     "type": "module",
     "main": "index.js",
     "files": [
+        "building.js",
+        "dumping.js",
+        "equivalence.js",
         "index.js",
-        "README.md",
-        "build.js",
-        "dump.js",
-        "parse.js",
-        "same.js"
+        "parsing.js",
+        "test.js",
+        "README.md"
     ],
     "keywords": [
         "def"

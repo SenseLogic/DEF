@@ -1,10 +1,12 @@
 ![](https://github.com/senselogic/DEF/blob/master/LOGO/def.png)
 
-# DEF
+# Data Exchange Format
 
-The Data Exchange Format allows complex configuration files to be defined in a simple readable way which is also easy to parse and generate.
+## Features
 
-It uses a consistent indentation scheme where each level is indented by a fixed amount of spaces (4 by default).
+*   Allows complex configuration files to be defined in a simple, readable way which is also easy to parse and generate.
+*   Uses a consistent indentation scheme where each level is indented with a fixed number of spaces (4 by default).
+*   Consists of lightweight, dependency-free JavaScript files that can be imported individually.
 
 ```
 {
@@ -269,9 +271,9 @@ import { buildDefText, getDumpText, parseDefText } from 'senselogic-def';
 
 let object =
     {
-        name: "John Doe",
+        name: 'John Doe',
         age: 30,
-        skills: [ "JavaScript", "TypeScript", "Node.js" ]
+        skills: [ 'JavaScript', 'TypeScript', 'Node.js' ]
     };
 
 let text = buildDefText( object );
@@ -305,24 +307,24 @@ let map = new Map();
 
 map.set(
     [
-        "first",
-        "key"
+        'first',
+        'key'
     ],
     {
-        first: "value",
-        second: "value"
+        first: 'value',
+        second: 'value'
     }
     );
 
 map.set(
     [
-        "second",
-        "key"
+        'second',
+        'key'
     ],
     {
-        first: "value",
-        second: "value",
-        third: "value"
+        first: 'value',
+        second: 'value',
+        third: 'value'
     }
     );
 

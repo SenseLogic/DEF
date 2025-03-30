@@ -115,7 +115,11 @@ function buildDefString(
 
 // ~~
 
-function buildDefValue( value, context, level )
+function buildDefValue(
+    value,
+    context,
+    level
+    )
 {
     let indent = ' '.repeat( level * context.levelSpaceCount );
 
@@ -204,7 +208,7 @@ export function buildDefText(
         {
             levelSpaceCount,
             quote,
-            lineArray : []
+            lineArray: []
         };
 
     buildDefValue( value, context, 0 );

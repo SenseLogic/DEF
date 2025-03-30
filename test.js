@@ -30,7 +30,7 @@ function readFileText(
     catch ( error )
     {
         console.error( error );
-        process.exit( 1 );
+        throw error;
     }
 }
 
@@ -39,7 +39,7 @@ function readFileText(
 function runTests(
     )
 {
-    let testDataArray = readFileText( "test.txt" ).split( '\n~~~\n' );
+    let testDataArray = readFileText( 'test.txt' ).split( '\n~~~\n' );
 
     for ( let testDataIndex = 0;
          testDataIndex + 1 < testDataArray.length;
@@ -50,7 +50,7 @@ function runTests(
 
         try
         {
-            console.log( "================================" );
+            console.log( '================================' );
             console.log( 'defText:' );
             console.log( defText );
             console.log( 'expectedValueText:' );
@@ -66,8 +66,8 @@ function runTests(
 
             if ( !haveSameValue( parsedValue, expectedValue ) )
             {
-                console.error( "Invalid parsed value" );
-                process.exit( 1 );
+                console.error( 'Invalid parsed value' );
+                throw new Error( 'Invalid parsed value' );
             }
 
             let builtText = buildDefText( expectedValue );
@@ -80,18 +80,18 @@ function runTests(
 
             if ( !haveSameValue( reparsedValue, expectedValue ) )
             {
-                console.error( "Invalid parsed value" );
-                process.exit( 1 );
+                console.error( 'Invalid parsed value' );
+                throw new Error( 'Invalid parsed value' );
             }
         }
         catch ( error )
         {
             console.error( error );
-            process.exit( 1 );
+            throw error;
         }
     }
 
-    console.log( "All tests passed!" );
+    console.log( 'All tests passed!' );
 }
 
 // -- STATEMENTS

@@ -1,9 +1,9 @@
 // -- IMPORTS
 
-import { buildDefText } from './build.js';
-import { getDumpText } from './dump.js';
-import { haveSameValue } from './same.js';
-import { parseDefText } from './parse.js';
+import { buildDefText } from './building.js';
+import { getDumpText } from './dumping.js';
+import { haveSameValue } from './equivalence.js';
+import { parseDefText } from './parsing.js';
 
 // -- EXPORTS
 

@@ -1,4 +1,4 @@
-// -- CONSTANTS
+// -- FUNCTIONS
 
 export function getDumpText(
     value,
@@ -42,7 +42,7 @@ export function getDumpText(
                        + ',\n';
             }
 
-            text = text.substring( 0, text.length - 2, levelSpaceCount ) + '\n';
+            text = text.substring( 0, text.length - 2 ) + '\n';
             text += ' '.repeat( level * levelSpaceCount ) + ']';
 
             return text;
