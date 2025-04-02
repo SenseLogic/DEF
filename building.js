@@ -19,7 +19,10 @@ function buildDefString(
     {
         context.lineArray.push( indent + '¨' );
     }
-    else if ( value === 'true'
+    else if ( value === '['
+              || value === '{'
+              || value === '('
+              || value === 'true'
               || value === 'false'
               || value === 'null'
               || value === 'undefined'
