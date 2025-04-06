@@ -22,6 +22,19 @@
                     filter
                     sort
                 ]
+            version
+                2.0¨
+            metrics
+                {
+                    cpuUsage
+                        0.75
+                    memoryUsage
+                        0.6
+                    networkTraffic
+                        1234567890
+                }
+            logging
+                true
         }
     users
         [
@@ -29,29 +42,33 @@
                 name
                     John Doe
                 role
-                    admin
-                preferences
-                    {
-                        notifications
-                            true
-                        language
-                            en
-                    }
+                    administrator
             }
             {
                 name
                     Jane Smith
                 role
-                    user
-                preferences
-                    {
-                        notifications
-                            false
-                        language
-                            fr
-                    }
+                    publisher
             }
         ]
+    texts
+        {
+            home
+                "Home
+                ¨fr:Accueil
+                ¨de:Startseite
+                ¨ja:ホーム"
+            services
+                `Services
+                ¨fr:Services
+                ¨de:Dienstleistungen
+                ¨ja:サービス`
+            contact
+                ´Contact
+                ¨fr:Contact
+                ¨de:Kontakt
+                ¨ja:連絡先´
+        }
 }
 ```
 

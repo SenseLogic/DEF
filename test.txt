@@ -1168,6 +1168,102 @@ new Map([
 ]
 ~~~
 {
+    settings
+        {
+            theme
+                dark
+            fontSize
+                16
+            features
+                [
+                    search
+                    filter
+                    sort
+                ]
+            version
+                2.0¨
+            metrics
+                {
+                    cpuUsage
+                        0.75
+                    memoryUsage
+                        0.6
+                    networkTraffic
+                        1234567890
+                }
+            logging
+                true
+        }
+    users
+        [
+            {
+                name
+                    John Doe
+                role
+                    administrator
+            }
+            {
+                name
+                    Jane Smith
+                role
+                    publisher
+            }
+        ]
+    texts
+        {
+            home
+                "Home
+                ¨fr:Accueil
+                ¨de:Startseite
+                ¨ja:ホーム"
+            services
+                `Services
+                ¨fr:Services
+                ¨de:Dienstleistungen
+                ¨ja:サービス`
+            contact
+                ´Contact
+                ¨fr:Contact
+                ¨de:Kontakt
+                ¨ja:連絡先´
+        }
+}
+~~~
+{
+    "settings": {
+        "theme": "dark",
+        "fontSize": 16,
+        "features": [
+            "search",
+            "filter",
+            "sort"
+        ],
+        "version": "2.0",
+        "metrics": {
+            "cpuUsage": 0.75,
+            "memoryUsage": 0.6,
+            "networkTraffic": 1234567890
+        },
+        "logging": true
+    },
+    "users": [
+        {
+            "name": "John Doe",
+            "role": "administrator"
+        },
+        {
+            "name": "Jane Smith",
+            "role": "publisher"
+        }
+    ],
+    "texts": {
+        "home": "Home\n¨fr:Accueil\n¨de:Startseite\n¨ja:ホーム",
+        "services": "Services\n¨fr:Services\n¨de:Dienstleistungen\n¨ja:サービス",
+        "contact": "Contact\n¨fr:Contact\n¨de:Kontakt\n¨ja:連絡先"
+    }
+}
+~~~
+{
     name
         DEF
     version
