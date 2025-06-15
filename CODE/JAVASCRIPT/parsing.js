@@ -26,7 +26,7 @@ function getTokenArray(
             else
             {
                 tokenArray.push( text[ characterIndex ] );
-                characterIndex++;
+                ++characterIndex;
             }
         }
         else
@@ -62,46 +62,46 @@ function getUnescapedText(
         {
             switch ( token[ 1 ] )
             {
-                case 'n' :
-                {
-                    unescapedText += '\n';
-                    break;
-                }
+                case 'n':
+                    {
+                        unescapedText += '\n';
+                        break;
+                    }
 
-                case 't' :
-                {
-                    unescapedText += '\t';
-                    break;
-                }
+                case 't':
+                    {
+                        unescapedText += '\t';
+                        break;
+                    }
 
-                case 'r' :
-                {
-                    unescapedText += '\r';
-                    break;
-                }
+                case 'r':
+                    {
+                        unescapedText += '\r';
+                        break;
+                    }
 
-                case 'b' :
-                {
-                    unescapedText += '\b';
-                    break;
-                }
+                case 'b':
+                    {
+                        unescapedText += '\b';
+                        break;
+                    }
 
-                case 'f' :
-                {
-                    unescapedText += '\f';
-                    break;
-                }
+                case 'f':
+                    {
+                        unescapedText += '\f';
+                        break;
+                    }
 
-                case '0' :
-                {
-                    unescapedText += '\0';
-                    break;
-                }
+                case '0':
+                    {
+                        unescapedText += '\0';
+                        break;
+                    }
 
-                default :
-                {
-                    unescapedText += token[ 1 ];
-                }
+                default:
+                    {
+                        unescapedText += token[ 1 ];
+                    }
             }
         }
         else
@@ -121,11 +121,11 @@ function throwParsingError(
     level
     )
 {
-    message
-        = message
-          + '\nText:\n'
-          + context.text
-          + '\nLine ' + context.lineIndex + ' @ ' + level;
+    message =
+        message
+        + '\nText:\n'
+        + context.text
+        + '\nLine ' + context.lineIndex + ' @ ' + level;
 
     if ( context.lineIndex > 0
          && context.lineIndex <= context.lineArray.length )
@@ -148,14 +148,21 @@ function parseDefLine(
     let levelSpaceCount = level * context.levelSpaceCount;
     let lineSpaceCount = line.length - trimmedLine.length;
 
-    if ( lineSpaceCount < levelSpaceCount
-         && trimmedLine !== '' )
+    if ( trimmedLine === '' )
     {
-        throwParsingError( 'Invalid DEF line', context, level );
+        line = '';
+        lineSpaceCount = 0;
     }
+    else
+    {
+        if ( lineSpaceCount < levelSpaceCount )
+        {
+            throwParsingError( 'Invalid DEF line', context, level );
+        }
 
-    line = line.slice( levelSpaceCount ).trimEnd();
-    lineSpaceCount -= levelSpaceCount;
+        line = line.slice( levelSpaceCount ).trimEnd();
+        lineSpaceCount -= levelSpaceCount;
+    }
 
     context.lineIndex++;
 
@@ -173,8 +180,8 @@ function parseDefUnquotedString(
 
     while ( context.lineIndex < context.lineArray.length )
     {
-        let { line, lineSpaceCount }
-            = parseDefLine( context, level );
+        let { line, lineSpaceCount } =
+            parseDefLine( context, level );
 
         let tokenArray = getTokenArray( line );
         let lastToken = ( tokenArray.length > 0 ) ? tokenArray[ tokenArray.length - 1 ] : '';
@@ -216,8 +223,7 @@ function parseDefQuotedString(
 
     while ( context.lineIndex < context.lineArray.length )
     {
-        let { line, lineSpaceCount }
-            = parseDefLine( context, level );
+        let { line, lineSpaceCount } = parseDefLine( context, level );
 
         if ( context.lineIndex === firstLineIndex )
         {
@@ -239,6 +245,7 @@ function parseDefQuotedString(
                   && lastToken !== escapedQuote )
         {
             tokenArray[ tokenArray.length - 1 ] = lastToken.slice( 0, -1 );
+
             string += getUnescapedText( tokenArray );
 
             return string;
@@ -269,8 +276,8 @@ function parseDefArray(
 
     while ( context.lineIndex < context.lineArray.length )
     {
-        let { line, lineSpaceCount }
-            = parseDefLine( context, level );
+        let { line, lineSpaceCount } =
+            parseDefLine( context, level );
 
         if ( lineSpaceCount === 0
              && line === ']' )
@@ -300,8 +307,8 @@ function parseDefObject(
 
     while ( context.lineIndex < context.lineArray.length )
     {
-        let { line, lineSpaceCount }
-            = parseDefLine( context, level );
+        let { line, lineSpaceCount } =
+            parseDefLine( context, level );
 
         if ( lineSpaceCount === 0
              && line === '}' )
@@ -341,8 +348,8 @@ function parseDefMap(
 
     while ( context.lineIndex < context.lineArray.length )
     {
-        let { line, lineSpaceCount }
-            = parseDefLine( context, level );
+        let { line, lineSpaceCount } =
+            parseDefLine( context, level );
 
         if ( lineSpaceCount === 0
              && line === ')' )
@@ -372,8 +379,8 @@ function parseDefValue(
 {
     if ( context.lineIndex < context.lineArray.length )
     {
-        let { line, lineSpaceCount }
-            = parseDefLine( context, level );
+        let { line, lineSpaceCount } =
+            parseDefLine( context, level );
 
         if ( line === '[' )
         {
@@ -401,33 +408,33 @@ function parseDefValue(
 
             if ( tokenArray.length === 1 && tokenArray[ 0 ] === line.trim() )
             {
-                if ( line === 'true' )
+                if ( line === 'undefined' )
                 {
-                    return true;
-                }
-                else if ( line === 'false' )
-                {
-                    return false;
+                    return undefined;
                 }
                 else if ( line === 'null' )
                 {
                     return null;
                 }
-                else if ( line === 'undefined' )
+                else if ( line === 'false' )
                 {
-                    return undefined;
+                    return false;
+                }
+                else if ( line === 'true' )
+                {
+                    return true;
                 }
                 else if ( line === 'NaN' )
                 {
                     return NaN;
                 }
-                else if ( line === 'Infinity' )
-                {
-                    return Infinity;
-                }
                 else if ( line === '-Infinity' )
                 {
                     return -Infinity;
+                }
+                else if ( line === 'Infinity' )
+                {
+                    return Infinity;
                 }
                 else if ( hexadecimalIntegerExpression.test( line )
                           || decimalRealExpression.test( line )
@@ -462,7 +469,12 @@ export function parseDefText(
     } = {}
     )
 {
-    let lineArray = text.replaceAll( '\t', ' '.repeat( levelSpaceCount ) ).replaceAll( '\r', '' ).split( '\n' );
+    let lineArray =
+        text
+            .replaceAll( '\t', ' '.repeat( levelSpaceCount ) )
+            .replaceAll( '\r', '' )
+            .split( '\n' );
+
     let context =
         {
             text,

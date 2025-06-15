@@ -1,16 +1,689 @@
-![](https://github.com/senselogic/DEF/blob/master/LOGO/def.png)
+undefined
+~~~
+null
+~~~
+false
+~~~
+true
+~~~
+42
+~~~
+-123
+~~~
+3.14159
+~~~
+-1.23456e-7
+~~~
+0xFF
+~~~
+NaN
+~~~
+-Infinity
+~~~
+Infinity
+~~~
+{
+    actual-number
+        42
+    string-number
+        42¨
+    actual-float
+        3.14159
+    string-float
+        3.14159¨
+    actual-hex
+        0xFF
+    string-hex
+        0xFF¨
+}
+~~~
 
-# DEF
+~~~
+¨
+~~~
+[¨
+~~~
+{¨
+~~~
+(¨
+~~~
+\¨
+~~~
+\[
+~~~
+\{
+~~~
+\(
+~~~
+Simple string
+~~~
+String with "quotes" inside
+~~~
+String with `backticks` inside
+~~~
+String with ´ticks´ inside
+~~~
+String with backslash \\ inside
+~~~
+One trailing space ¨
+~~~
+Multiple trailing spaces    ¨
+~~~
+Multiple    \
+trailing    \
+spaces    ¨
+~~~
+"Multiple    \
+trailing    ¨
+spaces    ¨"
+~~~
+"    Multiple    \
+    trailing    ¨
+    spaces    ¨"
+~~~
+[
+        Multiple    \
+        trailing    \
+        spaces    ¨
+    "    Multiple    \
+        trailing    ¨
+        spaces    "
+    "    Multiple    \
+        trailing    ¨
+        spaces    ¨"
+]
+~~~
+Single line \
+continued on next line
+~~~
+"Line 1
+Line 2
+Line 3"
+~~~
+"Line 1
 
-Data Exchange Format.
+Line 2
 
-## Features
+Line 3"
+~~~
+"Line 1
 
-*   Allows complex configuration files to be defined in a simple, readable way which is also easy to parse and generate.
-*   Uses a consistent indentation scheme where each level is indented with a fixed number of spaces (4 by default).
-*   Consists of lightweight, dependency-free JavaScript files that can be imported individually.
+    Line 2
 
-```
+Line 3"
+~~~
+[
+    Line 1\
+        \
+        Line 2\
+        \
+    Line 3
+    Line 1\
+    \
+        Line 2\n\
+    \n\
+    Line 3
+    "Line 1
+
+        Line 2
+
+    Line 3"
+]
+~~~
+"English text
+¨fr:Texte français
+¨de:Deutscher Text
+¨es:Texto español
+¨it:Testo italiano
+¨pt:Texto português
+¨ja:日本語テキスト
+¨ko:한국어 텍스트"
+~~~
+"Fruit list:
+* Banana
+* Kiwi
+* Orange
+¨fr:Liste de fruits :
+* Banane
+* Kiwi
+* Orange
+¨de:Obstliste:
+* Banane
+* Kiwi
+* Orange
+¨es:Lista de frutas:
+* Plátano
+* Kiwi
+* Naranja
+¨it:Elenco di frutta:
+* Banana
+* Kiwi
+* Arancia
+¨pt:Lista de frutas:
+* Banana
+* Kiwi
+* Laranja
+¨ja:果物リスト：
+* バナナ
+* キウイ
+* オレンジ
+¨ko:과일 목록:
+* 바나나
+* 키위
+* 오렌지"
+~~~
+"String with escaped \"quotes\" and \\ backslashes"
+~~~
+`String with escaped \`backticks\` and \\ backslashes`
+~~~
+´String with escaped \´ticks\´ and \\ backslashes´
+~~~
+"This is a simple quoted string"
+~~~
+`This is a backtick quoted string`
+~~~
+´This is a tick quoted string´
+~~~
+"First line \
+second line \
+third line"
+~~~
+"First line    \
+second line    ¨
+third line"
+~~~
+"Start \
+  indented    ¨\
+normal line\
+ slight indent \
+   more indent"
+~~~
+[
+    Single space ¨
+    Double spaces  ¨
+    Triple spaces   ¨
+]
+~~~
+[
+    ""
+    ``
+    ´´
+]
+~~~
+"Line one
+    Indented line
+        More indented
+    Back to less indent
+Normal indent"
+~~~
+"Line one    \
+ Line two     \
+  Line three      ¨
+   Line four       \
+    Line five"
+~~~
+{
+    emoji
+        "😀 😂 🤣 😊 🥰"
+    international
+        "こんにちは 你好 مرحبا Привет"
+    symbols
+        "★ ☀ ♫ ⚽ ♠ ⌛"
+}
+~~~
+{
+    no-quotes
+        Text with "double quotes", `backticks`, and ´ticks´
+    escaped-quotes
+        \"Text with "double quotes", `backticks`, and ´ticks´"
+    all-quotes
+        "Text with "double quotes", `backticks`, and ´ticks´"
+    nested-quotes
+        `Text with "double "nested" quotes" and ´ticks´`
+}
+~~~
+"String with \t tab, \n newline, \\ backslash, and \" quote"
+~~~
+"First line\nSecond line\tTabbed\rCarriage return"
+~~~
+ 42
+~~~
+    42
+~~~
+[
+]
+~~~
+[
+    1
+    2
+    3
+]
+~~~
+[
+    a
+    b
+    c
+]
+~~~
+[
+    undefined
+    null
+    false
+    true
+    NaN
+    -Infinity
+    Infinity
+]
+~~~
+[
+    0
+    -1
+    42
+    0xFF
+    3.14159
+    -1.23456e-7
+]
+~~~
+[
+    undefined¨
+    null¨
+    false¨
+    true¨
+    NaN¨
+    -Infinity¨
+    Infinity¨
+]
+~~~
+[
+    0¨
+    -1¨
+    42¨
+    0xFF¨
+    3.14159¨
+    -1.23456e-7¨
+]
+~~~
+[
+    undefined
+    null
+    true
+    42
+    "string"
+]
+~~~
+[
+    [
+        1
+        2
+    ]
+    [
+        3
+        4
+    ]
+]
+~~~
+[
+    [
+        [
+            [
+                "deep array"
+            ]
+        ]
+    ]
+]
+~~~
+[
+    1
+    "string"
+    true
+    null
+    [
+        nested
+        array
+    ]
+    {
+        nested
+            object
+    }
+    (
+        nested
+            map
+    )
+]
+~~~
+{
+}
+~~~
+{
+    a
+        1
+    b
+        2
+    c
+        3
+}
+~~~
+{
+    string key
+        "string value"
+    number key
+        42
+    boolean key
+        true
+    null key
+        null
+}
+~~~
+{
+    level-one
+        {
+            level-two
+                "value"
+        }
+}
+~~~
+{
+    deep nesting
+        {
+            level one
+                {
+                    level two
+                        {
+                            level three
+                                "deep value"
+                        }
+                }
+        }
+}
+~~~
+{
+    array field
+        [
+            1
+            2
+            3
+        ]
+    string field
+        "string value"
+    number field
+        42
+    boolean field
+        true
+    null field
+        null
+    object field
+        {
+            nested
+                object
+        }
+    map field
+        (
+            key
+                value
+        )
+}
+~~~
+{
+    mixed
+        [
+            {
+                inner object
+                    "value"
+            }
+            (
+                "inner map key"
+                    42
+            )
+        ]
+}
+~~~
+{
+    null-like
+        null¨
+    array-of-empties
+        [
+            ¨
+            ""
+            ``
+            ´´
+        ]
+    true-like
+        true¨
+    diaeresis-escape
+        "Text with escaped diaeresis \¨"
+}
+~~~
+{
+    key with spaces
+        value
+    key-with-dashes
+        value
+    key_with_underscores
+        value
+    key.with.dots
+        value
+    123
+        numeric key
+    true
+        boolean key
+    null
+        null key
+}
+~~~
+{
+    english
+        "This is English text
+         with multiple lines"
+    french
+        `Ceci est du texte français
+         avec plusieurs lignes`
+    spanish
+        ´Este es texto en español
+         con múltiples líneas´
+}
+~~~
+{
+    meta
+        {
+            type
+                test
+            complexity
+                high
+        }
+    data
+        [
+            {
+                id
+                    1
+                labels
+                    [
+                        primary
+                        secondary
+                    ]
+                content
+                    "Multi-line
+                    content with
+                    indentation preserved"
+            }
+            {
+                id
+                    2
+                labels
+                    [
+                        tertiary
+                    ]
+                content
+                    "Line with continuation \
+                    and preserved spaces    ¨
+                    final line"
+            }
+        ]
+}
+~~~
+(
+)
+~~~
+(
+    a
+        1
+    b
+        2
+    c
+        3
+)
+~~~
+(
+    "string key"
+        "string value"
+    42
+        "number value"
+    true
+        "boolean value"
+    null
+        "null value"
+)
+~~~
+(
+    [
+        1
+        2
+    ]
+        "array key"
+)
+~~~
+(
+    {
+        nested
+            key
+    }
+        "object key"
+)
+~~~
+(
+    (
+        inner
+            map
+    )
+        "map key"
+)
+~~~
+(
+    outer
+        (
+            inner
+                "value"
+        )
+)
+~~~
+(
+    (
+        (
+            (
+                map key
+                    map value
+            )
+                map value
+        )
+            map value
+    )
+        map value
+)
+~~~
+(
+    "string key"
+        "string value"
+    42
+        42
+    true
+        false
+    null
+        undefined
+    [
+        1
+        2
+        3
+    ]
+        [
+            4
+            5
+            6
+        ]
+    {
+        object
+            key
+    }
+        {
+            object
+                value
+        }
+    (
+        map
+            key
+    )
+        (
+            map
+                value
+        )
+)
+~~~
+(
+    [
+        {
+            complex
+                array object
+        }
+        (
+            inner
+                array map
+        )
+    ]
+        (
+            {
+                complex
+                    value object
+            }
+                [
+                    nested value array
+                ]
+        )
+)
+~~~
+(
+    {
+        complex
+            key1
+    }
+        "value1"
+    [
+        complex
+        key2
+    ]
+        "value2"
+    (
+        sub
+            map
+    )
+        "value3"
+)
+~~~
+[
+    [
+        [
+            [
+                {
+                    deep
+                        [
+                            (
+                                key
+                                    value
+                            )
+                        ]
+                }
+            ]
+        ]
+    ]
+]
+~~~
 {
     settings
         {
@@ -72,18 +745,7 @@ Data Exchange Format.
                 ¨ja:連絡先´
         }
 }
-```
-
-## Supported data types
-
-* **Constants**: undefined, null, false, true, NaN, -Infinity, Infinity
-* **Numbers**: decimal integers and reals, hexadecimal naturals
-* **Strings**: quoted and unquoted multiline texts
-* **Arrays**: ordered collections
-* **Objects**: key-value collections using strings as keys
-* **Maps**: key-value collections
-
-```
+~~~
 {
     name
         DEF
@@ -277,268 +939,4 @@ Data Exchange Format.
                 }
         }
 }
-```
-
-## JavaScript API
-
-```javascript
-// -- IMPORTS
-
-import { buildDefText, getDumpText, parseDefText } from 'senselogic-def';
-
-// -- STATEMENTS
-
-let object =
-    {
-        name: 'John Doe',
-        age: 30,
-        skills: [ 'JavaScript', 'TypeScript', 'Node.js' ]
-    };
-
-let text = buildDefText( object );
-console.log( text );
-/*
-{
-    name
-        John Doe
-    age
-        30
-    skills
-        [
-            JavaScript
-            TypeScript
-            Node.js
-        ]
-}
-*/
-
-let value = parseDefText( text );
-console.log( getDumpText( value ) );
-/*
-{
-  "name": "John Doe",
-  "age": 30,
-  "skills": [
-    "JavaScript",
-    "TypeScript",
-    "Node.js"
-  ]
-}
-*/
-
-let map = new Map();
-
-map.set(
-    [
-        'first',
-        'key'
-    ],
-    {
-        first: 'value',
-        second: 'value'
-    }
-    );
-
-map.set(
-    [
-        'second',
-        'key'
-    ],
-    {
-        first: 'value',
-        second: 'value',
-        third: 'value'
-    }
-    );
-
-text = buildDefText( map );
-console.log( text );
-/*
-(
-    [
-        first
-        key
-    ]
-        {
-            first
-                value
-            second
-                value
-        }
-    [
-        second
-        key
-    ]
-        {
-            first
-                value
-            second
-                value
-            third
-                value
-        }
-)
-*/
-
-value = parseDefText( text );
-console.log( getDumpText( value ) );
-/*
-Map(2) {
-  [
-    "first",
-    "key"
-  ] => {
-    "first": "value",
-    "second": "value"
-  },
-  [
-    "second",
-    "key"
-  ] => {
-    "first": "value",
-    "second": "value",
-    "third": "value"
-  }
-}
-*/
-```
-
-## Dart API
-
-```dart
-// -- IMPORTS
-
-import 'package:senselogic_def/senselogic_def.dart';
-
-// -- FUNCTIONS
-
-void main(
-    )
-{
-    var object =
-        {
-            'name': 'John Doe',
-            'age': 30,
-            'skills': [ 'JavaScript', 'TypeScript', 'Node.js' ]
-        };
-
-    var text = buildDefText( object );
-    print( text );
-    /*
-    {
-        name
-            John Doe
-        age
-            30
-        skills
-            [
-                JavaScript
-                TypeScript
-                Node.js
-            ]
-    }
-    */
-
-    var value = parseDefText( text );
-    print( getDumpText( value ) );
-    /*
-    {
-      "name": "John Doe",
-      "age": 30,
-      "skills": [
-        "JavaScript",
-        "TypeScript",
-        "Node.js"
-      ]
-    }
-    */
-
-    var map =
-        <dynamic, dynamic>{
-            [
-                'first',
-                'key'
-            ]: {
-                'first': 'value',
-                'second': 'value'
-            },
-            [
-                'second',
-                'key'
-            ]: {
-                'first': 'value',
-                'second': 'value',
-                'third': 'value'
-            }
-        };
-
-    text = buildDefText( map );
-    print( text );
-    /*
-    (
-        [
-            first
-            key
-        ]
-            {
-                first
-                    value
-                second
-                    value
-            }
-        [
-            second
-            key
-        ]
-            {
-                first
-                    value
-                second
-                    value
-                third
-                    value
-            }
-    )
-    */
-
-    value = parseDefText( text );
-    print( getDumpText( value ) );
-    /*
-    Map(2) {
-      [
-        "first",
-        "key"
-      ] => {
-        "first": "value",
-        "second": "value"
-      },
-      [
-        "second",
-        "key"
-      ] => {
-        "first": "value",
-        "second": "value",
-        "third": "value"
-      }
-    }
-    */
-}
-```
-
-## Limitations
-
-*   Tab characters are automatically replaced by a fixed number of spaces, regardless of their position in the line.
-
-## Version
-
-0.1
-
-## Author
-
-Eric Pelzer (ecstatic.coder@gmail.com).
-
-## License
-
-This project is licensed under the GNU Lesser General Public License version 3.
-
-See the [LICENSE.md](LICENSE.md) file for details.
+~~~

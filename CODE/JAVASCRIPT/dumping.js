@@ -6,13 +6,13 @@ export function getDumpText(
     levelSpaceCount = 2
     )
 {
-    if ( value === null )
-    {
-        return 'null';
-    }
-    else if ( value === undefined )
+    if ( value === undefined )
     {
         return 'undefined';
+    }
+    else if ( value === null )
+    {
+        return 'null';
     }
     else if ( typeof value === 'boolean'
               || typeof value === 'number' )
@@ -59,13 +59,13 @@ export function getDumpText(
             let text = 'Map(' + value.size + ') {\n';
             let indent = ' '.repeat( ( level + 1 ) * levelSpaceCount );
 
-            for ( let [ key, val ] of value.entries() )
+            for ( let [ entry_key, entry_value ] of value.entries() )
             {
                 text
                     += indent
-                       + getDumpText( key, level + 1, levelSpaceCount )
+                       + getDumpText( entry_key, level + 1, levelSpaceCount )
                        + ' => '
-                       + getDumpText( val, level + 1, levelSpaceCount )
+                       + getDumpText( entry_value, level + 1, levelSpaceCount )
                        + ',\n';
             }
 

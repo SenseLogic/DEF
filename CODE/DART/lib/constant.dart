@@ -1,0 +1,3 @@
+// -- CONSTANTS
+
+var undefined = Object();

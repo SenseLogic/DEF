@@ -22,13 +22,13 @@ function buildDefString(
     else if ( value === '['
               || value === '{'
               || value === '('
-              || value === 'true'
-              || value === 'false'
-              || value === 'null'
               || value === 'undefined'
+              || value === 'null'
+              || value === 'false'
+              || value === 'true'
               || value === 'NaN'
-              || value === 'Infinity'
               || value === '-Infinity'
+              || value === 'Infinity'
               || hexadecimalIntegerExpression.test( value )
               || decimalRealExpression.test( value )
               || exponentialDecimalRealExpression.test( value ) )
@@ -54,14 +54,14 @@ function buildDefString(
               lineIndex < lineCount;
               ++lineIndex )
         {
-            let line
-                = lineArray[ lineIndex ]
-                      .replaceAll( '\\', '\\\\' )
-                      .replaceAll( '\b', '\\b' )
-                      .replaceAll( '\f', '\\f' )
-                      .replaceAll( '\r', '\\r' )
-                      .replaceAll( '\t', '\\t' )
-                      .replaceAll( '\v', '\\v' );
+            let line =
+                lineArray[ lineIndex ]
+                    .replaceAll( '\\', '\\\\' )
+                    .replaceAll( '\b', '\\b' )
+                    .replaceAll( '\f', '\\f' )
+                    .replaceAll( '\r', '\\r' )
+                    .replaceAll( '\t', '\\t' )
+                    .replaceAll( '\v', '\\v' );
 
             if ( lineCount === 1 )
             {
@@ -126,13 +126,13 @@ function buildDefValue(
 {
     let indent = ' '.repeat( level * context.levelSpaceCount );
 
-    if ( value === null )
-    {
-        context.lineArray.push( indent + 'null' );
-    }
-    else if ( value === undefined )
+    if ( value === undefined )
     {
         context.lineArray.push( indent + 'undefined' );
+    }
+    else if ( value === null )
+    {
+        context.lineArray.push( indent + 'null' );
     }
     else if ( typeof value === 'boolean' )
     {

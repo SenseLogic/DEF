@@ -6,7 +6,7 @@ export function haveSameValue(
     )
 {
     if ( firstValue !== firstValue
-         && secondValue !== secondValue )
+         && secondValue !== secondValue )    // NaN
     {
         return true;
     }
@@ -60,7 +60,9 @@ export function haveSameValue(
             return false;
         }
 
-        for ( let valueIndex = 0; valueIndex < firstValue.length; valueIndex++ )
+        for ( let valueIndex = 0;
+              valueIndex < firstValue.length;
+              ++valueIndex )
         {
             if ( !haveSameValue( firstValue[ valueIndex ], secondValue[ valueIndex ] ) )
             {

@@ -1,2 +1,1 @@
 call npm publish
-pause

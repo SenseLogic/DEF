@@ -2,9 +2,9 @@ undefined
 ~~~
 null
 ~~~
-true
-~~~
 false
+~~~
+true
 ~~~
 42
 ~~~
@@ -18,9 +18,9 @@ false
 ~~~
 NaN
 ~~~
-Infinity
-~~~
 -Infinity
+~~~
+Infinity
 ~~~
 {
     actual-number
@@ -266,8 +266,46 @@ Normal indent"
 ]
 ~~~
 [
-    null
     undefined
+    null
+    false
+    true
+    NaN
+    -Infinity
+    Infinity
+]
+~~~
+[
+    0
+    -1
+    42
+    0xFF
+    3.14159
+    -1.23456e-7
+]
+~~~
+[
+    undefined¨
+    null¨
+    false¨
+    true¨
+    NaN¨
+    -Infinity¨
+    Infinity¨
+]
+~~~
+[
+    0¨
+    -1¨
+    42¨
+    0xFF¨
+    3.14159¨
+    -1.23456e-7¨
+]
+~~~
+[
+    undefined
+    null
     true
     42
     "string"

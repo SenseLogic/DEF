@@ -29,12 +29,16 @@ console.log( text );
 */
 
 let value = parseDefText( text );
-console.log( value );
+console.log( getDumpText( value ) );
 /*
 {
-  name: 'John Doe',
-  age: 30,
-  skills: [ 'JavaScript', 'TypeScript', 'Node.js' ]
+  "name": "John Doe",
+  "age": 30,
+  "skills": [
+    "JavaScript",
+    "TypeScript",
+    "Node.js"
+  ]
 }
 */
 
@@ -93,14 +97,6 @@ console.log( text );
 */
 
 value = parseDefText( text );
-console.log( value );
-/*
-Map(2) {
-  [ 'first', 'key' ] => { first: 'value', second: 'value' },
-  [ 'second', 'key' ] => { first: 'value', second: 'value', third: 'value' }
-}
-*/
-
 console.log( getDumpText( value ) );
 /*
 Map(2) {
