@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'constant.dart';
+import 'processing.dart';
 
 // -- CONSTANTS
 
@@ -10,7 +11,7 @@ final RegExp
 
 // -- TYPES
 
-class _Line
+class DefLine
 {
     // -- ATTRIBUTES
 
@@ -21,37 +22,43 @@ class _Line
 
     // -- CONSTRUCTORS
 
-    _Line(
+    DefLine(
         {
             required this.line,
-            required this.lineSpaceCount,
+            required this.lineSpaceCount
         }
         );
 }
 
 // ~~
 
-class _Context
+class ParsingContext
 {
     // -- ATTRIBUTES
 
+    final String
+        filePath;
+    final dynamic Function( String, ParsingContext, int )?
+        processDefQuotedStringFunction;
+    final int
+        levelSpaceCount;
     final String
         text;
     final List<String>
         lineArray;
     int
         lineIndex;
-    final int
-        levelSpaceCount;
 
     // -- CONSTRUCTORS
 
-    _Context(
+    ParsingContext(
         {
+            required this.filePath,
+            required this.processDefQuotedStringFunction,
+            required this.levelSpaceCount,
             required this.text,
             required this.lineArray,
             this.lineIndex = 0,
-            required this.levelSpaceCount
         }
         );
 }
@@ -174,14 +181,15 @@ String getUnescapedText(
 
 void throwParsingError(
     String message,
-    _Context context,
+    ParsingContext context,
     int level
     )
 {
     message =
         message
-        + '\nText:\n'
+        + '\nText :\n'
         + context.text
+        + '\nFile : ' + context.filePath
         + '\nLine ' + context.lineIndex.toString() + ' @ ' + level.toString();
 
     if ( context.lineIndex > 0
@@ -195,8 +203,8 @@ void throwParsingError(
 
 // ~~
 
-_Line parseDefLine(
-    _Context context,
+DefLine parseDefLine(
+    ParsingContext context,
     int level
     )
 {
@@ -223,13 +231,13 @@ _Line parseDefLine(
 
     context.lineIndex++;
 
-    return _Line( line: line, lineSpaceCount: lineSpaceCount );
+    return DefLine( line: line, lineSpaceCount: lineSpaceCount );
 }
 
 // ~~
 
 String parseDefUnquotedString(
-    _Context context,
+    ParsingContext context,
     int level
     )
 {
@@ -237,7 +245,7 @@ String parseDefUnquotedString(
 
     while ( context.lineIndex < context.lineArray.length )
     {
-        var _Line( :line, :lineSpaceCount )
+        var DefLine( :line, :lineSpaceCount )
             = parseDefLine( context, level );
 
         var tokenArray = getTokenArray( line );
@@ -269,8 +277,8 @@ String parseDefUnquotedString(
 
 // ~~
 
-String parseDefQuotedString(
-    _Context context,
+dynamic parseDefQuotedString(
+    ParsingContext context,
     int level
     )
 {
@@ -281,7 +289,7 @@ String parseDefQuotedString(
 
     while ( context.lineIndex < context.lineArray.length )
     {
-        var _Line( :line, :lineSpaceCount )
+        var DefLine( :line, :lineSpaceCount )
             = parseDefLine( context, level );
 
         if ( context.lineIndex == firstLineIndex )
@@ -307,7 +315,15 @@ String parseDefQuotedString(
 
             string += getUnescapedText( tokenArray );
 
-            return string;
+            if ( quote == '\''
+                 && context.processDefQuotedStringFunction != null )
+            {
+                return context.processDefQuotedStringFunction!( string, context, level );
+            }
+            else
+            {
+                return string;
+            }
         }
         else
         {
@@ -329,7 +345,7 @@ String parseDefQuotedString(
 // ~~
 
 List<dynamic> parseDefArray(
-    _Context context,
+    ParsingContext context,
     int level
     )
 {
@@ -337,7 +353,7 @@ List<dynamic> parseDefArray(
 
     while ( context.lineIndex < context.lineArray.length )
     {
-        var _Line( :line, :lineSpaceCount )
+        var DefLine( :line, :lineSpaceCount )
             = parseDefLine( context, level );
 
         if ( lineSpaceCount == 0
@@ -362,7 +378,7 @@ List<dynamic> parseDefArray(
 // ~~
 
 Map<String, dynamic> parseDefObject(
-    _Context context,
+    ParsingContext context,
     int level
     )
 {
@@ -370,7 +386,7 @@ Map<String, dynamic> parseDefObject(
 
     while ( context.lineIndex < context.lineArray.length )
     {
-        var _Line( :line, :lineSpaceCount )
+        var DefLine( :line, :lineSpaceCount )
             = parseDefLine( context, level );
 
         if ( lineSpaceCount == 0
@@ -411,7 +427,7 @@ Map<String, dynamic> parseDefObject(
 // ~~
 
 Map<dynamic, dynamic> parseDefMap(
-    _Context context,
+    ParsingContext context,
     int level
     )
 {
@@ -419,7 +435,7 @@ Map<dynamic, dynamic> parseDefMap(
 
     while ( context.lineIndex < context.lineArray.length )
     {
-        var _Line( :line, :lineSpaceCount )
+        var DefLine( :line, :lineSpaceCount )
             = parseDefLine( context, level );
 
         if ( lineSpaceCount == 0
@@ -446,13 +462,13 @@ Map<dynamic, dynamic> parseDefMap(
 // ~~
 
 dynamic parseDefValue(
-    _Context context,
+    ParsingContext context,
     int level
     )
 {
     if ( context.lineIndex < context.lineArray.length )
     {
-        var _Line( :line, :lineSpaceCount )
+        var DefLine( :line, :lineSpaceCount )
             = parseDefLine( context, level );
 
         if ( line == '[' )
@@ -467,7 +483,8 @@ dynamic parseDefValue(
         {
             return parseDefMap( context, level );
         }
-        else if ( line.startsWith( '"' )
+        else if ( line.startsWith( '\'' )
+                  || line.startsWith( '"' )
                   || line.startsWith( '`' )
                   || line.startsWith( '´' ) )
         {
@@ -540,6 +557,8 @@ dynamic parseDefValue(
 dynamic parseDefText(
     String text,
     {
+        String filePath = '',
+        dynamic Function( String, ParsingContext, int )? processDefQuotedStringFunction = null,
         int levelSpaceCount = 4
     }
     )
@@ -551,10 +570,12 @@ dynamic parseDefText(
             .split( '\n' );
 
     var context =
-        _Context(
+        ParsingContext(
+            filePath : filePath,
+            processDefQuotedStringFunction : processDefQuotedStringFunction,
+            levelSpaceCount : levelSpaceCount,
             text : text,
-            lineArray : lineArray,
-            levelSpaceCount : levelSpaceCount
+            lineArray : lineArray
             );
 
     return parseDefValue( context, 0 );

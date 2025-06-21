@@ -115,7 +115,7 @@ function getUnescapedText(
 
 // ~~
 
-function throwParsingError(
+export function throwParsingError(
     message,
     context,
     level
@@ -123,8 +123,9 @@ function throwParsingError(
 {
     message =
         message
-        + '\nText:\n'
+        + '\nText :\n'
         + context.text
+        + '\nFile : ' + context.filePath
         + '\nLine ' + context.lineIndex + ' @ ' + level;
 
     if ( context.lineIndex > 0
@@ -248,7 +249,15 @@ function parseDefQuotedString(
 
             string += getUnescapedText( tokenArray );
 
-            return string;
+            if ( quote === '\''
+                 && context.processDefQuotedStringFunction !== null )
+            {
+                return context.processDefQuotedStringFunction( string, context, level );
+            }
+            else
+            {
+                return string;
+            }
         }
         else
         {
@@ -394,7 +403,8 @@ function parseDefValue(
         {
             return parseDefMap( context, level );
         }
-        else if ( line.startsWith( '"' )
+        else if ( line.startsWith( '\'' )
+                  || line.startsWith( '"' )
                   || line.startsWith( '`' )
                   || line.startsWith( '´' ) )
         {
@@ -465,6 +475,8 @@ function parseDefValue(
 export function parseDefText(
     text,
     {
+        filePath = '',
+        processDefQuotedStringFunction = null,
         levelSpaceCount = 4
     } = {}
     )
@@ -477,10 +489,12 @@ export function parseDefText(
 
     let context =
         {
+            filePath,
+            processDefQuotedStringFunction,
+            levelSpaceCount,
             text,
             lineArray,
-            lineIndex: 0,
-            levelSpaceCount
+            lineIndex: 0
         };
 
     return parseDefValue( context, 0 );

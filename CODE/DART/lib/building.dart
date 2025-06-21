@@ -11,7 +11,7 @@ final RegExp
 
 // -- TYPES
 
-class _Context
+class BuildingContext
 {
     // -- ATTRIBUTES
 
@@ -24,7 +24,7 @@ class _Context
 
     // -- CONSTRUCTORS
 
-    _Context(
+    BuildingContext(
         {
             required this.levelSpaceCount,
             required this.quote,
@@ -37,7 +37,7 @@ class _Context
 
 void buildDefString(
     dynamic value,
-    _Context context,
+    BuildingContext context,
     int level
     )
 {
@@ -91,7 +91,8 @@ void buildDefString(
 
             if ( lineCount == 1 )
             {
-                if ( line.startsWith( '"' )
+                if ( line.startsWith( '\'' )
+                     || line.startsWith( '"' )
                      || line.startsWith( '`' )
                      || line.startsWith( '´' ) )
                 {
@@ -146,7 +147,7 @@ void buildDefString(
 
 void buildDefValue(
     dynamic value,
-    _Context context,
+    BuildingContext context,
     int level
     )
 {
@@ -234,7 +235,7 @@ String buildDefText(
     )
 {
     var context =
-        _Context(
+        BuildingContext(
             levelSpaceCount : levelSpaceCount,
             quote : quote
             );

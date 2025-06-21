@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:path/path.dart' as path;
 import 'package:senselogic_def/senselogic_def.dart';
 
 // -- VARIABLES
@@ -10,35 +9,6 @@ int
     testDataIndex = 0;
 
 // -- FUNCTIONS
-
-String getPhysicalFilePath(
-    String filePath
-    )
-{
-    var scriptPath = Platform.script.toFilePath();
-    var folderPath = path.dirname( scriptPath );
-
-    return path.join( folderPath, filePath );
-}
-
-// ~~
-
-String readFileText(
-    String filePath
-    )
-{
-    try
-    {
-        return File( getPhysicalFilePath( filePath ) ).readAsStringSync();
-    }
-    catch ( error )
-    {
-        print( error );
-        rethrow;
-    }
-}
-
-// ~~
 
 void runTest(
     dynamic expectedValue
@@ -55,7 +25,12 @@ void runTest(
         print( 'expectedValue:' );
         print( getDumpText( expectedValue ) );
 
-        var parsedValue = parseDefText( defText );
+        var parsedValue = 
+            parseDefText( 
+                defText, 
+                filePath: 'test.def',
+                processDefQuotedStringFunction: processDefQuotedString
+                );
         print( 'parsedValue:' );
         print( getDumpText( parsedValue ) );
 
@@ -93,7 +68,7 @@ void runTest(
 void main(
     )
 {
-    testDataArray = readFileText( '../test.txt' ).split( '\n~~~\n' );
+    testDataArray = readFileText( 'test.txt' ).split( '\n~~~\n' );
 
     runTest(
         undefined
@@ -871,6 +846,8 @@ void main(
                             "unquoted empty string with a trailing diaeresis": "",
                             "unquoted constant-like string with a trailing diaeresis": "null",
                             "unquoted number-like string with a trailing diaeresis": "1.0",
+                            "quoted multiline string": "Lines are joined using line breaks.\nA backslash escapes the next character.'\nA trailing backslash makes the line continue over the next line.\n    Starting spaces are kept.\nEnding spaces are not kept unless followed by a backspace or a diaeresis.    \n'Non-ending' quotes don't have to be escaped.",
+                            "quoted empty string": "",
                             "double-quoted multiline string": "Lines are joined using line breaks.\nA backslash escapes the next character.\"\nA trailing backslash makes the line continue over the next line.\n    Starting spaces are kept.\nEnding spaces are not kept unless followed by a backspace or a diaeresis.    \n\"Non-ending\" double-quotes don't have to be escaped.",
                             "double-quoted empty string": "",
                             "backticked multiline string": "Lines are joined using line breaks.\nA backslash escapes the next character.`\nA trailing backslash makes the line continue over the next line.\n    Starting spaces are kept.\nEnding spaces are not kept unless followed by a backspace or a diaeresis.    \n`Non-ending` backticks don't have to be escaped.",
@@ -888,10 +865,12 @@ void main(
                                     "2.0",
                                     "3",
                                     "4",
-                                    "5"
+                                    "5",
+                                    "6"
                                 ],
                             "array of empty strings":
                                 [
+                                    "",
                                     "",
                                     "",
                                     "",
@@ -954,6 +933,25 @@ void main(
                         }
                 }
         }
+        );
+
+    runTest(
+        "ef7c876f-00f3-acdd-d00f-a671f52d0b1f"
+        );
+
+    runTest(
+        "73yHbwDzrN3QD6Zx9S0LHw"
+        );
+
+    runTest(
+        "Included value"
+        );
+
+    runTest(
+        [
+            "Included value",
+            "Included value 2"
+        ]
         );
 
     print( 'All tests passed!' );

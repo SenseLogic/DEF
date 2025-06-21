@@ -5,3 +5,4 @@ environment:
   sdk: '>=3.0.0 <4.0.0'
 dependencies:
   path: ^1.8.0
+  crypto: ^3.0.0

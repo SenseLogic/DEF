@@ -809,6 +809,17 @@ Normal indent"
                         null¨
                     unquoted number-like string with a trailing diaeresis
                         1.0¨
+                    quoted multiline string
+                        'Lines are joined using line breaks.
+                        A backslash escapes the next character.\'
+                        A trailing backslash makes the line continue \
+                        over the next line.
+                            Starting spaces are kept.
+                        Ending spaces are not kept unless followed by a backspace \
+                        or a diaeresis.    ¨
+                        'Non-ending' quotes don't have to be escaped.'
+                    quoted empty string
+                        ''
                     double-quoted multiline string
                         "Lines are joined using line breaks.
                         A backslash escapes the next character.\"
@@ -851,14 +862,16 @@ Normal indent"
                             0
                             one
                             2.0¨
-                            "3"
-                            `4`
-                            ´5´
+                            '3'
+                            "4"
+                            `5`
+                            ´6´
                         ]
                     array of empty strings
                         [
 
                             ¨
+                            ''
                             ""
                             ``
                             ´´
@@ -940,3 +953,10 @@ Normal indent"
         }
 }
 ~~~
+'#uuid'
+~~~
+'%uuid'
+~~~
+'@included/included_value.def'
+~~~
+'@included/'

@@ -65,7 +65,8 @@ function buildDefString(
 
             if ( lineCount === 1 )
             {
-                if ( line.startsWith( '"' )
+                if ( line.startsWith( '\'' )
+                     || line.startsWith( '"' )
                      || line.startsWith( '`' )
                      || line.startsWith( '´' ) )
                 {

@@ -3,7 +3,7 @@
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { buildDefText, getDumpText, haveSameValue, parseDefText } from './index.js';
+import { buildDefText, getDumpText, haveSameValue, parseDefText, processDefQuotedString, readFileText } from './index.js';
 
 // -- VARIABLES
 
@@ -12,35 +12,6 @@ var
     testDataIndex = 0;
 
 // -- FUNCTIONS
-
-function getPhysicalFilePath(
-    filePath
-    )
-{
-    let scriptPath = fileURLToPath( import.meta.url );
-    let folderPath = dirname( scriptPath );
-
-    return join( folderPath, filePath );
-}
-
-// ~~
-
-function readFileText(
-    filePath
-    )
-{
-    try
-    {
-        return readFileSync( getPhysicalFilePath( filePath ), 'utf8' );
-    }
-    catch ( error )
-    {
-        console.error( error );
-        throw error;
-    }
-}
-
-// ~~
 
 function runTest(
     expectedValue
@@ -57,7 +28,14 @@ function runTest(
         console.log( 'expectedValue:' );
         console.log( getDumpText( expectedValue ) );
 
-        let parsedValue = parseDefText( defText );
+        let parsedValue =
+            parseDefText(
+                defText,
+                {
+                    filePath: 'test.def',
+                    processDefQuotedStringFunction: processDefQuotedString
+                }
+                );
         console.log( 'parsedValue:' );
         console.log( getDumpText( parsedValue ) );
 
@@ -1015,6 +993,8 @@ runTest(
                         "unquoted empty string with a trailing diaeresis": "",
                         "unquoted constant-like string with a trailing diaeresis": "null",
                         "unquoted number-like string with a trailing diaeresis": "1.0",
+                        "quoted multiline string": "Lines are joined using line breaks.\nA backslash escapes the next character.\'\nA trailing backslash makes the line continue over the next line.\n    Starting spaces are kept.\nEnding spaces are not kept unless followed by a backspace or a diaeresis.    \n'Non-ending' quotes don't have to be escaped.",
+                        "quoted empty string": "",
                         "double-quoted multiline string": "Lines are joined using line breaks.\nA backslash escapes the next character.\"\nA trailing backslash makes the line continue over the next line.\n    Starting spaces are kept.\nEnding spaces are not kept unless followed by a backspace or a diaeresis.    \n\"Non-ending\" double-quotes don't have to be escaped.",
                         "double-quoted empty string": "",
                         "backticked multiline string": "Lines are joined using line breaks.\nA backslash escapes the next character.`\nA trailing backslash makes the line continue over the next line.\n    Starting spaces are kept.\nEnding spaces are not kept unless followed by a backspace or a diaeresis.    \n`Non-ending` backticks don't have to be escaped.",
@@ -1032,10 +1012,12 @@ runTest(
                                 "2.0",
                                 "3",
                                 "4",
-                                "5"
+                                "5",
+                                "6"
                             ],
                         "array of empty strings":
                             [
+                                "",
                                 "",
                                 "",
                                 "",
@@ -1143,6 +1125,25 @@ runTest(
                     }
             }
     }
+    );
+
+runTest(
+    "ef7c876f-00f3-acdd-d00f-a671f52d0b1f"
+    );
+
+runTest(
+    "73yHbwDzrN3QD6Zx9S0LHw"
+    );
+
+runTest(
+    "Included value"
+    );
+
+runTest(
+    [
+        "Included value",
+        "Included value 2"
+    ]
     );
 
 console.log( 'All tests passed!' );
