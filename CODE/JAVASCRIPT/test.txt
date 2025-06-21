@@ -959,4 +959,12 @@ Normal indent"
 ~~~
 '@included/included_value.def'
 ~~~
+'@included/included_value.def
+@included/included_value_2.def'
+~~~
 '@included/'
+~~~
+'@included/
+@included/included_value.def
+@included/included_value_2.def'
+~~~

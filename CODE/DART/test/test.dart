@@ -25,9 +25,9 @@ void runTest(
         print( 'expectedValue:' );
         print( getDumpText( expectedValue ) );
 
-        var parsedValue = 
-            parseDefText( 
-                defText, 
+        var parsedValue =
+            parseDefText(
+                defText,
                 filePath: 'test.def',
                 processDefQuotedStringFunction: processDefQuotedString
                 );
@@ -949,6 +949,22 @@ void main(
 
     runTest(
         [
+            "Included value",
+            "Included value 2"
+        ]
+        );
+
+    runTest(
+        [
+            "Included value",
+            "Included value 2"
+        ]
+        );
+
+    runTest(
+        [
+            "Included value",
+            "Included value 2",
             "Included value",
             "Included value 2"
         ]

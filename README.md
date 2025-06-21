@@ -8,7 +8,6 @@ Data Exchange Format.
 
 *   Allows complex configuration files to be defined in a simple, readable way which is also easy to parse and generate.
 *   Uses a consistent indentation scheme where each level is indented with a fixed number of spaces (4 by default).
-*   Consists of lightweight, dependency-free JavaScript files that can be imported individually.
 
 ```
 {
@@ -147,6 +146,17 @@ Data Exchange Format.
                         null¨
                     unquoted number-like string with a trailing diaeresis
                         1.0¨
+                    quoted multiline string
+                        'Lines are joined using line breaks.
+                        A backslash escapes the next character.\'
+                        A trailing backslash makes the line continue \
+                        over the next line.
+                            Starting spaces are kept.
+                        Ending spaces are not kept unless followed by a backspace \
+                        or a diaeresis.    ¨
+                        'Non-ending' quotes don't have to be escaped.'
+                    quoted empty string
+                        ''
                     double-quoted multiline string
                         "Lines are joined using line breaks.
                         A backslash escapes the next character.\"
@@ -189,14 +199,16 @@ Data Exchange Format.
                             0
                             one
                             2.0¨
-                            "3"
-                            `4`
-                            ´5´
+                            '3'
+                            "4"
+                            `5`
+                            ´6´
                         ]
                     array of empty strings
                         [
 
                             ¨
+                            ''
                             ""
                             ``
                             ´´
