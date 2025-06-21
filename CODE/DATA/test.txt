@@ -744,6 +744,8 @@ Normal indent"
                 ¨de:Kontakt
                 ¨ja:連絡先´
         }
+    articles
+        '@articles/'
 }
 ~~~
 {

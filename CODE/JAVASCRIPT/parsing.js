@@ -249,10 +249,10 @@ function parseDefQuotedString(
 
             string += getUnescapedText( tokenArray );
 
-            if ( quote === '\''
-                 && context.processDefQuotedStringFunction !== null )
+            if ( quote === context.stringProcessingQuote
+                 && context.stringProcessingFunction !== null )
             {
-                return context.processDefQuotedStringFunction( string, context, level );
+                return context.stringProcessingFunction( string, context, level );
             }
             else
             {
@@ -476,7 +476,8 @@ export function parseDefText(
     text,
     {
         filePath = '',
-        processDefQuotedStringFunction = null,
+        stringProcessingQuote = '\'',
+        stringProcessingFunction = null,
         levelSpaceCount = 4
     } = {}
     )
@@ -490,7 +491,8 @@ export function parseDefText(
     let context =
         {
             filePath,
-            processDefQuotedStringFunction,
+            stringProcessingQuote,
+            stringProcessingFunction,
             levelSpaceCount,
             text,
             lineArray,

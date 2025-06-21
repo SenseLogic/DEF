@@ -38,8 +38,10 @@ class ParsingContext
 
     final String
         filePath;
+    final String
+        stringProcessingQuote;
     final dynamic Function( String, ParsingContext, int )?
-        processDefQuotedStringFunction;
+        stringProcessingFunction;
     final int
         levelSpaceCount;
     final String
@@ -54,7 +56,8 @@ class ParsingContext
     ParsingContext(
         {
             required this.filePath,
-            required this.processDefQuotedStringFunction,
+            required this.stringProcessingQuote,
+            required this.stringProcessingFunction,
             required this.levelSpaceCount,
             required this.text,
             required this.lineArray,
@@ -315,10 +318,10 @@ dynamic parseDefQuotedString(
 
             string += getUnescapedText( tokenArray );
 
-            if ( quote == '\''
-                 && context.processDefQuotedStringFunction != null )
+            if ( quote == context.stringProcessingQuote
+                 && context.stringProcessingFunction != null )
             {
-                return context.processDefQuotedStringFunction!( string, context, level );
+                return context.stringProcessingFunction!( string, context, level );
             }
             else
             {
@@ -558,7 +561,8 @@ dynamic parseDefText(
     String text,
     {
         String filePath = '',
-        dynamic Function( String, ParsingContext, int )? processDefQuotedStringFunction = null,
+        String stringProcessingQuote = '\'',
+        dynamic Function( String, ParsingContext, int )? stringProcessingFunction = null,
         int levelSpaceCount = 4
     }
     )
@@ -572,7 +576,8 @@ dynamic parseDefText(
     var context =
         ParsingContext(
             filePath : filePath,
-            processDefQuotedStringFunction : processDefQuotedStringFunction,
+            stringProcessingQuote : stringProcessingQuote,
+            stringProcessingFunction : stringProcessingFunction,
             levelSpaceCount : levelSpaceCount,
             text : text,
             lineArray : lineArray

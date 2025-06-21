@@ -32,8 +32,8 @@ function runTest(
             parseDefText(
                 defText,
                 {
-                    filePath: 'test.def',
-                    processDefQuotedStringFunction: processDefQuotedString
+                    filePath: '../DATA/test.def',
+                    stringProcessingFunction: processDefQuotedString
                 }
                 );
         console.log( 'parsedValue:' );
@@ -70,7 +70,7 @@ function runTest(
 
 // -- STATEMENTS
 
-testDataArray = readFileText( 'test.txt' ).split( '\n~~~\n' );
+testDataArray = readFileText( '../DATA/test.txt' ).split( '\n~~~\n' );
 
 runTest(
     undefined
@@ -942,7 +942,13 @@ runTest(
                 "home": "Home\n¨fr:Accueil\n¨de:Startseite\n¨ja:ホーム",
                 "services": "Services\n¨fr:Services\n¨de:Dienstleistungen\n¨ja:サービス",
                 "contact": "Contact\n¨fr:Contact\n¨de:Kontakt\n¨ja:連絡先"
-            }
+            },
+        "articles":
+            [
+                "Article 1",
+                "Article 2",
+                "Article 3"
+            ]
     }
     );
 

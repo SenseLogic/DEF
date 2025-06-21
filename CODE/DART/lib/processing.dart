@@ -56,7 +56,7 @@ String getDefStringUuid(
     }
     else
     {
-        String md5_hash = md5.convert( utf8.encode( string ) ).toString();
+        var md5_hash = md5.convert( utf8.encode( string ) ).toString();
 
         return (
             md5_hash.substring( 0, 8 )
@@ -84,7 +84,7 @@ String getDefStringTuid(
     }
     else
     {
-        String md5_hash = md5.convert( utf8.encode( string ) ).toString();
+        var md5_hash = md5.convert( utf8.encode( string ) ).toString();
 
         return (
             base64Url.encode( md5.convert( utf8.encode( string ) ).bytes )
@@ -110,7 +110,7 @@ List<String> getDefFilePathArray(
     String folderPath
     )
 {
-    List<String> filePathArray = [];
+    var filePathArray = <String>[];
 
     for ( FileSystemEntity entity in Directory( getPhysicalFilePath( folderPath ) ).listSync() )
     {
@@ -127,23 +127,24 @@ dynamic readDefFiles(
     ParsingContext context
     )
 {
-    String folderPath = getDefFolderPath( context.filePath );
-    List<dynamic> valueArray = [];
+    var folderPath = getDefFolderPath( context.filePath );
+    var valueArray = <dynamic>[];
 
-    for ( String path in pathArray )
+    for ( var path in pathArray )
     {
         if ( path.endsWith( '/' ) )
         {
-            List<String> filePathArray = getDefFilePathArray( folderPath + path );
+            var filePathArray = getDefFilePathArray( folderPath + path );
 
-            for ( String filePath in filePathArray )
+            for ( var filePath in filePathArray )
             {
                 if ( filePath.endsWith( '.def' ) )
                 {
                     valueArray.add(
                         readDefFile(
-                            filePath: filePath,
-                            processDefQuotedStringFunction: context.processDefQuotedStringFunction,
+                            filePath,
+                            stringProcessingQuote: context.stringProcessingQuote,
+                            stringProcessingFunction: context.stringProcessingFunction,
                             levelSpaceCount: context.levelSpaceCount
                             )
                         );
@@ -154,8 +155,9 @@ dynamic readDefFiles(
         {
             dynamic value =
                 readDefFile(
-                    filePath: folderPath + path,
-                    processDefQuotedStringFunction: context.processDefQuotedStringFunction,
+                    folderPath + path,
+                    stringProcessingQuote: context.stringProcessingQuote,
+                    stringProcessingFunction: context.stringProcessingFunction,
                     levelSpaceCount: context.levelSpaceCount
                     );
 
@@ -200,20 +202,22 @@ dynamic processDefQuotedString(
 // ~~
 
 dynamic readDefFile(
+    String filePath,
     {
-        required String filePath,
-        dynamic Function( String, ParsingContext, int )? processDefQuotedStringFunction,
+        String stringProcessingQuote = '\'',
+        dynamic Function( String, ParsingContext, int )? stringProcessingFunction = processDefQuotedString,
         int levelSpaceCount = 4
     }
     )
 {
-    String text = readFileText( filePath );
+    var text = readFileText( filePath );
 
     return (
         parseDefText(
             text,
             filePath: filePath,
-            processDefQuotedStringFunction: processDefQuotedStringFunction ?? processDefQuotedString,
+            stringProcessingQuote: stringProcessingQuote,
+            stringProcessingFunction: stringProcessingFunction,
             levelSpaceCount: levelSpaceCount
             )
         );

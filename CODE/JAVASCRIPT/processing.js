@@ -145,8 +145,11 @@ function readDefFiles(
                     valueArray.push(
                         readDefFile(
                             filePath,
-                            context.processDefQuotedStringFunction,
-                            context.levelSpaceCount
+                            {
+                                stringProcessingQuote: context.stringProcessingQuote,
+                                stringProcessingFunction: context.stringProcessingFunction,
+                                levelSpaceCount: context.levelSpaceCount
+                            }
                             )
                         );
                 }
@@ -157,8 +160,11 @@ function readDefFiles(
             let value =
                 readDefFile(
                     folderPath + path,
-                    context.processDefQuotedStringFunction,
-                    context.levelSpaceCount
+                    {
+                        stringProcessingQuote: context.stringProcessingQuote,
+                        stringProcessingFunction: context.stringProcessingFunction,
+                        levelSpaceCount: context.levelSpaceCount
+                    }
                     );
 
             if ( pathArray.length === 1 )
@@ -203,8 +209,11 @@ export function processDefQuotedString(
 
 export function readDefFile(
     filePath,
-    processDefQuotedStringFunction = processDefQuotedString,
-    levelSpaceCount = 4
+    {
+        stringProcessingQuote = '\'',
+        stringProcessingFunction = processDefQuotedString,
+        levelSpaceCount = 4
+    }
     )
 {
     let text = readFileText( filePath );
@@ -214,7 +223,8 @@ export function readDefFile(
             text,
             {
                 filePath,
-                processDefQuotedStringFunction,
+                stringProcessingQuote,
+                stringProcessingFunction,
                 levelSpaceCount
             }
             )

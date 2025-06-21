@@ -8,6 +8,7 @@ Data Exchange Format.
 
 *   Allows complex configuration files to be defined in a simple, readable way which is also easy to parse and generate.
 *   Uses a consistent indentation scheme where each level is indented with a fixed number of spaces (4 by default).
+*   Can be extended to execute commands, for instance to load all DEF files in a folder as an array of values.
 
 ```
 {
@@ -70,6 +71,8 @@ Data Exchange Format.
                 ¨de:Kontakt
                 ¨ja:連絡先´
         }
+    articles
+        '@articles/'
 }
 ```
 
