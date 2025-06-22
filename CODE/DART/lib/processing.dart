@@ -84,10 +84,10 @@ String getDefStringTuid(
     }
     else
     {
-        var md5_hash = md5.convert( utf8.encode( string ) ).toString();
+        var md5_hash = md5.convert( utf8.encode( string ) ).bytes;
 
         return (
-            base64Url.encode( md5.convert( utf8.encode( string ) ).bytes )
+            base64Url.encode( md5_hash )
                 .replaceAll( '+', '-' )
                 .replaceAll( '/', '_' )
                 .replaceAll( '=', '' )
