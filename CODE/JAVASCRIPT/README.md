@@ -9,8 +9,8 @@ Data Exchange Format.
 *   Allows to define complex configuration files in a simple, readable format that's easy to parse and generate.
 *   Uses a consistent indentation scheme where each level is indented with a fixed number of spaces (4 by default).
 *   Can execute custom commands within single-quoted strings to :
-    *   Generate an UUID from text : '#some-text'
-    *   Generate a base64 UUID from text : '%some-text'
+    *   Build a UUID from text : '#some-text'
+    *   Build a base64 UUID from text : '%some-text'
     *   Load the content of a DEF file as a value : '@file.def'
     *   Load the contents of all DEF files in a folder as an array of values : '@folder/'
 
