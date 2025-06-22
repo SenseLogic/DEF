@@ -1,3 +1,7 @@
+// -- IMPORTS
+
+import { processDefQuotedString } from './processing.js';
+
 // -- CONSTANTS
 
 var
@@ -477,7 +481,7 @@ export function parseDefText(
     {
         filePath = '',
         stringProcessingQuote = '\'',
-        stringProcessingFunction = null,
+        stringProcessingFunction = processDefQuotedString,
         levelSpaceCount = 4
     } = {}
     )

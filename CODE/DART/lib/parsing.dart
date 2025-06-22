@@ -562,7 +562,7 @@ dynamic parseDefText(
     {
         String filePath = '',
         String stringProcessingQuote = '\'',
-        dynamic Function( String, ParsingContext, int )? stringProcessingFunction = null,
+        dynamic Function( String, ParsingContext, int )? stringProcessingFunction = processDefQuotedString,
         int levelSpaceCount = 4
     }
     )
