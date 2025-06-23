@@ -6,13 +6,17 @@ Data Exchange Format.
 
 ## Features
 
-*   Allows to define complex configuration files in a simple, readable format that's easy to parse and generate.
-*   Uses a consistent indentation scheme where each level is indented with a fixed number of spaces (4 by default).
-*   Can execute custom commands within single-quoted strings to :
-    *   Build a UUID from text : '#some-text'
-    *   Build a base64 UUID from text : '%some-text'
-    *   Load the content of a DEF file as a value : '@file.def'
-    *   Load the contents of all DEF files in a folder as an array of values : '@folder/'
+*   Simple, readable syntax based on indentation.
+*   Easy to write, parse and generate.
+*   Compact representation for complex data structures.
+*   Flexible multiline string handling.
+*   Supports all JSON data types and more.
+*   Allows to :
+    *   Define arrays of objects and maps without repeating the keys.
+    *   Generate UUIDs : '#id'.
+    *   Generate base64 UUIDs : '%id'.
+    *   Load a DEF file as a value : '@file.def'.
+    *   Load all DEF files in a folder as an array of values : '@folder/'.
 
 ```
 {
@@ -42,21 +46,36 @@ Data Exchange Format.
             logging
                 true
         }
-    users
+    plugins
         [
             {
                 name
-                    John Doe
-                role
-                    administrator
+                    Analytics
+                status
+                    enabled
             }
             {
                 name
-                    Jane Smith
-                role
-                    publisher
+                    SEO
+                status
+                    disabled
             }
         ]
+    users
+        [
+            [
+                name
+                role
+            ]
+            [
+                John Doe
+                administrator
+            ]
+            [
+                Jane Smith
+                publisher
+            ]
+        ]{}
     texts
         {
             home
@@ -293,6 +312,66 @@ Data Exchange Format.
                                         object value 2
                                 }
                         )
+                    array of objects
+                        [
+                            {
+                                name
+                                    John Doe
+                                role
+                                    administrator
+                            }
+                            {
+                                name
+                                    Jane Smith
+                                role
+                                    publisher
+                            }
+                        ]
+                    tabular array of objects
+                        [
+                            [
+                                name
+                                role
+                            ]
+                            [
+                                John Doe
+                                administrator
+                            ]
+                            [
+                                Jane Smith
+                                publisher
+                            ]
+                        ]{}
+                    array of maps
+                        [
+                            (
+                                name
+                                    John Doe
+                                role
+                                    administrator
+                            )
+                            (
+                                name
+                                    Jane Smith
+                                role
+                                    publisher
+                            )
+                        ]
+                    tabular array of maps
+                        [
+                            [
+                                name
+                                role
+                            ]
+                            [
+                                John Doe
+                                administrator
+                            ]
+                            [
+                                Jane Smith
+                                publisher
+                            ]
+                        ]()
                 }
         }
 }

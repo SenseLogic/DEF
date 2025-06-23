@@ -68,6 +68,29 @@ class ParsingContext
 
 // -- FUNCTIONS
 
+String getKeyText(
+    dynamic key
+    )
+{
+    if ( key == undefined )
+    {
+        return 'undefined';
+    }
+    else if ( key is Map
+              || key is List
+              || key is bool
+              || key is num )
+    {
+        return jsonEncode( key );
+    }
+    else
+    {
+        return key.toString();
+    }
+}
+
+// ~~
+
 List<String> getTokenArray(
     String text
     )
@@ -364,6 +387,132 @@ List<dynamic> parseDefArray(
         {
             return array;
         }
+        else if ( lineSpaceCount == 0
+                  && line == ']{}' )
+        {
+            if ( array.length == 0 )
+            {
+                return [];
+            }
+            else
+            {
+                if ( array[ 0 ] is List )
+                {
+                    if ( array.length == 1 )
+                    {
+                        return [];
+                    }
+                    else
+                    {
+                        var keyArray = <String>[];
+
+                        for ( var key in array[ 0 ] )
+                        {
+                            keyArray.add( getKeyText( key ) );
+                        }
+
+                        var keyCount = keyArray.length;
+                        var objectArray = <Map<String, dynamic>>[];
+                        var objectCount = array.length - 1;
+
+                        for ( var objectIndex = 0;
+                              objectIndex < objectCount;
+                              ++objectIndex )
+                        {
+                            var valueArray = array[ objectIndex + 1 ];
+
+                            if ( valueArray is List
+                                 && valueArray.length == keyCount )
+                            {
+                                var object = <String, dynamic>{};
+
+                                for ( var keyIndex = 0;
+                                      keyIndex < keyCount;
+                                      ++keyIndex )
+                                {
+                                    object[ keyArray[ keyIndex ] ] = valueArray[ keyIndex ];
+                                }
+
+                                objectArray.add( object );
+                            }
+                            else
+                            {
+                                throwParsingError( 'Invalid DEF object array', context, level );
+                            }
+                        }
+
+                        return objectArray;
+                    }
+                }
+                else
+                {
+                    throwParsingError( 'Invalid DEF object array', context, level );
+                }
+            }
+        }
+        else if ( lineSpaceCount == 0
+                  && line == ']()' )
+        {
+            if ( array.length == 0 )
+            {
+                return [];
+            }
+            else
+            {
+                if ( array[ 0 ] is List )
+                {
+                    if ( array.length == 1 )
+                    {
+                        return [];
+                    }
+                    else
+                    {
+                        var keyArray = <String>[];
+
+                        for ( var key in array[ 0 ] )
+                        {
+                            keyArray.add( getKeyText( key ) );
+                        }
+
+                        var keyCount = keyArray.length;
+                        var mapArray = <Map<dynamic, dynamic>>[];
+                        var mapCount = array.length - 1;
+
+                        for ( var mapIndex = 0;
+                              mapIndex < mapCount;
+                              ++mapIndex )
+                        {
+                            var valueArray = array[ mapIndex + 1 ];
+
+                            if ( valueArray is List
+                                 && valueArray.length == keyCount )
+                            {
+                                var map = <dynamic, dynamic>{};
+
+                                for ( var keyIndex = 0;
+                                      keyIndex < keyCount;
+                                      ++keyIndex )
+                                {
+                                    map[ keyArray[ keyIndex ] ] = valueArray[ keyIndex ];
+                                }
+
+                                mapArray.add( map );
+                            }
+                            else
+                            {
+                                throwParsingError( 'Invalid DEF map array', context, level );
+                            }
+                        }
+
+                        return mapArray;
+                    }
+                }
+                else
+                {
+                    throwParsingError( 'Invalid DEF map array', context, level );
+                }
+            }
+        }
         else
         {
             context.lineIndex--;
@@ -404,21 +553,7 @@ Map<String, dynamic> parseDefObject(
             var key = parseDefValue( context, level + 1 );
             var value = parseDefValue( context, level + 2 );
 
-            if ( key == undefined )
-            {
-                object[ 'undefined' ] = value;
-            }
-            else if ( key is Map
-                      || key is List
-                      || key is bool
-                      || key is num )
-            {
-                object[ jsonEncode( key ) ] = value;
-            }
-            else
-            {
-                object[ key.toString() ] = value;
-            }
+            object[ getKeyText( key ) ] = value;
         }
     }
 

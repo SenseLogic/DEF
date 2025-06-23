@@ -8,6 +8,73 @@ import { parseDefText, throwParsingError } from './parsing.js';
 
 // -- FUNCTIONS
 
+export function getNaturalTextComparison(
+    firstText,
+    secondText
+    )
+{
+    let firstCharacterCount = firstText.length;
+    let secondCharacterCount = secondText.length;
+    let firstCharacterIndex = 0;
+    let secondCharacterIndex = 0;
+
+    while ( firstCharacterIndex < firstCharacterCount
+            && secondCharacterIndex < secondCharacterCount )
+    {
+        let firstCharacter = firstText[ firstCharacterIndex ];
+        let secondCharacter = secondText[ secondCharacterIndex ];
+
+        if ( firstCharacter === secondCharacter )
+        {
+            ++firstCharacterIndex;
+            ++secondCharacterIndex;
+        }
+        else
+        {
+            if ( firstCharacter >= '0'
+                 && firstCharacter <= '9'
+                 && secondCharacter >= '0'
+                 && secondCharacter <= '9' )
+            {
+                let firstNumberText = '';
+                let secondNumberText = '';
+
+                while ( firstCharacterIndex < firstCharacterCount
+                        && firstText[ firstCharacterIndex ] >= '0'
+                        && firstText[ firstCharacterIndex ] <= '9' )
+                {
+                    firstNumberText += firstText[ firstCharacterIndex ];
+
+                    ++firstCharacterIndex;
+                }
+
+                while ( secondCharacterIndex < secondCharacterCount
+                        && secondText[ secondCharacterIndex ] >= '0'
+                        && secondText[ secondCharacterIndex ] <= '9' )
+                {
+                    secondNumberText += secondText[ secondCharacterIndex ];
+
+                    ++secondCharacterIndex;
+                }
+
+                return parseInt( firstNumberText ) - parseInt( secondNumberText );
+            }
+            else if ( firstCharacter < secondCharacter )
+            {
+                return -1;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+    }
+
+    return firstCharacterCount - secondCharacterCount;
+}
+
+// ~~
+
 export function getPhysicalFilePath(
     filePath
     )
@@ -37,26 +104,26 @@ export function readFileText(
 
 // ~~
 
-export function getDefStringHash(
-    string
+export function getDefTextHash(
+    text
     )
 {
-    return md5( string );
+    return md5( text );
 }
 
 // ~~
 
-export function getDefStringUuid(
-    string
+export function getDefTextUuid(
+    text
     )
 {
-    if ( string === '' )
+    if ( text === '' )
     {
         return '';
     }
     else
     {
-        let md5_hash = md5( string );
+        let md5_hash = md5( text );
 
         return (
             md5_hash.slice( 0, 8 )
@@ -74,17 +141,17 @@ export function getDefStringUuid(
 
 // ~~
 
-export function getDefStringTuid(
-    string
+export function getDefTextTuid(
+    text
     )
 {
-    if ( string === '' )
+    if ( text === '' )
     {
         return '';
     }
     else
     {
-        let md5_hash = md5( string );
+        let md5_hash = md5( text );
 
         return (
             Buffer
@@ -119,24 +186,33 @@ export function getDefFilePathArray(
         filePathArray.push( folderPath + filePath.replaceAll( '\\', '/' ) )
     }
 
+    filePathArray.sort(
+        ( firstFilePath, secondFilePath ) => getNaturalTextComparison( firstFilePath, secondFilePath )
+        );
+
     return filePathArray;
 }
 
 // ~~
 
-function readDefFiles(
+export function readDefFiles(
     pathArray,
-    context
+    {
+        scriptFilePath = '',
+        stringProcessingQuote = '\'',
+        stringProcessingFunction = processDefQuotedString,
+        levelSpaceCount = 4
+    }
     )
 {
-    let folderPath = getDefFolderPath( context.filePath );
+    let scriptFolderPath = getDefFolderPath( scriptFilePath );
     let valueArray = [];
 
     for ( let path of pathArray )
     {
         if ( path.endsWith( '/' ) )
         {
-            let filePathArray = getDefFilePathArray( folderPath + path );
+            let filePathArray = getDefFilePathArray( scriptFolderPath + path );
 
             for ( let filePath of filePathArray )
             {
@@ -146,9 +222,9 @@ function readDefFiles(
                         readDefFile(
                             filePath,
                             {
-                                stringProcessingQuote: context.stringProcessingQuote,
-                                stringProcessingFunction: context.stringProcessingFunction,
-                                levelSpaceCount: context.levelSpaceCount
+                                stringProcessingQuote,
+                                stringProcessingFunction,
+                                levelSpaceCount
                             }
                             )
                         );
@@ -159,11 +235,11 @@ function readDefFiles(
         {
             let value =
                 readDefFile(
-                    folderPath + path,
+                    scriptFolderPath + path,
                     {
-                        stringProcessingQuote: context.stringProcessingQuote,
-                        stringProcessingFunction: context.stringProcessingFunction,
-                        levelSpaceCount: context.levelSpaceCount
+                        stringProcessingQuote,
+                        stringProcessingFunction,
+                        levelSpaceCount
                     }
                     );
 
@@ -191,15 +267,25 @@ export function processDefQuotedString(
 {
     if ( string.startsWith( '#' ) )
     {
-        return getDefStringUuid( string.slice( 1 ) );
+        return getDefTextUuid( string.slice( 1 ) );
     }
     else if ( string.startsWith( '%' ) )
     {
-        return getDefStringTuid( string.slice( 1 ) );
+        return getDefTextTuid( string.slice( 1 ) );
     }
     else if ( string.startsWith( '@' ) )
     {
-        return readDefFiles( string.slice( 1 ).split( '\n@' ), context );
+        return (
+            readDefFiles(
+                string.slice( 1 ).split( '\n@' ),
+                {
+                    scriptFilePath: context.filePath,
+                    stringProcessingQuote: context.stringProcessingQuote,
+                    stringProcessingFunction: context.stringProcessingFunction,
+                    levelSpaceCount: context.levelSpaceCount
+                }
+                )
+            );
     }
 
     return string;

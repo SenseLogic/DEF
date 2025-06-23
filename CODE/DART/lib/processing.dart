@@ -8,6 +8,72 @@ import 'parsing.dart';
 
 // -- FUNCTIONS
 
+int getNaturalTextComparison(
+    String firstText,
+    String secondText
+    )
+{
+    var firstCharacterCount = firstText.length;
+    var secondCharacterCount = secondText.length;
+    var firstCharacterIndex = 0;
+    var secondCharacterIndex = 0;
+
+    while ( firstCharacterIndex < firstCharacterCount
+            && secondCharacterIndex < secondCharacterCount )
+    {
+        var firstCharacter = firstText[ firstCharacterIndex ];
+        var secondCharacter = secondText[ secondCharacterIndex ];
+
+        if ( firstCharacter == secondCharacter )
+        {
+            ++firstCharacterIndex;
+            ++secondCharacterIndex;
+        }
+        else
+        {
+            var firstCodeUnit = firstCharacter.codeUnitAt( 0 );
+            var secondCodeUnit = secondCharacter.codeUnitAt( 0 );
+
+            if ( firstCodeUnit >= 48
+                 && firstCodeUnit <= 57
+                 && secondCodeUnit >= 48
+                 && secondCodeUnit <= 57 )
+            {
+                var firstNumberText = '';
+                var secondNumberText = '';
+
+                while ( firstCharacterIndex < firstCharacterCount
+                        && firstText[ firstCharacterIndex ].codeUnitAt( 0 ) >= 48
+                        && firstText[ firstCharacterIndex ].codeUnitAt( 0 ) <= 57 )
+                {
+                    firstNumberText += firstText[ firstCharacterIndex ];
+
+                    ++firstCharacterIndex;
+                }
+
+                while ( secondCharacterIndex < secondCharacterCount
+                        && secondText[ secondCharacterIndex ].codeUnitAt( 0 ) >= 48
+                        && secondText[ secondCharacterIndex ].codeUnitAt( 0 ) <= 57 )
+                {
+                    secondNumberText += secondText[ secondCharacterIndex ];
+
+                    ++secondCharacterIndex;
+                }
+
+                return int.parse( firstNumberText ) - int.parse( secondNumberText );
+            }
+            else
+            {
+                return firstCharacter.compareTo( secondCharacter );
+            }
+        }
+    }
+
+    return firstCharacterCount - secondCharacterCount;
+}
+
+// ~~
+
 String getPhysicalFilePath(
     String filePath
     )
@@ -37,26 +103,26 @@ String readFileText(
 
 // ~~
 
-String getDefStringHash(
-    String string
+String getDefTextHash(
+    String text
     )
 {
-    return md5.convert( utf8.encode( string ) ).toString();
+    return md5.convert( utf8.encode( text ) ).toString();
 }
 
 // ~~
 
-String getDefStringUuid(
-    String string
+String getDefTextUuid(
+    String text
     )
 {
-    if ( string == '' )
+    if ( text == '' )
     {
         return '';
     }
     else
     {
-        var md5_hash = md5.convert( utf8.encode( string ) ).toString();
+        var md5_hash = md5.convert( utf8.encode( text ) ).toString();
 
         return (
             md5_hash.substring( 0, 8 )
@@ -74,17 +140,17 @@ String getDefStringUuid(
 
 // ~~
 
-String getDefStringTuid(
-    String string
+String getDefTextTuid(
+    String text
     )
 {
-    if ( string == '' )
+    if ( text == '' )
     {
         return '';
     }
     else
     {
-        var md5_hash = md5.convert( utf8.encode( string ) ).bytes;
+        var md5_hash = md5.convert( utf8.encode( text ) ).bytes;
 
         return (
             base64Url.encode( md5_hash )
@@ -117,6 +183,10 @@ List<String> getDefFilePathArray(
         filePathArray.add( path.join( folderPath, entity.path.replaceAll( '\\', '/' ) ) );
     }
 
+    filePathArray.sort(
+        ( firstFilePath, secondFilePath ) => getNaturalTextComparison( firstFilePath, secondFilePath )
+        );
+
     return filePathArray;
 }
 
@@ -124,17 +194,22 @@ List<String> getDefFilePathArray(
 
 dynamic readDefFiles(
     List<String> pathArray,
-    ParsingContext context
+    {
+        String scriptFilePath = '',
+        String stringProcessingQuote = '\'',
+        dynamic Function( String, ParsingContext, int )? stringProcessingFunction = processDefQuotedString,
+        int levelSpaceCount = 4
+    }
     )
 {
-    var folderPath = getDefFolderPath( context.filePath );
+    var scriptFolderPath = getDefFolderPath( scriptFilePath );
     var valueArray = <dynamic>[];
 
     for ( var path in pathArray )
     {
         if ( path.endsWith( '/' ) )
         {
-            var filePathArray = getDefFilePathArray( folderPath + path );
+            var filePathArray = getDefFilePathArray( scriptFolderPath + path );
 
             for ( var filePath in filePathArray )
             {
@@ -143,9 +218,9 @@ dynamic readDefFiles(
                     valueArray.add(
                         readDefFile(
                             filePath,
-                            stringProcessingQuote: context.stringProcessingQuote,
-                            stringProcessingFunction: context.stringProcessingFunction,
-                            levelSpaceCount: context.levelSpaceCount
+                            stringProcessingQuote: stringProcessingQuote,
+                            stringProcessingFunction: stringProcessingFunction,
+                            levelSpaceCount: levelSpaceCount
                             )
                         );
                 }
@@ -155,10 +230,10 @@ dynamic readDefFiles(
         {
             dynamic value =
                 readDefFile(
-                    folderPath + path,
-                    stringProcessingQuote: context.stringProcessingQuote,
-                    stringProcessingFunction: context.stringProcessingFunction,
-                    levelSpaceCount: context.levelSpaceCount
+                    scriptFolderPath + path,
+                    stringProcessingQuote: stringProcessingQuote,
+                    stringProcessingFunction: stringProcessingFunction,
+                    levelSpaceCount: levelSpaceCount
                     );
 
             if ( pathArray.length == 1 )
@@ -185,15 +260,23 @@ dynamic processDefQuotedString(
 {
     if ( string.startsWith( '#' ) )
     {
-        return getDefStringUuid( string.substring( 1 ) );
+        return getDefTextUuid( string.substring( 1 ) );
     }
     else if ( string.startsWith( '%' ) )
     {
-        return getDefStringTuid( string.substring( 1 ) );
+        return getDefTextTuid( string.substring( 1 ) );
     }
     else if ( string.startsWith( '@' ) )
     {
-        return readDefFiles( string.substring( 1 ).split( '\n@' ), context );
+        return (
+            readDefFiles(
+                string.substring( 1 ).split( '\n@' ),
+                scriptFilePath: context.filePath,
+                stringProcessingQuote: context.stringProcessingQuote,
+                stringProcessingFunction: context.stringProcessingFunction,
+                levelSpaceCount: context.levelSpaceCount
+                )
+            );
     }
 
     return string;

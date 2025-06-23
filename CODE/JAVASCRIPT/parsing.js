@@ -11,6 +11,23 @@ var
 
 // -- FUNCTIONS
 
+function getKeyText(
+    key
+    )
+{
+    if ( key !== null
+         && typeof key === 'object' )
+    {
+        return JSON.stringify( key );
+    }
+    else
+    {
+        return String( key );
+    }
+}
+
+// ~~
+
 function getTokenArray(
     text
     )
@@ -297,6 +314,132 @@ function parseDefArray(
         {
             return array;
         }
+        else if ( lineSpaceCount === 0
+                  && line === ']{}' )
+        {
+            if ( array.length == 0 )
+            {
+                return [];
+            }
+            else
+            {
+                if ( Array.isArray( array[ 0 ] ) )
+                {
+                    if ( array.length === 1 )
+                    {
+                        return [];
+                    }
+                    else
+                    {
+                        let keyArray = [];
+
+                        for ( let key of array[ 0 ] )
+                        {
+                            keyArray.push( getKeyText( key ) );
+                        }
+
+                        let keyCount = keyArray.length;
+                        let objectArray = [];
+                        let objectCount = array.length - 1;
+
+                        for ( let objectIndex = 0;
+                              objectIndex < objectCount;
+                              ++objectIndex )
+                        {
+                            let valueArray = array[ objectIndex + 1 ];
+
+                            if ( Array.isArray( valueArray )
+                                 && valueArray.length === keyCount )
+                            {
+                                let object = {};
+
+                                for ( let keyIndex = 0;
+                                      keyIndex < keyCount;
+                                      ++keyIndex )
+                                {
+                                    object[ keyArray[ keyIndex ] ] = valueArray[ keyIndex ];
+                                }
+
+                                objectArray.push( object );
+                            }
+                            else
+                            {
+                                throwParsingError( 'Invalid DEF object array', context, level );
+                            }
+                        }
+
+                        return objectArray;
+                    }
+                }
+                else
+                {
+                    throwParsingError( 'Invalid DEF object array', context, level );
+                }
+            }
+        }
+        else if ( lineSpaceCount === 0
+                  && line === ']()' )
+        {
+            if ( array.length == 0 )
+            {
+                return [];
+            }
+            else
+            {
+                if ( Array.isArray( array[ 0 ] ) )
+                {
+                    if ( array.length === 1 )
+                    {
+                        return [];
+                    }
+                    else
+                    {
+                        let keyArray = [];
+
+                        for ( let key of array[ 0 ] )
+                        {
+                            keyArray.push( getKeyText( key ) );
+                        }
+
+                        let keyCount = keyArray.length;
+                        let mapArray = [];
+                        let mapCount = array.length - 1;
+
+                        for ( let mapIndex = 0;
+                              mapIndex < mapCount;
+                              ++mapIndex )
+                        {
+                            let valueArray = array[ mapIndex + 1 ];
+
+                            if ( Array.isArray( valueArray )
+                                 && valueArray.length === keyCount )
+                            {
+                                let map = new Map();
+
+                                for ( let keyIndex = 0;
+                                      keyIndex < keyCount;
+                                      ++keyIndex )
+                                {
+                                    map.set( keyArray[ keyIndex ], valueArray[ keyIndex ] );
+                                }
+
+                                mapArray.push( map );
+                            }
+                            else
+                            {
+                                throwParsingError( 'Invalid DEF map array', context, level );
+                            }
+                        }
+
+                        return mapArray;
+                    }
+                }
+                else
+                {
+                    throwParsingError( 'Invalid DEF map array', context, level );
+                }
+            }
+        }
         else
         {
             context.lineIndex--;
@@ -335,8 +478,8 @@ function parseDefObject(
             let key = parseDefValue( context, level + 1 );
             let value = parseDefValue( context, level + 2 );
 
-            if ( typeof key === 'object'
-                 && key !== null )
+            if ( key !== null
+                 && typeof key === 'object' )
             {
                 object[ JSON.stringify( key ) ] = value;
             }

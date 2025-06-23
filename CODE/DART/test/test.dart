@@ -779,6 +779,17 @@ void main(
                         },
                     "logging": true
                 },
+            "plugins":
+                [
+                    {
+                        "name": "Analytics",
+                        "status": "enabled"
+                    },
+                    {
+                        "name": "SEO",
+                        "status": "disabled"
+                    }
+                ],
             "users":
                 [
                     {
@@ -799,8 +810,10 @@ void main(
             "articles":
                 [
                     "Article 1",
-                    "Article 2",
-                    "Article 3"
+                    "Article 002",
+                    "Article 3",
+                    "Article 10",
+                    "Article 200"
                 ]
         }
         );
@@ -935,7 +948,51 @@ void main(
                                             "object key 1": "object value 1",
                                             "object key 2": "object value 2"
                                         }
-                                }
+                                },
+                            "array of objects":
+                                [
+                                    {
+                                        "name": "John Doe",
+                                        "role": "administrator"
+                                    },
+                                    {
+                                        "name": "Jane Smith",
+                                        "role": "publisher"
+                                    }
+                                ],
+                            "tabular array of objects":
+                                [
+                                    {
+                                        "name": "John Doe",
+                                        "role": "administrator"
+                                    },
+                                    {
+                                        "name": "Jane Smith",
+                                        "role": "publisher"
+                                    }
+                                ],
+                            "array of maps":
+                                [
+                                    {
+                                        "name": "John Doe",
+                                        "role": "administrator"
+                                    },
+                                    {
+                                        "name": "Jane Smith",
+                                        "role": "publisher"
+                                    }
+                                ],
+                            "tabular array of maps":
+                                [
+                                    {
+                                        "name": "John Doe",
+                                        "role": "administrator"
+                                    },
+                                    {
+                                        "name": "Jane Smith",
+                                        "role": "publisher"
+                                    }
+                                ]
                         }
                 }
         }

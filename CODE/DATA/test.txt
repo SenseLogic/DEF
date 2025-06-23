@@ -711,21 +711,36 @@ Normal indent"
             logging
                 true
         }
-    users
+    plugins
         [
             {
                 name
-                    John Doe
-                role
-                    administrator
+                    Analytics
+                status
+                    enabled
             }
             {
                 name
-                    Jane Smith
-                role
-                    publisher
+                    SEO
+                status
+                    disabled
             }
         ]
+    users
+        [
+            [
+                name
+                role
+            ]
+            [
+                John Doe
+                administrator
+            ]
+            [
+                Jane Smith
+                publisher
+            ]
+        ]{}
     texts
         {
             home
@@ -951,6 +966,66 @@ Normal indent"
                                         object value 2
                                 }
                         )
+                    array of objects
+                        [
+                            {
+                                name
+                                    John Doe
+                                role
+                                    administrator
+                            }
+                            {
+                                name
+                                    Jane Smith
+                                role
+                                    publisher
+                            }
+                        ]
+                    tabular array of objects
+                        [
+                            [
+                                name
+                                role
+                            ]
+                            [
+                                John Doe
+                                administrator
+                            ]
+                            [
+                                Jane Smith
+                                publisher
+                            ]
+                        ]{}
+                    array of maps
+                        [
+                            (
+                                name
+                                    John Doe
+                                role
+                                    administrator
+                            )
+                            (
+                                name
+                                    Jane Smith
+                                role
+                                    publisher
+                            )
+                        ]
+                    tabular array of maps
+                        [
+                            [
+                                name
+                                role
+                            ]
+                            [
+                                John Doe
+                                administrator
+                            ]
+                            [
+                                Jane Smith
+                                publisher
+                            ]
+                        ]()
                 }
         }
 }

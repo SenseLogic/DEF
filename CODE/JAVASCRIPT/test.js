@@ -926,6 +926,17 @@ runTest(
                     },
                 "logging": true
             },
+        "plugins":
+            [
+                {
+                    "name": "Analytics",
+                    "status": "enabled"
+                },
+                {
+                    "name": "SEO",
+                    "status": "disabled"
+                }
+            ],
         "users":
             [
                 {
@@ -946,8 +957,10 @@ runTest(
         "articles":
             [
                 "Article 1",
-                "Article 2",
-                "Article 3"
+                "Article 002",
+                "Article 3",
+                "Article 10",
+                "Article 200"
             ]
     }
     );
@@ -1127,7 +1140,83 @@ runTest(
                                         }
                                     ]
                                 ]
-                                )
+                                ),
+                        "array of objects":
+                            [
+                                {
+                                    "name": "John Doe",
+                                    "role": "administrator"
+                                },
+                                {
+                                    "name": "Jane Smith",
+                                    "role": "publisher"
+                                }
+                            ],
+                        "tabular array of objects":
+                            [
+                                {
+                                    "name": "John Doe",
+                                    "role": "administrator"
+                                },
+                                {
+                                    "name": "Jane Smith",
+                                    "role": "publisher"
+                                }
+                            ],
+                        "array of maps":
+                            [
+                                new Map(
+                                    [
+                                        [
+                                            "name",
+                                            "John Doe"
+                                        ],
+                                        [
+                                            "role",
+                                            "administrator"
+                                        ]
+                                    ]
+                                    ),
+                                new Map(
+                                    [
+                                        [
+                                            "name",
+                                            "Jane Smith"
+                                        ],
+                                        [
+                                            "role",
+                                            "publisher"
+                                        ]
+                                    ]
+                                    )
+                            ],
+                        "tabular array of maps":
+                            [
+                                new Map(
+                                    [
+                                        [
+                                            "name",
+                                            "John Doe"
+                                        ],
+                                        [
+                                            "role",
+                                            "administrator"
+                                        ]
+                                    ]
+                                    ),
+                                new Map(
+                                    [
+                                        [
+                                            "name",
+                                            "Jane Smith"
+                                        ],
+                                        [
+                                            "role",
+                                            "publisher"
+                                        ]
+                                    ]
+                                    )
+                            ]
                     }
             }
     }
