@@ -9,14 +9,19 @@ Data Exchange Format.
 *   Simple, readable syntax based on indentation.
 *   Easy to write, parse and generate.
 *   Compact representation for complex data structures.
-*   Flexible multiline string handling.
-*   Supports all JSON data types and more.
-*   Allows to :
-    *   Define arrays of objects and maps without repeating the keys.
-    *   Generate UUIDs : '#id'.
-    *   Generate base64 UUIDs : '%id'.
-    *   Load a DEF file as a value : '@file.def'.
-    *   Load all DEF files in a folder as an array of values : '@folder/'.
+*   Supports all JSON data types and more:
+    *   Constants
+    *   Numbers
+    *   Multiline strings
+    *   Arrays
+    *   Objects
+    *   Maps
+    *   Tabular arrays of objects and maps
+*   Can execute custom commands to :
+    *   Generate UUIDs : '#id'
+    *   Generate base64 UUIDs : '%id'
+    *   Load a DEF file as a value : '@file.def'
+    *   Load all DEF files in a folder as an array of values : '@folder/'
 
 ```
 {
