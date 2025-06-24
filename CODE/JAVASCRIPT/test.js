@@ -1251,6 +1251,15 @@ runTest(
 runTest(
     [
         "Included value",
+        "Included value 2"
+    ]
+    );
+
+runTest(
+    [
+        "Included value",
+        "Included value 2",
+        "Included value",
         "Included value 2",
         "Included value",
         "Included value 2"

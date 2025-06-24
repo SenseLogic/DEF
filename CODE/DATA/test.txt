@@ -760,7 +760,7 @@ Normal indent"
                 ¨ja:連絡先´
         }
     articles
-        '@articles/'
+        '@articles/*.def'
 }
 ~~~
 {
@@ -1041,7 +1041,10 @@ Normal indent"
 ~~~
 '@included/'
 ~~~
+'@included/included_*.def'
+~~~
 '@included/
+@included/included_*.def
 @included/included_value.def
 @included/included_value_2.def'
 ~~~

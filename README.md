@@ -21,7 +21,7 @@ Data Exchange Format.
     *   Generate UUIDs : '#id'
     *   Generate base64 UUIDs : '%id'
     *   Load a DEF file as a value : '@file.def'
-    *   Load all DEF files in a folder as an array of values : '@folder/'
+    *   Load several DEF files as an array of values : '@folder/*.def'
 
 ```
 {
@@ -100,7 +100,7 @@ Data Exchange Format.
                 ¨ja:連絡先´
         }
     articles
-        '@articles/'
+        '@articles/*.def'
 }
 ```
 

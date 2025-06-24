@@ -1,10 +1,14 @@
+## 0.1.9
+
+* Added file filters.
+
 ## 0.1.8
 
 * Updated readme.
 
 ## 0.1.7
 
-* Added support for tabular arrays.
+* Added tabular arrays.
 
 ## 0.1.6
 

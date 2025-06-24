@@ -1,7 +1,7 @@
 // -- IMPORTS
 
-import { readFileSync, readdirSync } from 'node:fs';
-import { dirname, join } from 'node:path';
+import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { dirname, join, basename, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import md5 from 'md5';
 import { parseDefText, throwParsingError } from './parsing.js';
@@ -176,14 +176,56 @@ export function getDefFolderPath(
 // ~~
 
 export function getDefFilePathArray(
-    folderPath
+    fileFilter
     )
 {
+    fileFilter = fileFilter;
+    let folderPath = getDefFolderPath( fileFilter );
+    fileFilter = fileFilter.slice( folderPath.length );
+
+    if ( fileFilter === '' )
+    {
+        fileFilter = "^.*\\.def$";
+    }
+    else
+    {
+        fileFilter =
+            '^'
+            + fileFilter
+                  .replaceAll( '.', '\\.' )
+                  .replaceAll( '*', '.*' )
+                  .replaceAll( '?', '.' )
+                  .replaceAll( '[', '\\[' )
+                  .replaceAll( ']', '\\]' )
+                  .replaceAll( '(', '\\(' )
+                  .replaceAll( ')', '\\)' )
+                  .replaceAll( '{', '\\{' )
+                  .replaceAll( '}', '\\}' )
+                  .replaceAll( '|', '\\|' )
+                  .replaceAll( '^', '\\^' )
+                  .replaceAll( '$', '\\$' )
+                  .replaceAll( '+', '\\+' )
+                  .replaceAll( '-', '\\-' )
+            + '$';
+    }
+
+    let fileNameRegularExpression = new RegExp( fileFilter );
     let filePathArray = [];
 
-    for ( let filePath of readdirSync( folderPath ) )
+    try
     {
-        filePathArray.push( folderPath + filePath.replaceAll( '\\', '/' ) )
+        for ( let fileName of readdirSync( folderPath ) )
+        {
+            if ( fileNameRegularExpression.test( fileName ) )
+            {
+                filePathArray.push( folderPath + fileName.replaceAll( '\\', '/' ) );
+            }
+        }
+    }
+    catch ( error )
+    {
+        console.error( error );
+        throw error;
     }
 
     filePathArray.sort(
@@ -210,25 +252,24 @@ export function readDefFiles(
 
     for ( let path of pathArray )
     {
-        if ( path.endsWith( '/' ) )
+        if ( path.endsWith( '/' )
+             || path.includes( '*' )
+             || path.includes( '?' ) )
         {
             let filePathArray = getDefFilePathArray( scriptFolderPath + path );
 
             for ( let filePath of filePathArray )
             {
-                if ( filePath.endsWith( '.def' ) )
-                {
-                    valueArray.push(
-                        readDefFile(
-                            filePath,
-                            {
-                                stringProcessingQuote,
-                                stringProcessingFunction,
-                                levelSpaceCount
-                            }
-                            )
-                        );
-                }
+                valueArray.push(
+                    readDefFile(
+                        filePath,
+                        {
+                            stringProcessingQuote,
+                            stringProcessingFunction,
+                            levelSpaceCount
+                        }
+                        )
+                    );
             }
         }
         else

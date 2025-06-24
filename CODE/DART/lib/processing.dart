@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'package:crypto/crypto.dart';
 import 'package:path/path.dart' as path;
 import 'parsing.dart';
@@ -173,14 +174,58 @@ String getDefFolderPath(
 // ~~
 
 List<String> getDefFilePathArray(
-    String folderPath
+    String fileFilter
     )
 {
+    fileFilter = fileFilter;
+    var folderPath = getDefFolderPath( fileFilter );
+    fileFilter = fileFilter.substring( folderPath.length );
+
+    if ( fileFilter == '' )
+    {
+        fileFilter = "^.*\\.def\$";
+    }
+    else
+    {
+        fileFilter =
+            '^'
+            + fileFilter
+                  .replaceAll( '.', '\\.' )
+                  .replaceAll( '*', '.*' )
+                  .replaceAll( '?', '.' )
+                  .replaceAll( '[', '\\[' )
+                  .replaceAll( ']', '\\]' )
+                  .replaceAll( '(', '\\(' )
+                  .replaceAll( ')', '\\)' )
+                  .replaceAll( '{', '\\{' )
+                  .replaceAll( '}', '\\}' )
+                  .replaceAll( '|', '\\|' )
+                  .replaceAll( '^', '\\^' )
+                  .replaceAll( '\$', '\\\$' )
+                  .replaceAll( '+', '\\+' )
+                  .replaceAll( '-', '\\-' )
+            + '\$';
+    }
+
+    var fileNameRegularExpression = RegExp( fileFilter );
     var filePathArray = <String>[];
 
-    for ( FileSystemEntity entity in Directory( getPhysicalFilePath( folderPath ) ).listSync() )
+    try
     {
-        filePathArray.add( path.join( folderPath, entity.path.replaceAll( '\\', '/' ) ) );
+        for ( FileSystemEntity entity in Directory( getPhysicalFilePath( folderPath ) ).listSync() )
+        {
+            var fileName = path.basename( entity.path );
+            
+            if ( fileNameRegularExpression.hasMatch( fileName ) )
+            {
+                filePathArray.add( folderPath + fileName.replaceAll( '\\', '/' ) );
+            }
+        }
+    }
+    catch ( error )
+    {
+        print( error );
+        rethrow;
     }
 
     filePathArray.sort(
@@ -207,23 +252,22 @@ dynamic readDefFiles(
 
     for ( var path in pathArray )
     {
-        if ( path.endsWith( '/' ) )
+        if ( path.endsWith( '/' )
+             || path.contains( '*' )
+             || path.contains( '?' ) )
         {
             var filePathArray = getDefFilePathArray( scriptFolderPath + path );
 
             for ( var filePath in filePathArray )
             {
-                if ( filePath.endsWith( '.def' ) )
-                {
-                    valueArray.add(
-                        readDefFile(
-                            filePath,
-                            stringProcessingQuote: stringProcessingQuote,
-                            stringProcessingFunction: stringProcessingFunction,
-                            levelSpaceCount: levelSpaceCount
-                            )
-                        );
-                }
+                valueArray.add(
+                    readDefFile(
+                        filePath,
+                        stringProcessingQuote: stringProcessingQuote,
+                        stringProcessingFunction: stringProcessingFunction,
+                        levelSpaceCount: levelSpaceCount
+                        )
+                    );
             }
         }
         else
