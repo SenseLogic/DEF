@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 import 'package:crypto/crypto.dart';
 import 'package:path/path.dart' as path;
 import 'parsing.dart';
@@ -215,7 +214,7 @@ List<String> getDefFilePathArray(
         for ( FileSystemEntity entity in Directory( getPhysicalFilePath( folderPath ) ).listSync() )
         {
             var fileName = path.basename( entity.path );
-            
+
             if ( fileNameRegularExpression.hasMatch( fileName ) )
             {
                 filePathArray.add( folderPath + fileName.replaceAll( '\\', '/' ) );
