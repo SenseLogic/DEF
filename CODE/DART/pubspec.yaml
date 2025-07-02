@@ -2,7 +2,7 @@ name: senselogic_def
 description: Data exchange format.
 homepage: https://github.com/senselogic/DEF
 repository: https://github.com/senselogic/DEF
-version: 0.1.9
+version: 0.1.10
 
 environment:
   sdk: '>=3.0.0 <4.0.0'

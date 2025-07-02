@@ -1,3 +1,7 @@
+## 0.1.10
+
+* Added file reading function.
+
 ## 0.1.9
 
 * Added file filters.

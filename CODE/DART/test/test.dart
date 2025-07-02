@@ -28,7 +28,7 @@ void runTest(
         var parsedValue =
             parseDefText(
                 defText,
-                filePath: '../../DATA/test.def',
+                filePath: '../DATA/test.def',
                 stringProcessingFunction: processDefQuotedString
                 );
         print( 'parsedValue:' );
@@ -68,7 +68,7 @@ void runTest(
 void main(
     )
 {
-    testDataArray = readFileText( '../../DATA/test.txt' ).split( '\n~~~\n' );
+    testDataArray = readFileText( '../DATA/test.txt' ).split( '\n~~~\n' );
 
     runTest(
         undefined

@@ -2,7 +2,6 @@
 
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { dirname, join, basename, extname } from 'node:path';
-import { fileURLToPath } from 'node:url';
 import md5 from 'md5';
 import { parseDefText, throwParsingError } from './parsing.js';
 
@@ -76,24 +75,23 @@ export function getNaturalTextComparison(
 // ~~
 
 export function getPhysicalFilePath(
-    filePath
+    filePath,
+    baseFolderPath = ''
     )
 {
-    let scriptPath = fileURLToPath( import.meta.url );
-    let folderPath = dirname( scriptPath );
-
-    return join( folderPath, filePath );
+    return join( baseFolderPath, filePath );
 }
 
 // ~~
 
 export function readFileText(
-    filePath
+    filePath,
+    baseFolderPath = ''
     )
 {
     try
     {
-        return readFileSync( getPhysicalFilePath( filePath ), 'utf8' );
+        return readFileSync( getPhysicalFilePath( filePath, baseFolderPath ), 'utf8' );
     }
     catch ( error )
     {
@@ -240,14 +238,16 @@ export function getDefFilePathArray(
 export function readDefFiles(
     pathArray,
     {
-        scriptFilePath = '',
+        baseFolderPath = '',
+        filePath = '',
+        fileReadingFunction = readFileText,
         stringProcessingQuote = '\'',
         stringProcessingFunction = processDefQuotedString,
         levelSpaceCount = 4
     }
     )
 {
-    let scriptFolderPath = getDefFolderPath( scriptFilePath );
+    let scriptFolderPath = getDefFolderPath( filePath );
     let valueArray = [];
 
     for ( let path of pathArray )
@@ -256,14 +256,16 @@ export function readDefFiles(
              || path.includes( '*' )
              || path.includes( '?' ) )
         {
-            let filePathArray = getDefFilePathArray( scriptFolderPath + path );
+            let folderFilePathArray = getDefFilePathArray( scriptFolderPath + path );
 
-            for ( let filePath of filePathArray )
+            for ( let folderFilePath of folderFilePathArray )
             {
                 valueArray.push(
                     readDefFile(
-                        filePath,
+                        folderFilePath,
                         {
+                            baseFolderPath,
+                            fileReadingFunction,
                             stringProcessingQuote,
                             stringProcessingFunction,
                             levelSpaceCount
@@ -278,6 +280,8 @@ export function readDefFiles(
                 readDefFile(
                     scriptFolderPath + path,
                     {
+                        baseFolderPath,
+                        fileReadingFunction,
                         stringProcessingQuote,
                         stringProcessingFunction,
                         levelSpaceCount
@@ -320,7 +324,9 @@ export function processDefQuotedString(
             readDefFiles(
                 string.slice( 1 ).split( '\n@' ),
                 {
-                    scriptFilePath: context.filePath,
+                    baseFolderPath: context.baseFolderPath,
+                    filePath: context.filePath,
+                    fileReadingFunction: context.fileReadingFunction,
                     stringProcessingQuote: context.stringProcessingQuote,
                     stringProcessingFunction: context.stringProcessingFunction,
                     levelSpaceCount: context.levelSpaceCount
@@ -337,19 +343,23 @@ export function processDefQuotedString(
 export function readDefFile(
     filePath,
     {
+        baseFolderPath = '',
+        fileReadingFunction = readFileText,
         stringProcessingQuote = '\'',
         stringProcessingFunction = processDefQuotedString,
         levelSpaceCount = 4
     }
     )
 {
-    let text = readFileText( filePath );
+    let text = fileReadingFunction( filePath, baseFolderPath );
 
     return (
         parseDefText(
             text,
             {
+                baseFolderPath,
                 filePath,
+                fileReadingFunction,
                 stringProcessingQuote,
                 stringProcessingFunction,
                 levelSpaceCount

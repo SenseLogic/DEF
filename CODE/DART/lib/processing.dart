@@ -75,24 +75,27 @@ int getNaturalTextComparison(
 // ~~
 
 String getPhysicalFilePath(
-    String filePath
+    String filePath,
+    [
+        String baseFolderPath = ''
+    ]
     )
 {
-    var scriptPath = Platform.script.toFilePath();
-    var folderPath = path.dirname( scriptPath );
-
-    return path.join( folderPath, filePath );
+    return path.join( baseFolderPath, filePath );
 }
 
 // ~~
 
 String readFileText(
-    String filePath
+    String filePath,
+    [
+        String baseFolderPath = ''
+    ]
     )
 {
     try
     {
-        return File( getPhysicalFilePath( filePath ) ).readAsStringSync();
+        return File( getPhysicalFilePath( filePath, baseFolderPath ) ).readAsStringSync();
     }
     catch ( error )
     {
@@ -239,14 +242,16 @@ List<String> getDefFilePathArray(
 dynamic readDefFiles(
     List<String> pathArray,
     {
-        String scriptFilePath = '',
+        String baseFolderPath = '',
+        String filePath = '',
+        String Function( String, [String] )? fileReadingFunction = readFileText,
         String stringProcessingQuote = '\'',
         dynamic Function( String, ParsingContext, int )? stringProcessingFunction = processDefQuotedString,
         int levelSpaceCount = 4
     }
     )
 {
-    var scriptFolderPath = getDefFolderPath( scriptFilePath );
+    var scriptFolderPath = getDefFolderPath( filePath );
     var valueArray = <dynamic>[];
 
     for ( var path in pathArray )
@@ -255,13 +260,15 @@ dynamic readDefFiles(
              || path.contains( '*' )
              || path.contains( '?' ) )
         {
-            var filePathArray = getDefFilePathArray( scriptFolderPath + path );
+            var folderFilePathArray = getDefFilePathArray( scriptFolderPath + path );
 
-            for ( var filePath in filePathArray )
+            for ( var folderFilePath in folderFilePathArray )
             {
                 valueArray.add(
                     readDefFile(
-                        filePath,
+                        folderFilePath,
+                        baseFolderPath: baseFolderPath,
+                        fileReadingFunction: fileReadingFunction,
                         stringProcessingQuote: stringProcessingQuote,
                         stringProcessingFunction: stringProcessingFunction,
                         levelSpaceCount: levelSpaceCount
@@ -274,6 +281,8 @@ dynamic readDefFiles(
             dynamic value =
                 readDefFile(
                     scriptFolderPath + path,
+                    baseFolderPath: baseFolderPath,
+                    fileReadingFunction: fileReadingFunction,
                     stringProcessingQuote: stringProcessingQuote,
                     stringProcessingFunction: stringProcessingFunction,
                     levelSpaceCount: levelSpaceCount
@@ -314,7 +323,9 @@ dynamic processDefQuotedString(
         return (
             readDefFiles(
                 string.substring( 1 ).split( '\n@' ),
-                scriptFilePath: context.filePath,
+                baseFolderPath: context.baseFolderPath,
+                filePath: context.filePath,
+                fileReadingFunction: context.fileReadingFunction,
                 stringProcessingQuote: context.stringProcessingQuote,
                 stringProcessingFunction: context.stringProcessingFunction,
                 levelSpaceCount: context.levelSpaceCount
@@ -330,6 +341,8 @@ dynamic processDefQuotedString(
 dynamic readDefFile(
     String filePath,
     {
+        String baseFolderPath = '',
+        String Function( String, [String] )? fileReadingFunction = readFileText,
         String stringProcessingQuote = '\'',
         dynamic Function( String, ParsingContext, int )? stringProcessingFunction = processDefQuotedString,
         int levelSpaceCount = 4
@@ -341,7 +354,9 @@ dynamic readDefFile(
     return (
         parseDefText(
             text,
+            baseFolderPath: baseFolderPath,
             filePath: filePath,
+            fileReadingFunction: fileReadingFunction,
             stringProcessingQuote: stringProcessingQuote,
             stringProcessingFunction: stringProcessingFunction,
             levelSpaceCount: levelSpaceCount

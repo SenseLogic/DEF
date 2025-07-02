@@ -37,7 +37,10 @@ class ParsingContext
     // -- ATTRIBUTES
 
     final String
+        baseFolderPath,
         filePath;
+    final String Function( String, [String] )?
+        fileReadingFunction;
     final String
         stringProcessingQuote;
     final dynamic Function( String, ParsingContext, int )?
@@ -55,7 +58,9 @@ class ParsingContext
 
     ParsingContext(
         {
+            required this.baseFolderPath,
             required this.filePath,
+            required this.fileReadingFunction,
             required this.stringProcessingQuote,
             required this.stringProcessingFunction,
             required this.levelSpaceCount,
@@ -695,7 +700,9 @@ dynamic parseDefValue(
 dynamic parseDefText(
     String text,
     {
+        String baseFolderPath = '',
         String filePath = '',
+        String Function( String, [String] )? fileReadingFunction = readFileText,
         String stringProcessingQuote = '\'',
         dynamic Function( String, ParsingContext, int )? stringProcessingFunction = processDefQuotedString,
         int levelSpaceCount = 4
@@ -710,12 +717,14 @@ dynamic parseDefText(
 
     var context =
         ParsingContext(
-            filePath : filePath,
-            stringProcessingQuote : stringProcessingQuote,
-            stringProcessingFunction : stringProcessingFunction,
-            levelSpaceCount : levelSpaceCount,
-            text : text,
-            lineArray : lineArray
+            baseFolderPath: baseFolderPath,
+            filePath: filePath,
+            fileReadingFunction: fileReadingFunction,
+            stringProcessingQuote: stringProcessingQuote,
+            stringProcessingFunction: stringProcessingFunction,
+            levelSpaceCount: levelSpaceCount,
+            text: text,
+            lineArray: lineArray
             );
 
     return parseDefValue( context, 0 );

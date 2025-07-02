@@ -1,6 +1,6 @@
 // -- IMPORTS
 
-import { processDefQuotedString } from './processing.js';
+import { processDefQuotedString, readDefFile } from './processing.js';
 
 // -- CONSTANTS
 
@@ -622,7 +622,9 @@ function parseDefValue(
 export function parseDefText(
     text,
     {
+        baseFolderPath = '',
         filePath = '',
+        fileReadingFunction = readDefFile,
         stringProcessingQuote = '\'',
         stringProcessingFunction = processDefQuotedString,
         levelSpaceCount = 4
@@ -637,7 +639,9 @@ export function parseDefText(
 
     let context =
         {
+            baseFolderPath,
             filePath,
+            fileReadingFunction,
             stringProcessingQuote,
             stringProcessingFunction,
             levelSpaceCount,
