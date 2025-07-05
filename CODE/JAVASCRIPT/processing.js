@@ -244,7 +244,7 @@ export function readDefFiles(
         stringProcessingQuote = '\'',
         stringProcessingFunction = processDefQuotedString,
         levelSpaceCount = 4
-    }
+    } = {}
     )
 {
     let scriptFolderPath = getDefFolderPath( filePath );
@@ -348,7 +348,7 @@ export function readDefFile(
         stringProcessingQuote = '\'',
         stringProcessingFunction = processDefQuotedString,
         levelSpaceCount = 4
-    }
+    } = {}
     )
 {
     let text = fileReadingFunction( filePath, baseFolderPath );

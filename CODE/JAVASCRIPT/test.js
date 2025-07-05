@@ -1,8 +1,6 @@
 // -- IMPORTS
 
 import { readFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { buildDefText, getDumpText, haveSameValue, parseDefText, processDefQuotedString, readFileText } from './index.js';
 
 // -- VARIABLES
