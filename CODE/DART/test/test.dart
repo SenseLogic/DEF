@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:senselogic_def/senselogic_def.dart';
 
 // -- VARIABLES
