@@ -1,0 +1,32 @@
+{
+    "name": "senselogic-def-file",
+    "description": "Data exchange format file processing.",
+    "version": "0.1.12",
+    "author": "Eric Pelzer <ecstatic.coder@gmail.com>",
+    "license": "LGPL-3.0-only",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/senselogic/DEF.git"
+    },
+    "bugs": {
+        "url": "https://github.com/senselogic/DEF/issues"
+    },
+    "homepage": "https://github.com/senselogic/DEF",
+    "type": "module",
+    "main": "index.js",
+    "files": [
+        "file.js",
+        "index.js",
+        "README.md"
+    ],
+    "keywords": [
+        "def",
+        "file"
+    ],
+    "dependencies": {
+        "senselogic-def": "^0.1.12"
+    },
+    "scripts": {
+        "test": "node test.js"
+    }
+}

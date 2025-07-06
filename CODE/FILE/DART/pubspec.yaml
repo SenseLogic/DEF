@@ -1,0 +1,12 @@
+name: senselogic_def_file
+description: Data exchange format file processing.
+homepage: https://github.com/senselogic/DEF
+repository: https://github.com/senselogic/DEF
+version: 0.1.12
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  path: ^1.8.0
+  senselogic_def: ^0.1.12

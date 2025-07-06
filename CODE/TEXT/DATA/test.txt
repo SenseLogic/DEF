@@ -1,0 +1,1033 @@
+undefined
+~~~
+null
+~~~
+false
+~~~
+true
+~~~
+42
+~~~
+-123
+~~~
+3.14159
+~~~
+-1.23456e-7
+~~~
+0xFF
+~~~
+NaN
+~~~
+-Infinity
+~~~
+Infinity
+~~~
+{
+    actual-number
+        42
+    string-number
+        42¨
+    actual-float
+        3.14159
+    string-float
+        3.14159¨
+    actual-hex
+        0xFF
+    string-hex
+        0xFF¨
+}
+~~~
+
+~~~
+¨
+~~~
+[¨
+~~~
+{¨
+~~~
+(¨
+~~~
+\¨
+~~~
+\[
+~~~
+\{
+~~~
+\(
+~~~
+Simple string
+~~~
+String with "quotes" inside
+~~~
+String with `backticks` inside
+~~~
+String with ´ticks´ inside
+~~~
+String with backslash \\ inside
+~~~
+One trailing space ¨
+~~~
+Multiple trailing spaces    ¨
+~~~
+Multiple    \
+trailing    \
+spaces    ¨
+~~~
+"Multiple    \
+trailing    ¨
+spaces    ¨"
+~~~
+"    Multiple    \
+    trailing    ¨
+    spaces    ¨"
+~~~
+[
+        Multiple    \
+        trailing    \
+        spaces    ¨
+    "    Multiple    \
+        trailing    ¨
+        spaces    "
+    "    Multiple    \
+        trailing    ¨
+        spaces    ¨"
+]
+~~~
+Single line \
+continued on next line
+~~~
+"Line 1
+Line 2
+Line 3"
+~~~
+"Line 1
+
+Line 2
+
+Line 3"
+~~~
+"Line 1
+
+    Line 2
+
+Line 3"
+~~~
+[
+    Line 1\
+        \
+        Line 2\
+        \
+    Line 3
+    Line 1\
+    \
+        Line 2\n\
+    \n\
+    Line 3
+    "Line 1
+
+        Line 2
+
+    Line 3"
+]
+~~~
+"English text
+¨fr:Texte français
+¨de:Deutscher Text
+¨es:Texto español
+¨it:Testo italiano
+¨pt:Texto português
+¨ja:日本語テキスト
+¨ko:한국어 텍스트"
+~~~
+"Fruit list:
+* Banana
+* Kiwi
+* Orange
+¨fr:Liste de fruits :
+* Banane
+* Kiwi
+* Orange
+¨de:Obstliste:
+* Banane
+* Kiwi
+* Orange
+¨es:Lista de frutas:
+* Plátano
+* Kiwi
+* Naranja
+¨it:Elenco di frutta:
+* Banana
+* Kiwi
+* Arancia
+¨pt:Lista de frutas:
+* Banana
+* Kiwi
+* Laranja
+¨ja:果物リスト：
+* バナナ
+* キウイ
+* オレンジ
+¨ko:과일 목록:
+* 바나나
+* 키위
+* 오렌지"
+~~~
+"String with escaped \"quotes\" and \\ backslashes"
+~~~
+`String with escaped \`backticks\` and \\ backslashes`
+~~~
+´String with escaped \´ticks\´ and \\ backslashes´
+~~~
+"This is a simple quoted string"
+~~~
+`This is a backtick quoted string`
+~~~
+´This is a tick quoted string´
+~~~
+"First line \
+second line \
+third line"
+~~~
+"First line    \
+second line    ¨
+third line"
+~~~
+"Start \
+  indented    ¨\
+normal line\
+ slight indent \
+   more indent"
+~~~
+[
+    Single space ¨
+    Double spaces  ¨
+    Triple spaces   ¨
+]
+~~~
+[
+    ""
+    ``
+    ´´
+]
+~~~
+"Line one
+    Indented line
+        More indented
+    Back to less indent
+Normal indent"
+~~~
+"Line one    \
+ Line two     \
+  Line three      ¨
+   Line four       \
+    Line five"
+~~~
+{
+    emoji
+        "😀 😂 🤣 😊 🥰"
+    international
+        "こんにちは 你好 مرحبا Привет"
+    symbols
+        "★ ☀ ♫ ⚽ ♠ ⌛"
+}
+~~~
+{
+    no-quotes
+        Text with "double quotes", `backticks`, and ´ticks´
+    escaped-quotes
+        \"Text with "double quotes", `backticks`, and ´ticks´"
+    all-quotes
+        "Text with "double quotes", `backticks`, and ´ticks´"
+    nested-quotes
+        `Text with "double "nested" quotes" and ´ticks´`
+}
+~~~
+"String with \t tab, \n newline, \\ backslash, and \" quote"
+~~~
+"First line\nSecond line\tTabbed\rCarriage return"
+~~~
+ 42
+~~~
+    42
+~~~
+[
+]
+~~~
+[
+    1
+    2
+    3
+]
+~~~
+[
+    a
+    b
+    c
+]
+~~~
+[
+    undefined
+    null
+    false
+    true
+    NaN
+    -Infinity
+    Infinity
+]
+~~~
+[
+    0
+    -1
+    42
+    0xFF
+    3.14159
+    -1.23456e-7
+]
+~~~
+[
+    undefined¨
+    null¨
+    false¨
+    true¨
+    NaN¨
+    -Infinity¨
+    Infinity¨
+]
+~~~
+[
+    0¨
+    -1¨
+    42¨
+    0xFF¨
+    3.14159¨
+    -1.23456e-7¨
+]
+~~~
+[
+    undefined
+    null
+    true
+    42
+    "string"
+]
+~~~
+[
+    [
+        1
+        2
+    ]
+    [
+        3
+        4
+    ]
+]
+~~~
+[
+    [
+        [
+            [
+                "deep array"
+            ]
+        ]
+    ]
+]
+~~~
+[
+    1
+    "string"
+    true
+    null
+    [
+        nested
+        array
+    ]
+    {
+        nested
+            object
+    }
+    (
+        nested
+            map
+    )
+]
+~~~
+{
+}
+~~~
+{
+    a
+        1
+    b
+        2
+    c
+        3
+}
+~~~
+{
+    string key
+        "string value"
+    number key
+        42
+    boolean key
+        true
+    null key
+        null
+}
+~~~
+{
+    level-one
+        {
+            level-two
+                "value"
+        }
+}
+~~~
+{
+    deep nesting
+        {
+            level one
+                {
+                    level two
+                        {
+                            level three
+                                "deep value"
+                        }
+                }
+        }
+}
+~~~
+{
+    array field
+        [
+            1
+            2
+            3
+        ]
+    string field
+        "string value"
+    number field
+        42
+    boolean field
+        true
+    null field
+        null
+    object field
+        {
+            nested
+                object
+        }
+    map field
+        (
+            key
+                value
+        )
+}
+~~~
+{
+    mixed
+        [
+            {
+                inner object
+                    "value"
+            }
+            (
+                "inner map key"
+                    42
+            )
+        ]
+}
+~~~
+{
+    null-like
+        null¨
+    array-of-empties
+        [
+            ¨
+            ""
+            ``
+            ´´
+        ]
+    true-like
+        true¨
+    diaeresis-escape
+        "Text with escaped diaeresis \¨"
+}
+~~~
+{
+    key with spaces
+        value
+    key-with-dashes
+        value
+    key_with_underscores
+        value
+    key.with.dots
+        value
+    123
+        numeric key
+    true
+        boolean key
+    null
+        null key
+}
+~~~
+{
+    english
+        "This is English text
+         with multiple lines"
+    french
+        `Ceci est du texte français
+         avec plusieurs lignes`
+    spanish
+        ´Este es texto en español
+         con múltiples líneas´
+}
+~~~
+{
+    meta
+        {
+            type
+                test
+            complexity
+                high
+        }
+    data
+        [
+            {
+                id
+                    1
+                labels
+                    [
+                        primary
+                        secondary
+                    ]
+                content
+                    "Multi-line
+                    content with
+                    indentation preserved"
+            }
+            {
+                id
+                    2
+                labels
+                    [
+                        tertiary
+                    ]
+                content
+                    "Line with continuation \
+                    and preserved spaces    ¨
+                    final line"
+            }
+        ]
+}
+~~~
+(
+)
+~~~
+(
+    a
+        1
+    b
+        2
+    c
+        3
+)
+~~~
+(
+    "string key"
+        "string value"
+    42
+        "number value"
+    true
+        "boolean value"
+    null
+        "null value"
+)
+~~~
+(
+    [
+        1
+        2
+    ]
+        "array key"
+)
+~~~
+(
+    {
+        nested
+            key
+    }
+        "object key"
+)
+~~~
+(
+    (
+        inner
+            map
+    )
+        "map key"
+)
+~~~
+(
+    outer
+        (
+            inner
+                "value"
+        )
+)
+~~~
+(
+    (
+        (
+            (
+                map key
+                    map value
+            )
+                map value
+        )
+            map value
+    )
+        map value
+)
+~~~
+(
+    "string key"
+        "string value"
+    42
+        42
+    true
+        false
+    null
+        undefined
+    [
+        1
+        2
+        3
+    ]
+        [
+            4
+            5
+            6
+        ]
+    {
+        object
+            key
+    }
+        {
+            object
+                value
+        }
+    (
+        map
+            key
+    )
+        (
+            map
+                value
+        )
+)
+~~~
+(
+    [
+        {
+            complex
+                array object
+        }
+        (
+            inner
+                array map
+        )
+    ]
+        (
+            {
+                complex
+                    value object
+            }
+                [
+                    nested value array
+                ]
+        )
+)
+~~~
+(
+    {
+        complex
+            key1
+    }
+        "value1"
+    [
+        complex
+        key2
+    ]
+        "value2"
+    (
+        sub
+            map
+    )
+        "value3"
+)
+~~~
+[
+    [
+        [
+            [
+                {
+                    deep
+                        [
+                            (
+                                key
+                                    value
+                            )
+                        ]
+                }
+            ]
+        ]
+    ]
+]
+~~~
+{
+    settings
+        {
+            theme
+                dark
+            fontSize
+                16
+            features
+                [
+                    search
+                    filter
+                    sort
+                ]
+            version
+                2.0¨
+            metrics
+                {
+                    cpuUsage
+                        0.75
+                    memoryUsage
+                        0.6
+                    networkTraffic
+                        1234567890
+                }
+            logging
+                true
+        }
+    plugins
+        [
+            {
+                name
+                    Analytics
+                status
+                    enabled
+            }
+            {
+                name
+                    SEO
+                status
+                    disabled
+            }
+        ]
+    users
+        [
+            [
+                name
+                role
+            ]
+            [
+                John Doe
+                administrator
+            ]
+            [
+                Jane Smith
+                publisher
+            ]
+        ]{}
+    texts
+        {
+            home
+                "Home
+                ¨fr:Accueil
+                ¨de:Startseite
+                ¨ja:ホーム"
+            services
+                `Services
+                ¨fr:Services
+                ¨de:Dienstleistungen
+                ¨ja:サービス`
+            contact
+                ´Contact
+                ¨fr:Contact
+                ¨de:Kontakt
+                ¨ja:連絡先´
+        }
+}
+~~~
+{
+    name
+        DEF
+    version
+        1.0¨
+    description
+        Data exchange format.
+    author
+        {
+            name
+                Ecstatic Coder
+            email
+                ecstatic.coder@gmail.com
+        }
+    features
+        [
+            Simple, parseable syntax based on indentation.
+            Compact representation for complex data structures.
+            Supports all JSON data types and more.
+            Flexible multiline string handling.
+        ]
+    examples
+        {
+            constants
+                [
+                    undefined
+                    null
+                    false
+                    true
+                    NaN
+                    -Infinity
+                    Infinity
+                ]
+            numbers
+                [
+                    0
+                    -1
+                    42
+                    0xFF
+                    3.14159
+                    -1.23456e-7
+                ]
+            strings
+                {
+                    unquoted string
+                        Single-line strings don't need quotes.
+                    unquoted string starting and ending with spaces
+                            Unquoted strings can start and end with spaces.    ¨
+                    unquoted multiline string
+                        A backslash escapes the next character.\\\
+                        A trailing backslash makes the line continue \
+                        over the next line. \
+                            Starting spaces are kept. \
+                        Ending spaces are not kept unless followed by a backspace \
+                        or a diaeresis.    ¨
+                    unquoted empty string
+
+                    unquoted empty string with a trailing diaeresis
+                        ¨
+                    unquoted constant-like string with a trailing diaeresis
+                        null¨
+                    unquoted number-like string with a trailing diaeresis
+                        1.0¨
+                    quoted multiline string
+                        'Lines are joined using line breaks.
+                        A backslash escapes the next character.\'
+                        A trailing backslash makes the line continue \
+                        over the next line.
+                            Starting spaces are kept.
+                        Ending spaces are not kept unless followed by a backspace \
+                        or a diaeresis.    ¨
+                        'Non-ending' quotes don't have to be escaped.'
+                    quoted empty string
+                        ''
+                    double-quoted multiline string
+                        "Lines are joined using line breaks.
+                        A backslash escapes the next character.\"
+                        A trailing backslash makes the line continue \
+                        over the next line.
+                            Starting spaces are kept.
+                        Ending spaces are not kept unless followed by a backspace \
+                        or a diaeresis.    ¨
+                        "Non-ending" double-quotes don't have to be escaped."
+                    double-quoted empty string
+                        ""
+                    backticked multiline string
+                        `Lines are joined using line breaks.
+                        A backslash escapes the next character.\`
+                        A trailing backslash makes the line continue \
+                        over the next line.
+                            Starting spaces are kept.
+                        Ending spaces are not kept unless followed by a backspace \
+                        or a diaeresis.    ¨
+                        `Non-ending` backticks don't have to be escaped.`
+                    backticked empty string
+                        ``
+                    ticked multiline string
+                        ´Lines are joined using line breaks.
+                        A backslash escapes the next character.\´
+                        A trailing backslash makes the line continue \
+                        over the next line.
+                            Starting spaces are kept.
+                        Ending spaces are not kept unless followed by a backspace
+                        or a diaeresis.    ¨
+                        ´Non-ending´ ticks don't have to be escaped.´
+                    ticked empty string
+                        ´´
+                }
+            collections
+                {
+                    array of values
+                        [
+                            null
+                            0
+                            one
+                            2.0¨
+                            '3'
+                            "4"
+                            `5`
+                            ´6´
+                        ]
+                    array of empty strings
+                        [
+
+                            ¨
+                            ''
+                            ""
+                            ``
+                            ´´
+                        ]
+                    object of key/value pairs (where keys are coerced to strings)
+                        {
+                            key
+                                value
+                            other key
+                                other value
+                            123
+                                null
+                            undefined
+                                not found
+                            keys
+                                [
+                                    array value 1
+                                    array value 2
+                                ]
+                            are converted
+                                {
+                                    object key 1
+                                        object value 1
+                                    object key 2
+                                        object value 2
+                                }
+                            to strings
+                                (
+                                    map key 1
+                                        map value 1
+                                    map key 2
+                                        map value 2
+                                )
+                        }
+                    map of key/value pairs (where keys can be of any type)
+                        (
+                            key
+                                value
+                            other key
+                                other value
+                            123
+                                null
+                            undefined
+                                not found
+                            [
+                                array value 1
+                                array value 2
+                            ]
+                                (
+                                    map key 1
+                                        map value 1
+                                    map key 2
+                                        map value 2
+                                )
+                            {
+                                object key 1
+                                    object value 1
+                                object key 2
+                                    object value 2
+                            }
+                                [
+                                    array value 1
+                                    array value 2
+                                ]
+                            (
+                                map key 1
+                                    map value 1
+                                map key 2
+                                    map value 2
+                            )
+                                {
+                                    object key 1
+                                        object value 1
+                                    object key 2
+                                        object value 2
+                                }
+                        )
+                    array of objects
+                        [
+                            {
+                                name
+                                    John Doe
+                                role
+                                    administrator
+                            }
+                            {
+                                name
+                                    Jane Smith
+                                role
+                                    publisher
+                            }
+                        ]
+                    tabular array of objects
+                        [
+                            [
+                                name
+                                role
+                            ]
+                            [
+                                John Doe
+                                administrator
+                            ]
+                            [
+                                Jane Smith
+                                publisher
+                            ]
+                        ]{}
+                    array of maps
+                        [
+                            (
+                                name
+                                    John Doe
+                                role
+                                    administrator
+                            )
+                            (
+                                name
+                                    Jane Smith
+                                role
+                                    publisher
+                            )
+                        ]
+                    tabular array of maps
+                        [
+                            [
+                                name
+                                role
+                            ]
+                            [
+                                John Doe
+                                administrator
+                            ]
+                            [
+                                Jane Smith
+                                publisher
+                            ]
+                        ]()
+                }
+        }
+}
+~~~
+'#uuid'
+~~~
+'%uuid'
