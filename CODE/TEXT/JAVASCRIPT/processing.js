@@ -3,6 +3,11 @@
 import md5 from 'md5';
 import { parseDefText, throwParsingError } from './parsing.js';
 
+// -- CONSTANTS
+
+const
+    isBrowser = ( typeof window !== 'undefined' && typeof window.document !== 'undefined' );
+
 // -- FUNCTIONS
 
 export function getNaturalTextComparison(
@@ -91,18 +96,18 @@ export function getDefTextUuid(
     }
     else
     {
-        let md5_hash = md5( text );
+        let hash = md5( text );
 
         return (
-            md5_hash.slice( 0, 8 )
+            hash.slice( 0, 8 )
             + '-'
-            + md5_hash.slice( 8, 12 )
+            + hash.slice( 8, 12 )
             + '-'
-            + md5_hash.slice( 12, 16 )
+            + hash.slice( 12, 16 )
             + '-'
-            + md5_hash.slice( 16, 20 )
+            + hash.slice( 16, 20 )
             + '-'
-            + md5_hash.slice( 20, 32 )
+            + hash.slice( 20, 32 )
             );
     }
 }
@@ -119,12 +124,27 @@ export function getDefTextTuid(
     }
     else
     {
-        let md5_hash = md5( text );
+        let hash = md5( text );
+        let tuid = '';
 
+        if ( isBrowser )
+        {
+            let buffer = '';
+
+            for ( let byteIndex = 0; byteIndex < hash.length; byteIndex += 2 )
+            {
+                buffer += String.fromCharCode( parseInt( hash.slice( byteIndex, byteIndex + 2 ), 16 ) );
+            }
+            
+            tuid = btoa( buffer );
+        }
+        else
+        {
+            tuid = Buffer.from( hash, 'hex' ).toString( 'base64' );
+        }
+    
         return (
-            Buffer
-                .from( md5_hash, 'hex' )
-                .toString( 'base64' )
+            tuid
                 .replaceAll( '+', '-' )
                 .replaceAll( '/', '_' )
                 .replaceAll( '=', '' )
