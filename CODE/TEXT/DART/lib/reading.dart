@@ -4,7 +4,7 @@ import 'dart:io';
 
 // -- FUNCTIONS
 
-Future<String> readFile(
+Future<String> readTextFile(
     String filePath,
     ) async
 {
@@ -19,7 +19,7 @@ Future<String> readFile(
 Future<String> readDefFile(
     String filePath,
     {
-        Future<String> Function( String ) fileReadingFunction = readFile,
+        Future<String> Function( String ) fileReadingFunction = readTextFile,
         bool fileIsTrimmed = true,
         bool fileHasImports = false,
         String importPrefix = '@\'',

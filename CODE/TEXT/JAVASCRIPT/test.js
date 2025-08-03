@@ -11,7 +11,7 @@ var
 
 // -- FUNCTIONS
 
-async function readFile(
+async function readTextFile(
     filePath
     )
 {
@@ -96,7 +96,7 @@ async function runImportTest(
             await readDefFile( 
                 '../DATA/imported.def',
                 {
-                    fileReadingFunction: readFile,
+                    fileReadingFunction: readTextFile,
                     fileHasImports: true
                 }
                 );

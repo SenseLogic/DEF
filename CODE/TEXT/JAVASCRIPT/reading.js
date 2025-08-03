@@ -1,6 +1,6 @@
 // -- FUNCTIONS
 
-export async function readFile(
+export async function fetchTextFile(
     filePath
     )
 {
@@ -15,7 +15,7 @@ export async function readFile(
 export async function readDefFile(
     filePath,
     {
-        fileReadingFunction = readFile,
+        fileReadingFunction = fetchTextFile,
         fileIsTrimmed = true,
         fileHasImports = false,
         importPrefix = '@\'',

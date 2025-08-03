@@ -1,3 +1,7 @@
+## 0.1.14
+
+* Updated reading.
+
 ## 0.1.13
 
 * Added fetching.
