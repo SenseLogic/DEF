@@ -79,7 +79,7 @@ Future<void> runImportTest(
     try
     {
         var defText =
-            await readDefFile(
+            await fetchDefFile(
                 '../DATA/imported.def',
                 fileHasImports: true
                 );
