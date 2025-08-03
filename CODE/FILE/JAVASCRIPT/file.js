@@ -20,7 +20,7 @@ export function getPhysicalFilePath(
 
 // ~~
 
-export function readFileText(
+export function readTextFile(
     filePath,
     baseFolderPath = ''
     )
@@ -114,7 +114,7 @@ export function readDefFiles(
     {
         baseFolderPath = '',
         filePath = '',
-        fileReadingFunction = readFileText,
+        fileReadingFunction = readTextFile,
         stringProcessingQuote = '\'',
         stringProcessingFunction = processDefFileQuotedString,
         levelSpaceCount = 4
@@ -182,7 +182,7 @@ export function readDefFile(
     filePath,
     {
         baseFolderPath = '',
-        fileReadingFunction = readFileText,
+        fileReadingFunction = readTextFile,
         stringProcessingQuote = '\'',
         stringProcessingFunction = processDefFileQuotedString,
         levelSpaceCount = 4
@@ -243,7 +243,7 @@ export function parseDefFileText(
     {
         baseFolderPath = '',
         filePath = '',
-        fileReadingFunction = readFileText,
+        fileReadingFunction = readTextFile,
         stringProcessingQuote = '\'',
         stringProcessingFunction = processDefFileQuotedString,
         levelSpaceCount = 4

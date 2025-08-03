@@ -92,8 +92,8 @@ async function runImportTest(
 {
     try
     {
-        let defText = 
-            await readDefFile( 
+        let defText =
+            await readDefFile(
                 '../DATA/imported.def',
                 {
                     fileReadingFunction: readTextFile,
@@ -101,7 +101,7 @@ async function runImportTest(
                 }
                 );
 
-        parseText( defText, expectedValue );    
+        parseText( defText, expectedValue );
     }
     catch ( error )
     {

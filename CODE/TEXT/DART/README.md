@@ -20,6 +20,7 @@ Data Exchange Format.
 *   Can execute custom commands to :
     *   Generate UUIDs : '#id'
     *   Generate base64 UUIDs : '%id'
+    *   Load a DEF file : '@file.def'
 
 ```
 {

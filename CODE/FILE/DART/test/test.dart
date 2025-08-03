@@ -67,7 +67,7 @@ void runTest(
 void main(
     )
 {
-    testDataArray = readFileText( '../DATA/test.txt' ).split( '\n~~~\n' );
+    testDataArray = readTextFile( '../DATA/test.txt' ).split( '\n~~~\n' );
 
     runTest(
         {

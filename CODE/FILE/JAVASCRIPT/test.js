@@ -1,7 +1,7 @@
 // -- IMPORTS
 
 import { buildDefText, getDumpText, haveSameValue, parseDefText } from 'senselogic-def';
-import { parseDefFileText, readFileText } from './index.js';
+import { parseDefFileText, readTextFile } from './index.js';
 
 // -- VARIABLES
 
@@ -67,7 +67,7 @@ function runTest(
 
 // -- STATEMENTS
 
-testDataArray = readFileText( '../DATA/test.txt' ).split( '\n~~~\n' );
+testDataArray = readTextFile( '../DATA/test.txt' ).split( '\n~~~\n' );
 
 runTest(
     {

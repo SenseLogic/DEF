@@ -12,13 +12,23 @@ export async function fetchTextFile(
 
 // ~~
 
+export async function findMatchingFiles(
+    fileFilter
+    )
+{
+    return [ fileFilter ];
+}
+
+// ~~
+
 export async function readDefFile(
     filePath,
     {
         fileReadingFunction = fetchTextFile,
+        fileFindingFunction = findMatchingFiles,
         fileIsTrimmed = true,
         fileHasImports = false,
-        importPrefix = '@\'',
+        importPrefix = '\'@',
         importSuffix = '\''
     } = {}
     )
@@ -28,7 +38,7 @@ export async function readDefFile(
     if ( fileIsTrimmed )
     {
         fileText = fileText.trimEnd();
-    }   
+    }
 
     if ( fileHasImports
          && ( importPrefix !== ''
@@ -48,30 +58,35 @@ export async function readDefFile(
                  && trimmedLine.startsWith( importPrefix )
                  && trimmedLine.endsWith( importSuffix ) )
             {
-                let importedFilePath = trimmedLine.slice( importPrefix.length, trimmedLine.length - importSuffix.length );
-                let importedFileText = 
-                    await readDefFile( 
-                        folderPath + importedFilePath, 
-                        {
-                            fileReadingFunction,
-                            fileHasImports,
-                            importPrefix, 
-                            importSuffix 
-                        }
-                        );
+                let importedFileFilter = trimmedLine.slice( importPrefix.length, trimmedLine.length - importSuffix.length );
+                let importedFilePathArray = await fileFindingFunction( importedFileFilter );
 
-                let indentation = line.slice( 0, line.length - line.trimStart().length );
-                let indentedLineArray = importedFileText.split( '\n' );
-
-                for ( let indentedLineIndex = 0;
-                      indentedLineIndex < indentedLineArray.length;
-                      ++indentedLineIndex )
+                for ( let importedFilePath of importedFilePathArray )
                 {
-                    indentedLineArray[ indentedLineIndex ] = indentation + indentedLineArray[ indentedLineIndex ];
-                }
+                    let importedFileText =
+                        await readDefFile(
+                            folderPath + importedFilePath,
+                            {
+                                fileReadingFunction,
+                                fileHasImports,
+                                importPrefix,
+                                importSuffix
+                            }
+                            );
 
-                lineArray.splice( lineIndex, 1, ...indentedLineArray );
-                lineIndex += indentedLineArray.length - 1;
+                    let indentation = line.slice( 0, line.length - line.trimStart().length );
+                    let indentedLineArray = importedFileText.split( '\n' );
+
+                    for ( let indentedLineIndex = 0;
+                        indentedLineIndex < indentedLineArray.length;
+                        ++indentedLineIndex )
+                    {
+                        indentedLineArray[ indentedLineIndex ] = indentation + indentedLineArray[ indentedLineIndex ];
+                    }
+
+                    lineArray.splice( lineIndex, 1, ...indentedLineArray );
+                    lineIndex += indentedLineArray.length - 1;
+                }
             }
         }
 

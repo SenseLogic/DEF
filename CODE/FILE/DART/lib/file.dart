@@ -18,7 +18,7 @@ String getPhysicalFilePath(
 
 // ~~
 
-String readFileText(
+String readTextFile(
     String filePath,
     [
         String baseFolderPath = ''
@@ -116,7 +116,7 @@ dynamic readDefFiles(
     {
         String baseFolderPath = '',
         String filePath = '',
-        String Function( String, [String] )? fileReadingFunction = readFileText,
+        String Function( String, [String] )? fileReadingFunction = readTextFile,
         String stringProcessingQuote = '\'',
         dynamic Function( String, ParsingContext, int )? stringProcessingFunction = processDefFileQuotedString,
         int levelSpaceCount = 4
@@ -180,14 +180,14 @@ dynamic readDefFile(
     String filePath,
     {
         String baseFolderPath = '',
-        String Function( String, [String] )? fileReadingFunction = readFileText,
+        String Function( String, [String] )? fileReadingFunction = readTextFile,
         String stringProcessingQuote = '\'',
         dynamic Function( String, ParsingContext, int )? stringProcessingFunction = processDefFileQuotedString,
         int levelSpaceCount = 4
     }
     )
 {
-    var text = readFileText( filePath );
+    var text = readTextFile( filePath );
 
     return (
         parseDefText(
@@ -237,7 +237,7 @@ dynamic parseDefFileText(
     {
         String baseFolderPath = '',
         String filePath = '',
-        String Function( String, [String] )? fileReadingFunction = readFileText,
+        String Function( String, [String] )? fileReadingFunction = readTextFile,
         String stringProcessingQuote = '\'',
         dynamic Function( String, ParsingContext, int )? stringProcessingFunction = processDefFileQuotedString,
         int levelSpaceCount = 4

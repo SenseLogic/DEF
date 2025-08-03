@@ -6,7 +6,7 @@ import {
     parseDefFileText,
     processDefFileQuotedString,
     readDefFile,
-    readFileText
+    readTextFile
     } from './file.js';
 
 // -- EXPORTS
@@ -17,5 +17,5 @@ export {
     parseDefFileText,
     processDefFileQuotedString,
     readDefFile,
-    readFileText
+    readTextFile
     };

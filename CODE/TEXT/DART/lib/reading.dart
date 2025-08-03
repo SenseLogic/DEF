@@ -16,13 +16,23 @@ Future<String> readTextFile(
 
 // ~~
 
+Future<List<String>> findMatchingFiles(
+    String fileFilter
+    ) async
+{
+    return [ fileFilter ];
+}
+
+// ~~
+
 Future<String> readDefFile(
     String filePath,
     {
         Future<String> Function( String ) fileReadingFunction = readTextFile,
+        Future<List<String>> Function( String ) fileFindingFunction = findMatchingFiles,
         bool fileIsTrimmed = true,
         bool fileHasImports = false,
-        String importPrefix = '@\'',
+        String importPrefix = '\'@',
         String importSuffix = '\''
     }
     ) async
@@ -52,29 +62,34 @@ Future<String> readDefFile(
                  && trimmedLine.startsWith( importPrefix )
                  && trimmedLine.endsWith( importSuffix ) )
             {
-                var importedFilePath = trimmedLine.substring( importPrefix.length, trimmedLine.length - importSuffix.length );
-                var importedFileText = 
-                    await readDefFile( 
-                        folderPath + importedFilePath, 
-                        fileReadingFunction: fileReadingFunction,
-                        fileHasImports: fileHasImports,
-                        importPrefix: importPrefix,
-                        importSuffix: importSuffix
-                        );
+                var importedFileFilter = trimmedLine.substring( importPrefix.length, trimmedLine.length - importSuffix.length );
+                var importedFilePathArray = await fileFindingFunction( importedFileFilter );
 
-                var indentation = line.substring( 0, line.length - line.trimLeft().length );
-                var indentedLineArray = importedFileText.split( '\n' );
-
-                for ( int indentedLineIndex = 0;
-                      indentedLineIndex < indentedLineArray.length;
-                      ++indentedLineIndex )
+                for ( var importedFilePath in importedFilePathArray )
                 {
-                    indentedLineArray[ indentedLineIndex ] = indentation + indentedLineArray[ indentedLineIndex ];
-                }
+                    var importedFileText =
+                        await readDefFile(
+                            folderPath + importedFilePath,
+                            fileReadingFunction: fileReadingFunction,
+                            fileHasImports: fileHasImports,
+                            importPrefix: importPrefix,
+                            importSuffix: importSuffix
+                            );
 
-                lineArray.removeAt( lineIndex );
-                lineArray.insertAll( lineIndex, indentedLineArray );
-                lineIndex += indentedLineArray.length - 1;
+                    var indentation = line.substring( 0, line.length - line.trimLeft().length );
+                    var indentedLineArray = importedFileText.split( '\n' );
+
+                    for ( int indentedLineIndex = 0;
+                        indentedLineIndex < indentedLineArray.length;
+                        ++indentedLineIndex )
+                    {
+                        indentedLineArray[ indentedLineIndex ] = indentation + indentedLineArray[ indentedLineIndex ];
+                    }
+
+                    lineArray.removeAt( lineIndex );
+                    lineArray.insertAll( lineIndex, indentedLineArray );
+                    lineIndex += indentedLineArray.length - 1;
+                }
             }
         }
 
