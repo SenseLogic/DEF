@@ -82,7 +82,7 @@ bool haveSameValue(
             return false;
         }
 
-        for ( var valueIndex = 0;
+        for ( int valueIndex = 0;
               valueIndex < firstValue.length;
               ++valueIndex )
         {

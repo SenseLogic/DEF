@@ -10,12 +10,11 @@ int
 
 // -- FUNCTIONS
 
-void runTest(
+void parseText(
+    String defText,
     dynamic expectedValue
     )
 {
-    var defText = testDataArray![ testDataIndex ];
-
     try
     {
         print( '================================' );
@@ -58,14 +57,47 @@ void runTest(
         print( error );
         rethrow;
     }
+}
+
+// ~~
+
+void runTest(
+    dynamic expectedValue
+    )
+{
+    var defText = testDataArray![ testDataIndex ];
+
+    parseText( defText, expectedValue );
 
     ++testDataIndex;
+}
+// ~~
+
+Future<void> runImportTest(
+    expectedValue
+    ) async
+{
+    try
+    {
+        var defText = 
+            await readDefFile( 
+                '../DATA/imported.def',
+                fileHasImports: true
+                );
+
+        parseText( defText, expectedValue );
+    }
+    catch ( error )
+    {
+        print( error );
+        rethrow;
+    }
 }
 
 // ~~
 
 void main(
-    )
+    ) async
 {
     testDataArray = File( '../DATA/test.txt' ).readAsStringSync().split( '\n~~~\n' );
 
@@ -997,5 +1029,37 @@ void main(
         "73yHbwDzrN3QD6Zx9S0LHw"
         );
 
+    await runImportTest(
+        [
+            "imported",
+            [
+                "imported_1",
+                [
+                    "imported/imported_1",
+                    "imported/imported/imported_1",
+                    "imported/imported/imported_2"
+                ],
+                [
+                    "imported/imported_2",
+                    "imported/imported/imported_1",
+                    "imported/imported/imported_2"
+                ]
+            ],
+            [
+                "imported_2",
+                [
+                    "imported/imported_1",
+                    "imported/imported/imported_1",
+                    "imported/imported/imported_2"
+                ],
+                [
+                    "imported/imported_2",
+                    "imported/imported/imported_1",
+                    "imported/imported/imported_2"
+                ]
+            ]
+        ]
+        );
+    
     print( 'All tests passed!' );
 }

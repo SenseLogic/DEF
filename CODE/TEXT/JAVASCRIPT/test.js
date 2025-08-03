@@ -1,7 +1,7 @@
 // -- IMPORTS
 
 import { readFileSync } from 'node:fs';
-import { buildDefText, getDumpText, haveSameValue, parseDefText } from './index.js';
+import { buildDefText, getDumpText, haveSameValue, parseDefText, readDefFile } from './index.js';
 
 // -- VARIABLES
 
@@ -11,12 +11,20 @@ var
 
 // -- FUNCTIONS
 
-function runTest(
+async function readFile(
+    filePath
+    )
+{
+    return readFileSync( filePath, 'utf8' );
+}
+
+// ~~
+
+function parseText(
+    defText,
     expectedValue
     )
 {
-    let defText = testDataArray[ testDataIndex ];
-
     try
     {
         console.log( '================================' );
@@ -61,8 +69,45 @@ function runTest(
         console.error( error );
         throw error;
     }
+}
+
+// ~~
+
+function runTest(
+    expectedValue
+    )
+{
+    let defText = testDataArray[ testDataIndex ];
+
+    parseText( defText, expectedValue );
 
     ++testDataIndex;
+}
+
+// ~~
+
+async function runImportTest(
+    expectedValue
+    )
+{
+    try
+    {
+        let defText = 
+            await readDefFile( 
+                '../DATA/imported.def',
+                {
+                    fileReadingFunction: readFile,
+                    fileHasImports: true
+                }
+                );
+
+        parseText( defText, expectedValue );    
+    }
+    catch ( error )
+    {
+        console.error( error );
+        throw error;
+    }
 }
 
 // -- STATEMENTS
@@ -1217,6 +1262,38 @@ runTest(
 
 runTest(
     "73yHbwDzrN3QD6Zx9S0LHw"
+    );
+
+await runImportTest(
+    [
+        "imported",
+        [
+            "imported_1",
+            [
+                "imported/imported_1",
+                "imported/imported/imported_1",
+                "imported/imported/imported_2"
+            ],
+            [
+                "imported/imported_2",
+                "imported/imported/imported_1",
+                "imported/imported/imported_2"
+            ]
+        ],
+        [
+            "imported_2",
+            [
+                "imported/imported_1",
+                "imported/imported/imported_1",
+                "imported/imported/imported_2"
+            ],
+            [
+                "imported/imported_2",
+                "imported/imported/imported_1",
+                "imported/imported/imported_2"
+            ]
+        ]
+    ]
     );
 
 console.log( 'All tests passed!' );

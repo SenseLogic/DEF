@@ -1,3 +1,7 @@
+## 0.1.13
+
+* Added fetching.
+
 ## 0.1.12
 
 * Updated test.

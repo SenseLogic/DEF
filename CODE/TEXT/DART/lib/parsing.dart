@@ -422,7 +422,7 @@ List<dynamic> parseDefArray(
                         var objectArray = <Map<String, dynamic>>[];
                         var objectCount = array.length - 1;
 
-                        for ( var objectIndex = 0;
+                        for ( int objectIndex = 0;
                               objectIndex < objectCount;
                               ++objectIndex )
                         {
@@ -433,7 +433,7 @@ List<dynamic> parseDefArray(
                             {
                                 var object = <String, dynamic>{};
 
-                                for ( var keyIndex = 0;
+                                for ( int keyIndex = 0;
                                       keyIndex < keyCount;
                                       ++keyIndex )
                                 {
@@ -485,7 +485,7 @@ List<dynamic> parseDefArray(
                         var mapArray = <Map<dynamic, dynamic>>[];
                         var mapCount = array.length - 1;
 
-                        for ( var mapIndex = 0;
+                        for ( int mapIndex = 0;
                               mapIndex < mapCount;
                               ++mapIndex )
                         {
@@ -496,7 +496,7 @@ List<dynamic> parseDefArray(
                             {
                                 var map = <dynamic, dynamic>{};
 
-                                for ( var keyIndex = 0;
+                                for ( int keyIndex = 0;
                                       keyIndex < keyCount;
                                       ++keyIndex )
                                 {

@@ -9,8 +9,9 @@ import {
     getDefTextTuid,
     getDefTextUuid,
     getNaturalTextComparison,
-    processDefQuotedString
+    processDefQuotedString,
     } from './processing.js';
+import { readFile, readDefFile } from './reading.js';
 
 // -- EXPORTS
 
@@ -23,5 +24,7 @@ export {
     getNaturalTextComparison,
     haveSameValue,
     parseDefText,
-    processDefQuotedString
+    processDefQuotedString,
+    readFile,
+    readDefFile
     };
