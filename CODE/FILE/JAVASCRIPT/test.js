@@ -11,12 +11,11 @@ var
 
 // -- FUNCTIONS
 
-function runTest(
+function parseText(
+    defText,
     expectedValue
     )
 {
-    let defText = testDataArray[ testDataIndex ];
-
     try
     {
         console.log( '================================' );
@@ -61,6 +60,16 @@ function runTest(
         console.error( error );
         throw error;
     }
+}
+
+// ~~
+
+function runTest(
+    expectedValue
+    )
+{
+    let defText = testDataArray[ testDataIndex ];
+    parseText( defText, expectedValue );
 
     ++testDataIndex;
 }

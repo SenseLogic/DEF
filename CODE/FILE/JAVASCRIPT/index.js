@@ -7,7 +7,7 @@ import {
     processDefFileQuotedString,
     readDefFile,
     readTextFile
-    } from './file.js';
+    } from './reading.js';
 
 // -- EXPORTS
 

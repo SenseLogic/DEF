@@ -10,12 +10,11 @@ int
 
 // -- FUNCTIONS
 
-void runTest(
+void parseText(
+    String defText,
     dynamic expectedValue
     )
 {
-    var defText = testDataArray![ testDataIndex ];
-
     try
     {
         print( '================================' );
@@ -58,6 +57,16 @@ void runTest(
         print( error );
         rethrow;
     }
+}
+
+// ~~
+
+void runTest(
+    dynamic expectedValue
+    )
+{
+    var defText = testDataArray![ testDataIndex ];
+    parseText( defText, expectedValue );
 
     ++testDataIndex;
 }

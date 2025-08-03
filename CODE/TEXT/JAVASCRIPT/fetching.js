@@ -21,10 +21,10 @@ export async function findMatchingFiles(
 
 // ~~
 
-export async function readDefFile(
+export async function fetchDefFile(
     filePath,
     {
-        fileReadingFunction = fetchTextFile,
+        fileFetchingFunction = fetchTextFile,
         fileFindingFunction = findMatchingFiles,
         fileIsTrimmed = true,
         fileHasImports = false,
@@ -33,7 +33,7 @@ export async function readDefFile(
     } = {}
     )
 {
-    let fileText = await fileReadingFunction( filePath );
+    let fileText = await fileFetchingFunction( filePath );
 
     if ( fileIsTrimmed )
     {
@@ -64,10 +64,10 @@ export async function readDefFile(
                 for ( let importedFilePath of importedFilePathArray )
                 {
                     let importedFileText =
-                        await readDefFile(
+                        await fetchDefFile(
                             folderPath + importedFilePath,
                             {
-                                fileReadingFunction,
+                                fileFetchingFunction,
                                 fileHasImports,
                                 importPrefix,
                                 importSuffix

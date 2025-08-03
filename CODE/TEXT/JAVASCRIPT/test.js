@@ -1,7 +1,7 @@
 // -- IMPORTS
 
 import { readFileSync } from 'node:fs';
-import { buildDefText, getDumpText, haveSameValue, parseDefText, readDefFile } from './index.js';
+import { buildDefText, getDumpText, haveSameValue, parseDefText, fetchDefFile } from './index.js';
 
 // -- VARIABLES
 
@@ -11,7 +11,7 @@ var
 
 // -- FUNCTIONS
 
-async function readTextFile(
+async function fetchTextFile(
     filePath
     )
 {
@@ -78,7 +78,6 @@ function runTest(
     )
 {
     let defText = testDataArray[ testDataIndex ];
-
     parseText( defText, expectedValue );
 
     ++testDataIndex;
@@ -93,10 +92,10 @@ async function runImportTest(
     try
     {
         let defText =
-            await readDefFile(
+            await fetchDefFile(
                 '../DATA/imported.def',
                 {
-                    fileReadingFunction: readTextFile,
+                    fileFetchingFunction: fetchTextFile,
                     fileHasImports: true
                 }
                 );

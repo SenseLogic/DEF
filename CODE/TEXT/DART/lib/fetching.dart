@@ -4,7 +4,7 @@ import 'dart:io';
 
 // -- FUNCTIONS
 
-Future<String> readTextFile(
+Future<String> fetchTextFile(
     String filePath,
     ) async
 {
@@ -25,10 +25,10 @@ Future<List<String>> findMatchingFiles(
 
 // ~~
 
-Future<String> readDefFile(
+Future<String> fetchDefFile(
     String filePath,
     {
-        Future<String> Function( String ) fileReadingFunction = readTextFile,
+        Future<String> Function( String ) fileFetchingFunction = fetchTextFile,
         Future<List<String>> Function( String ) fileFindingFunction = findMatchingFiles,
         bool fileIsTrimmed = true,
         bool fileHasImports = false,
@@ -37,7 +37,7 @@ Future<String> readDefFile(
     }
     ) async
 {
-    var fileText = await fileReadingFunction( filePath );
+    var fileText = await fileFetchingFunction( filePath );
 
     if ( fileIsTrimmed )
     {
@@ -68,9 +68,9 @@ Future<String> readDefFile(
                 for ( var importedFilePath in importedFilePathArray )
                 {
                     var importedFileText =
-                        await readDefFile(
+                        await fetchDefFile(
                             folderPath + importedFilePath,
-                            fileReadingFunction: fileReadingFunction,
+                            fileFetchingFunction: fileFetchingFunction,
                             fileHasImports: fileHasImports,
                             importPrefix: importPrefix,
                             importSuffix: importSuffix

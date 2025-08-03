@@ -66,7 +66,6 @@ void runTest(
     )
 {
     var defText = testDataArray![ testDataIndex ];
-
     parseText( defText, expectedValue );
 
     ++testDataIndex;
@@ -79,8 +78,8 @@ Future<void> runImportTest(
 {
     try
     {
-        var defText = 
-            await readDefFile( 
+        var defText =
+            await readDefFile(
                 '../DATA/imported.def',
                 fileHasImports: true
                 );
@@ -1060,6 +1059,6 @@ void main(
             ]
         ]
         );
-    
+
     print( 'All tests passed!' );
 }
