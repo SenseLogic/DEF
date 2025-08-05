@@ -713,6 +713,7 @@ dynamic parseDefText(
 {
     var lineArray =
         text
+            .trimRight()
             .replaceAll( '\t', ' ' * levelSpaceCount )
             .replaceAll( '\r', '' )
             .split( '\n' );

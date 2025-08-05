@@ -26,23 +26,14 @@ export async function fetchDefFile(
     {
         fileFetchingFunction = fetchTextFile,
         fileFindingFunction = findMatchingFiles,
-        fileIsTrimmed = true,
-        fileHasImports = false,
-        importPrefix = '\'@',
-        importSuffix = '\''
+        hasImportCommands = true,
+        importCommandRegularExpression = /^'@(.+\.def)'$/
     } = {}
     )
 {
-    let fileText = await fileFetchingFunction( filePath );
+    let fileText = ( await fileFetchingFunction( filePath ) ).trimEnd();
 
-    if ( fileIsTrimmed )
-    {
-        fileText = fileText.trimEnd();
-    }
-
-    if ( fileHasImports
-         && ( importPrefix !== ''
-              || importSuffix !== '' ) )
+    if ( hasImportCommands )
     {
         let folderPath = filePath.slice( 0, filePath.lastIndexOf( '/' ) + 1 );
         let lineArray = fileText.split( '\n' );
@@ -53,12 +44,11 @@ export async function fetchDefFile(
         {
             let line = lineArray[ lineIndex ];
             let trimmedLine = line.trim();
+            let importCommandMatch = trimmedLine.match( importCommandRegularExpression );
 
-            if ( trimmedLine.length > importPrefix.length + importSuffix.length
-                 && trimmedLine.startsWith( importPrefix )
-                 && trimmedLine.endsWith( importSuffix ) )
+            if ( importCommandMatch )
             {
-                let importedFileFilter = trimmedLine.slice( importPrefix.length, trimmedLine.length - importSuffix.length );
+                let importedFileFilter = importCommandMatch[ 1 ];
                 let importedFilePathArray = await fileFindingFunction( importedFileFilter );
 
                 for ( let importedFilePath of importedFilePathArray )
@@ -68,9 +58,8 @@ export async function fetchDefFile(
                             folderPath + importedFilePath,
                             {
                                 fileFetchingFunction,
-                                fileHasImports,
-                                importPrefix,
-                                importSuffix
+                                hasImportCommands,
+                                importCommandRegularExpression
                             }
                             );
 

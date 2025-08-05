@@ -633,6 +633,7 @@ export function parseDefText(
 {
     let lineArray =
         text
+            .trimEnd()
             .replaceAll( '\t', ' '.repeat( levelSpaceCount ) )
             .replaceAll( '\r', '' )
             .split( '\n' );

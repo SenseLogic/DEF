@@ -78,12 +78,7 @@ Future<void> runImportTest(
 {
     try
     {
-        var defText =
-            await fetchDefFile(
-                '../DATA/imported.def',
-                fileHasImports: true
-                );
-
+        var defText = await fetchDefFile( '../DATA/imported.def' );
         parseText( defText, expectedValue );
     }
     catch ( error )

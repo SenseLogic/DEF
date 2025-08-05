@@ -1,3 +1,7 @@
+## 0.1.17
+
+* Updated fetching.
+
 ## 0.1.16
 
 * Updated fetching.

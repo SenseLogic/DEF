@@ -30,24 +30,20 @@ Future<String> fetchDefFile(
     {
         Future<String> Function( String ) fileFetchingFunction = fetchTextFile,
         Future<List<String>> Function( String ) fileFindingFunction = findMatchingFiles,
-        bool fileIsTrimmed = true,
-        bool fileHasImports = false,
-        String importPrefix = '\'@',
-        String importSuffix = '\''
+        bool hasImportCommands = true,
+        RegExp? importCommandRegularExpression
     }
     ) async
 {
-    var fileText = await fileFetchingFunction( filePath );
+    var fileText = ( await fileFetchingFunction( filePath ) ).trimRight();
 
-    if ( fileIsTrimmed )
+    if ( hasImportCommands )
     {
-        fileText = fileText.trimRight();
-    }
+        if ( importCommandRegularExpression == null )
+        {
+            importCommandRegularExpression = RegExp( r"^'@(.+\.def)'$" );
+        }
 
-    if ( fileHasImports
-         && ( importPrefix != ''
-              || importSuffix != '' ) )
-    {
         var folderPath = filePath.substring( 0, filePath.lastIndexOf( '/' ) + 1 );
         var lineArray = fileText.split( '\n' );
 
@@ -57,12 +53,11 @@ Future<String> fetchDefFile(
         {
             var line = lineArray[ lineIndex ];
             var trimmedLine = line.trim();
+            var importCommandMatch = importCommandRegularExpression.firstMatch( trimmedLine );
 
-            if ( trimmedLine.length > importPrefix.length + importSuffix.length
-                 && trimmedLine.startsWith( importPrefix )
-                 && trimmedLine.endsWith( importSuffix ) )
+            if ( importCommandMatch != null )
             {
-                var importedFileFilter = trimmedLine.substring( importPrefix.length, trimmedLine.length - importSuffix.length );
+                var importedFileFilter = importCommandMatch.group( 1 )!;
                 var importedFilePathArray = await fileFindingFunction( importedFileFilter );
 
                 for ( var importedFilePath in importedFilePathArray )
@@ -71,9 +66,8 @@ Future<String> fetchDefFile(
                         await fetchDefFile(
                             folderPath + importedFilePath,
                             fileFetchingFunction: fileFetchingFunction,
-                            fileHasImports: fileHasImports,
-                            importPrefix: importPrefix,
-                            importSuffix: importSuffix
+                            hasImportCommands: hasImportCommands,
+                            importCommandRegularExpression: importCommandRegularExpression
                             );
 
                     var indentation = line.substring( 0, line.length - line.trimLeft().length );
