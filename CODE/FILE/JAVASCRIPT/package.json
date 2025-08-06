@@ -24,7 +24,7 @@
         "file"
     ],
     "dependencies": {
-        "senselogic-def": "^0.1.19"
+        "senselogic-def": "^0.1.21"
     },
     "scripts": {
         "test": "node test.js"

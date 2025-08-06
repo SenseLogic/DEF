@@ -9,4 +9,4 @@ environment:
 
 dependencies:
   path: ^1.8.0
-  senselogic_def: ^0.1.16
+  senselogic_def: ^0.1.18
