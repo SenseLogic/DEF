@@ -116,9 +116,9 @@ dynamic readDefFiles(
     {
         String baseFolderPath = '',
         String filePath = '',
-        String Function( String, [String] )? fileReadingFunction = readTextFile,
+        String Function( String, [String] )? readTextFileFunction = readTextFile,
         String stringProcessingQuote = '\'',
-        dynamic Function( String, ParsingContext, int )? stringProcessingFunction = processDefFileQuotedString,
+        dynamic Function( String, ParsingContext, int )? processQuotedStringFunction = processDefFileQuotedString,
         int levelSpaceCount = 4
     }
     )
@@ -140,9 +140,9 @@ dynamic readDefFiles(
                     readDefFile(
                         folderFilePath,
                         baseFolderPath: baseFolderPath,
-                        fileReadingFunction: fileReadingFunction,
+                        readTextFileFunction: readTextFileFunction,
                         stringProcessingQuote: stringProcessingQuote,
-                        stringProcessingFunction: stringProcessingFunction,
+                        processQuotedStringFunction: processQuotedStringFunction,
                         levelSpaceCount: levelSpaceCount
                         )
                     );
@@ -154,9 +154,9 @@ dynamic readDefFiles(
                 readDefFile(
                     scriptFolderPath + path,
                     baseFolderPath: baseFolderPath,
-                    fileReadingFunction: fileReadingFunction,
+                    readTextFileFunction: readTextFileFunction,
                     stringProcessingQuote: stringProcessingQuote,
-                    stringProcessingFunction: stringProcessingFunction,
+                    processQuotedStringFunction: processQuotedStringFunction,
                     levelSpaceCount: levelSpaceCount
                     );
 
@@ -180,9 +180,9 @@ dynamic readDefFile(
     String filePath,
     {
         String baseFolderPath = '',
-        String Function( String, [String] )? fileReadingFunction = readTextFile,
+        String Function( String, [String] )? readTextFileFunction = readTextFile,
         String stringProcessingQuote = '\'',
-        dynamic Function( String, ParsingContext, int )? stringProcessingFunction = processDefFileQuotedString,
+        dynamic Function( String, ParsingContext, int )? processQuotedStringFunction = processDefFileQuotedString,
         int levelSpaceCount = 4
     }
     )
@@ -194,9 +194,9 @@ dynamic readDefFile(
             text,
             baseFolderPath: baseFolderPath,
             filePath: filePath,
-            fileReadingFunction: fileReadingFunction,
+            readTextFileFunction: readTextFileFunction,
             stringProcessingQuote: stringProcessingQuote,
-            stringProcessingFunction: stringProcessingFunction,
+            processQuotedStringFunction: processQuotedStringFunction,
             levelSpaceCount: levelSpaceCount
             )
         );
@@ -217,9 +217,9 @@ dynamic processDefFileQuotedString(
                 string.substring( 1 ).split( '\n@' ),
                 baseFolderPath: context.baseFolderPath,
                 filePath: context.filePath,
-                fileReadingFunction: context.fileReadingFunction,
+                readTextFileFunction: context.readTextFileFunction,
                 stringProcessingQuote: context.stringProcessingQuote,
-                stringProcessingFunction: context.stringProcessingFunction,
+                processQuotedStringFunction: context.processQuotedStringFunction,
                 levelSpaceCount: context.levelSpaceCount
                 )
             );
@@ -237,9 +237,9 @@ dynamic parseDefFileText(
     {
         String baseFolderPath = '',
         String filePath = '',
-        String Function( String, [String] )? fileReadingFunction = readTextFile,
+        String Function( String, [String] )? readTextFileFunction = readTextFile,
         String stringProcessingQuote = '\'',
-        dynamic Function( String, ParsingContext, int )? stringProcessingFunction = processDefFileQuotedString,
+        dynamic Function( String, ParsingContext, int )? processQuotedStringFunction = processDefFileQuotedString,
         int levelSpaceCount = 4
     }
     )
@@ -249,9 +249,9 @@ dynamic parseDefFileText(
             text,
             baseFolderPath: baseFolderPath,
             filePath: filePath,
-            fileReadingFunction: fileReadingFunction,
+            readTextFileFunction: readTextFileFunction,
             stringProcessingQuote: stringProcessingQuote,
-            stringProcessingFunction: stringProcessingFunction,
+            processQuotedStringFunction: processQuotedStringFunction,
             levelSpaceCount: levelSpaceCount
             )
         );

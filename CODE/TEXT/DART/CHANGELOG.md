@@ -1,3 +1,7 @@
+## 0.1.18
+
+* Renamed functions.
+
 ## 0.1.17
 
 * Updated fetching.

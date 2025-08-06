@@ -12,11 +12,28 @@ export async function fetchTextFile(
 
 // ~~
 
-export async function findMatchingFiles(
-    fileFilter
+export async function getImportedFilePathArray(
+    importedFileFilter
     )
 {
-    return [ fileFilter ];
+    return [ importedFileFilter ];
+}
+
+// ~~
+
+export function getImportedPath(
+    trimmedLine
+    )
+{
+    if ( trimmedLine.startsWith( '\'@' )
+         && trimmedLine.endsWith( '.def\'' ) )
+    {
+        return trimmedLine.slice( 2, -1 );
+    }
+    else
+    {
+        return '';
+    }
 }
 
 // ~~
@@ -24,14 +41,14 @@ export async function findMatchingFiles(
 export async function fetchDefFile(
     filePath,
     {
-        fileFetchingFunction = fetchTextFile,
-        fileFindingFunction = findMatchingFiles,
+        fetchTextFileFunction = fetchTextFile,
         hasImportCommands = true,
-        importCommandRegularExpression = /^'@(.+\.def)'$/
+        getImportedPathFunction = getImportedPath,
+        getImportedFilePathArrayFunction = getImportedFilePathArray
     } = {}
     )
 {
-    let fileText = ( await fileFetchingFunction( filePath ) ).trimEnd();
+    let fileText = ( await fetchTextFileFunction( filePath ) ).trimEnd();
 
     if ( hasImportCommands )
     {
@@ -44,12 +61,11 @@ export async function fetchDefFile(
         {
             let line = lineArray[ lineIndex ];
             let trimmedLine = line.trim();
-            let importCommandMatch = trimmedLine.match( importCommandRegularExpression );
+            let importedFileFilter = getImportedPathFunction( trimmedLine );
 
-            if ( importCommandMatch )
+            if ( importedFileFilter.length > 0 )
             {
-                let importedFileFilter = importCommandMatch[ 1 ];
-                let importedFilePathArray = await fileFindingFunction( importedFileFilter );
+                let importedFilePathArray = await getImportedFilePathArrayFunction( importedFileFilter );
 
                 for ( let importedFilePath of importedFilePathArray )
                 {
@@ -57,9 +73,10 @@ export async function fetchDefFile(
                         await fetchDefFile(
                             folderPath + importedFilePath,
                             {
-                                fileFetchingFunction,
+                                fetchTextFileFunction,
                                 hasImportCommands,
-                                importCommandRegularExpression
+                                getImportedPathFunction,
+                                getImportedFilePathArrayFunction
                             }
                             );
 

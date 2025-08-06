@@ -16,11 +16,28 @@ Future<String> fetchTextFile(
 
 // ~~
 
-Future<List<String>> findMatchingFiles(
-    String fileFilter
+Future<List<String>> getImportedFilePathArray(
+    String importedFileFilter
     ) async
 {
-    return [ fileFilter ];
+    return [ importedFileFilter ];
+}
+
+// ~~
+
+String getImportedPath(
+    String trimmedLine
+    )
+{
+    if ( trimmedLine.startsWith( '\'@' )
+         && trimmedLine.endsWith( '.def\'' ) )
+    {
+        return trimmedLine.substring( 2, trimmedLine.length - 1 );
+    }
+    else
+    {
+        return '';
+    }
 }
 
 // ~~
@@ -28,22 +45,17 @@ Future<List<String>> findMatchingFiles(
 Future<String> fetchDefFile(
     String filePath,
     {
-        Future<String> Function( String ) fileFetchingFunction = fetchTextFile,
-        Future<List<String>> Function( String ) fileFindingFunction = findMatchingFiles,
+        Future<String> Function( String ) fetchTextFileFunction = fetchTextFile,
         bool hasImportCommands = true,
-        RegExp? importCommandRegularExpression
+        String Function( String ) getImportedPathFunction = getImportedPath,
+        Future<List<String>> Function( String ) getImportedFilePathArrayFunction = getImportedFilePathArray
     }
     ) async
 {
-    var fileText = ( await fileFetchingFunction( filePath ) ).trimRight();
+    var fileText = ( await fetchTextFileFunction( filePath ) ).trimRight();
 
     if ( hasImportCommands )
     {
-        if ( importCommandRegularExpression == null )
-        {
-            importCommandRegularExpression = RegExp( r"^'@(.+\.def)'$" );
-        }
-
         var folderPath = filePath.substring( 0, filePath.lastIndexOf( '/' ) + 1 );
         var lineArray = fileText.split( '\n' );
 
@@ -53,21 +65,21 @@ Future<String> fetchDefFile(
         {
             var line = lineArray[ lineIndex ];
             var trimmedLine = line.trim();
-            var importCommandMatch = importCommandRegularExpression.firstMatch( trimmedLine );
+            var importedFilePath = getImportedPathFunction( trimmedLine );
 
-            if ( importCommandMatch != null )
+            if ( importedFilePath.length > 0 )
             {
-                var importedFileFilter = importCommandMatch.group( 1 )!;
-                var importedFilePathArray = await fileFindingFunction( importedFileFilter );
+                var importedFilePathArray = await getImportedFilePathArrayFunction( importedFilePath );
 
                 for ( var importedFilePath in importedFilePathArray )
                 {
                     var importedFileText =
                         await fetchDefFile(
                             folderPath + importedFilePath,
-                            fileFetchingFunction: fileFetchingFunction,
+                            fetchTextFileFunction: fetchTextFileFunction,
                             hasImportCommands: hasImportCommands,
-                            importCommandRegularExpression: importCommandRegularExpression
+                            getImportedPathFunction: getImportedPathFunction,
+                            getImportedFilePathArrayFunction: getImportedFilePathArrayFunction
                             );
 
                     var indentation = line.substring( 0, line.length - line.trimLeft().length );

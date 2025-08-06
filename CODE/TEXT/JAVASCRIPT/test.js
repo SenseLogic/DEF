@@ -91,7 +91,7 @@ async function runImportTest(
 {
     try
     {
-        let defText = await fetchDefFile( '../DATA/imported.def', { fileFetchingFunction: fetchTextFile } );
+        let defText = await fetchDefFile( '../DATA/imported.def', { fetchTextFileFunction: fetchTextFile } );
         parseText( defText, expectedValue );
     }
     catch ( error )

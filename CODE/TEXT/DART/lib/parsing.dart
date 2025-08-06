@@ -42,11 +42,11 @@ class ParsingContext
         baseFolderPath,
         filePath;
     final String Function( String, [String] )?
-        fileReadingFunction;
+        readTextFileFunction;
     final String
         stringProcessingQuote;
     final dynamic Function( String, ParsingContext, int )?
-        stringProcessingFunction;
+        processQuotedStringFunction;
     final int
         levelSpaceCount;
     final String
@@ -62,9 +62,9 @@ class ParsingContext
         {
             required this.baseFolderPath,
             required this.filePath,
-            required this.fileReadingFunction,
+            required this.readTextFileFunction,
             required this.stringProcessingQuote,
-            required this.stringProcessingFunction,
+            required this.processQuotedStringFunction,
             required this.levelSpaceCount,
             required this.text,
             required this.lineArray,
@@ -349,9 +349,9 @@ dynamic parseDefQuotedString(
             string += getUnescapedText( tokenArray );
 
             if ( quote == context.stringProcessingQuote
-                 && context.stringProcessingFunction != null )
+                 && context.processQuotedStringFunction != null )
             {
-                return context.stringProcessingFunction!( string, context, level );
+                return context.processQuotedStringFunction!( string, context, level );
             }
             else
             {
@@ -704,9 +704,9 @@ dynamic parseDefText(
     {
         String baseFolderPath = '',
         String filePath = '',
-        String Function( String, [String] )? fileReadingFunction = null,
+        String Function( String, [String] )? readTextFileFunction = null,
         String stringProcessingQuote = '\'',
-        dynamic Function( String, ParsingContext, int )? stringProcessingFunction = processDefQuotedString,
+        dynamic Function( String, ParsingContext, int )? processQuotedStringFunction = processDefQuotedString,
         int levelSpaceCount = 4
     }
     )
@@ -722,9 +722,9 @@ dynamic parseDefText(
         ParsingContext(
             baseFolderPath: baseFolderPath,
             filePath: filePath,
-            fileReadingFunction: fileReadingFunction,
+            readTextFileFunction: readTextFileFunction,
             stringProcessingQuote: stringProcessingQuote,
-            stringProcessingFunction: stringProcessingFunction,
+            processQuotedStringFunction: processQuotedStringFunction,
             levelSpaceCount: levelSpaceCount,
             text: text,
             lineArray: lineArray

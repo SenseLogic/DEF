@@ -271,9 +271,9 @@ function parseDefQuotedString(
             string += getUnescapedText( tokenArray );
 
             if ( quote === context.stringProcessingQuote
-                 && context.stringProcessingFunction !== null )
+                 && context.processQuotedStringFunction !== null )
             {
-                return context.stringProcessingFunction( string, context, level );
+                return context.processQuotedStringFunction( string, context, level );
             }
             else
             {
@@ -624,9 +624,9 @@ export function parseDefText(
     {
         baseFolderPath = '',
         filePath = '',
-        fileReadingFunction = null,
+        readTextFileFunction = null,
         stringProcessingQuote = '\'',
-        stringProcessingFunction = processDefQuotedString,
+        processQuotedStringFunction = processDefQuotedString,
         levelSpaceCount = 4
     } = {}
     )
@@ -642,9 +642,9 @@ export function parseDefText(
         {
             baseFolderPath,
             filePath,
-            fileReadingFunction,
+            readTextFileFunction,
             stringProcessingQuote,
-            stringProcessingFunction,
+            processQuotedStringFunction,
             levelSpaceCount,
             text,
             lineArray,

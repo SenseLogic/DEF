@@ -114,9 +114,9 @@ export function readDefFiles(
     {
         baseFolderPath = '',
         filePath = '',
-        fileReadingFunction = readTextFile,
+        readTextFileFunction = readTextFile,
         stringProcessingQuote = '\'',
-        stringProcessingFunction = processDefFileQuotedString,
+        processQuotedStringFunction = processDefFileQuotedString,
         levelSpaceCount = 4
     } = {}
     )
@@ -139,9 +139,9 @@ export function readDefFiles(
                         folderFilePath,
                         {
                             baseFolderPath,
-                            fileReadingFunction,
+                            readTextFileFunction,
                             stringProcessingQuote,
-                            stringProcessingFunction,
+                            processQuotedStringFunction,
                             levelSpaceCount
                         }
                         )
@@ -155,9 +155,9 @@ export function readDefFiles(
                     scriptFolderPath + path,
                     {
                         baseFolderPath,
-                        fileReadingFunction,
+                        readTextFileFunction,
                         stringProcessingQuote,
-                        stringProcessingFunction,
+                        processQuotedStringFunction,
                         levelSpaceCount
                     }
                     );
@@ -182,14 +182,14 @@ export function readDefFile(
     filePath,
     {
         baseFolderPath = '',
-        fileReadingFunction = readTextFile,
+        readTextFileFunction = readTextFile,
         stringProcessingQuote = '\'',
-        stringProcessingFunction = processDefFileQuotedString,
+        processQuotedStringFunction = processDefFileQuotedString,
         levelSpaceCount = 4
     } = {}
     )
 {
-    let text = fileReadingFunction( filePath, baseFolderPath );
+    let text = readTextFileFunction( filePath, baseFolderPath );
 
     return (
         parseDefText(
@@ -197,9 +197,9 @@ export function readDefFile(
             {
                 baseFolderPath,
                 filePath,
-                fileReadingFunction,
+                readTextFileFunction,
                 stringProcessingQuote,
-                stringProcessingFunction,
+                processQuotedStringFunction,
                 levelSpaceCount
             }
             )
@@ -222,9 +222,9 @@ export function processDefFileQuotedString(
                 {
                     baseFolderPath: context.baseFolderPath,
                     filePath: context.filePath,
-                    fileReadingFunction: context.fileReadingFunction,
+                    readTextFileFunction: context.readTextFileFunction,
                     stringProcessingQuote: context.stringProcessingQuote,
-                    stringProcessingFunction: context.stringProcessingFunction,
+                    processQuotedStringFunction: context.processQuotedStringFunction,
                     levelSpaceCount: context.levelSpaceCount
                 }
                 )
@@ -243,9 +243,9 @@ export function parseDefFileText(
     {
         baseFolderPath = '',
         filePath = '',
-        fileReadingFunction = readTextFile,
+        readTextFileFunction = readTextFile,
         stringProcessingQuote = '\'',
-        stringProcessingFunction = processDefFileQuotedString,
+        processQuotedStringFunction = processDefFileQuotedString,
         levelSpaceCount = 4
     } = {}
     )
@@ -256,9 +256,9 @@ export function parseDefFileText(
             {
                 baseFolderPath,
                 filePath,
-                fileReadingFunction,
+                readTextFileFunction,
                 stringProcessingQuote,
-                stringProcessingFunction,
+                processQuotedStringFunction,
                 levelSpaceCount
             }
             )
