@@ -1,3 +1,7 @@
+## 0.1.14
+
+* Updated package.
+
 ## 0.1.13
 
 * Renamed functions.
