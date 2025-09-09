@@ -3,9 +3,14 @@
 import {
     getDefFilePathArray,
     getDefFolderPath,
+    getImportedPath,
+    getImportedFilePathArray,
+    getPhysicalFilePath,
     parseDefFileText,
-    processDefFileQuotedString,
+    processDefFileText,
     readDefFile,
+    readDefFileText,
+    readDefFiles,
     readTextFile
     } from './reading.js';
 
@@ -14,8 +19,13 @@ import {
 export {
     getDefFilePathArray,
     getDefFolderPath,
+    getImportedPath,
+    getImportedFilePathArray,
+    getPhysicalFilePath,
     parseDefFileText,
-    processDefFileQuotedString,
+    processDefFileText,
     readDefFile,
+    readDefFileText,
+    readDefFiles,
     readTextFile
     };

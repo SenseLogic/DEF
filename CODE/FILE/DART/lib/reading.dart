@@ -6,6 +6,32 @@ import 'package:senselogic_def/senselogic_def.dart';
 
 // -- FUNCTIONS
 
+String getImportedPath(
+    String trimmedLine
+    )
+{
+    if ( trimmedLine.startsWith( '\'@' )
+         && trimmedLine.endsWith( '\'' ) )
+    {
+        return trimmedLine.substring( 2, trimmedLine.length - 1 );
+    }
+    else
+    {
+        return '';
+    }
+}
+
+// ~~
+
+List<String> getImportedFilePathArray(
+    String importedFileFilter
+    )
+{
+    return getDefFilePathArray( importedFileFilter );
+}
+
+// ~~
+
 String getPhysicalFilePath(
     String filePath,
     [
@@ -111,6 +137,188 @@ List<String> getDefFilePathArray(
 
 // ~~
 
+String processDefFileText(
+    String fileText,
+    {
+        String baseFolderPath = '',
+        String filePath = '',
+        String Function( String, [String] )? readTextFileFunction = readTextFile,
+        bool hasImportCommands = true,
+        String Function( String )? getImportedPathFunction = getImportedPath,
+        List<String> Function( String )? getImportedFilePathArrayFunction = getImportedFilePathArray
+    }
+    )
+{
+    if ( hasImportCommands )
+    {
+        var folderPath = filePath.substring( 0, filePath.lastIndexOf( '/' ) + 1 );
+        var lineArray = fileText.split( '\n' );
+
+        for ( var lineIndex = 0;
+              lineIndex < lineArray.length;
+              ++lineIndex )
+        {
+            var line = lineArray[ lineIndex ];
+            var trimmedLine = line.trim();
+            var importedFileFilter = getImportedPathFunction!( trimmedLine );
+
+            if ( importedFileFilter.isNotEmpty )
+            {
+                lineArray.removeAt( lineIndex );
+                var importedFilePathArray = getImportedFilePathArrayFunction!( folderPath + importedFileFilter );
+
+                for ( var importedFilePath in importedFilePathArray )
+                {
+                    var importedFileText =
+                        readDefFileText(
+                            importedFilePath,
+                            baseFolderPath: baseFolderPath,
+                            readTextFileFunction: readTextFileFunction,
+                            hasImportCommands: hasImportCommands,
+                            getImportedPathFunction: getImportedPathFunction,
+                            getImportedFilePathArrayFunction: getImportedFilePathArrayFunction
+                            );
+
+                    var indentation = line.substring( 0, line.length - line.trimLeft().length );
+                    var indentedLineArray = importedFileText.split( '\n' );
+
+                    for ( var indentedLineIndex = 0;
+                          indentedLineIndex < indentedLineArray.length;
+                          ++indentedLineIndex )
+                    {
+                        indentedLineArray[ indentedLineIndex ] = indentation + indentedLineArray[ indentedLineIndex ];
+                    }
+
+                    lineArray.insertAll( lineIndex, indentedLineArray );
+                    lineIndex += indentedLineArray.length;
+                }
+
+                --lineIndex;
+            }
+        }
+
+        fileText = lineArray.join( '\n' );
+    }
+
+    return fileText;
+}
+
+// ~~
+
+dynamic parseDefFileText(
+    String fileText,
+    {
+        String baseFolderPath = '',
+        String filePath = '',
+        String Function( String, [String] )? readTextFileFunction = readTextFile,
+        bool hasImportCommands = true,
+        String stringProcessingQuote = '\'',
+        dynamic Function( String, ParsingContext, int )? processQuotedStringFunction = processDefQuotedString,
+        int levelSpaceCount = 4,
+        String Function( String )? getImportedPathFunction = getImportedPath,
+        List<String> Function( String )? getImportedFilePathArrayFunction = getImportedFilePathArray
+    }
+    )
+{
+    if ( hasImportCommands )
+    {
+        fileText =
+            processDefFileText(
+                fileText,
+                baseFolderPath: baseFolderPath,
+                filePath: filePath,
+                readTextFileFunction: readTextFileFunction,
+                hasImportCommands: hasImportCommands,
+                getImportedPathFunction: getImportedPathFunction,
+                getImportedFilePathArrayFunction: getImportedFilePathArrayFunction
+                );
+    }
+
+    return (
+        parseDefText(
+            fileText,
+            baseFolderPath: baseFolderPath,
+            filePath: filePath,
+            readTextFileFunction: readTextFileFunction,
+            stringProcessingQuote: stringProcessingQuote,
+            processQuotedStringFunction: processQuotedStringFunction,
+            levelSpaceCount: levelSpaceCount
+            )
+        );
+}
+
+// ~~
+
+String readDefFileText(
+    String filePath,
+    {
+        String baseFolderPath = '',
+        String Function( String, [String] )? readTextFileFunction = readTextFile,
+        bool hasImportCommands = true,
+        String Function( String )? getImportedPathFunction = getImportedPath,
+        List<String> Function( String )? getImportedFilePathArrayFunction = getImportedFilePathArray
+    }
+    )
+{
+    var fileText = readTextFileFunction!( filePath, baseFolderPath ).trimRight();
+
+    if ( hasImportCommands )
+    {
+        fileText =
+            processDefFileText(
+                fileText,
+                baseFolderPath: baseFolderPath,
+                filePath: filePath,
+                readTextFileFunction: readTextFileFunction,
+                hasImportCommands: hasImportCommands,
+                getImportedPathFunction: getImportedPathFunction,
+                getImportedFilePathArrayFunction: getImportedFilePathArrayFunction
+                );
+    }
+
+    return fileText;
+}
+
+// ~~
+
+dynamic readDefFile(
+    String filePath,
+    {
+        String baseFolderPath = '',
+        String Function( String, [String] )? readTextFileFunction = readTextFile,
+        String stringProcessingQuote = '\'',
+        dynamic Function( String, ParsingContext, int )? processQuotedStringFunction = processDefQuotedString,
+        int levelSpaceCount = 4,
+        bool hasImportCommands = true,
+        String Function( String )? getImportedPathFunction = getImportedPath,
+        List<String> Function( String )? getImportedFilePathArrayFunction = getImportedFilePathArray
+    }
+    )
+{
+    var text = readDefFileText(
+        filePath,
+        baseFolderPath: baseFolderPath,
+        readTextFileFunction: readTextFileFunction,
+        hasImportCommands: hasImportCommands,
+        getImportedPathFunction: getImportedPathFunction,
+        getImportedFilePathArrayFunction: getImportedFilePathArrayFunction
+        );
+
+    return (
+        parseDefText(
+            text,
+            baseFolderPath: baseFolderPath,
+            filePath: filePath,
+            readTextFileFunction: readTextFileFunction,
+            stringProcessingQuote: stringProcessingQuote,
+            processQuotedStringFunction: processQuotedStringFunction,
+            levelSpaceCount: levelSpaceCount
+            )
+        );
+}
+
+// ~~
+
 dynamic readDefFiles(
     List<String> pathArray,
     {
@@ -118,8 +326,11 @@ dynamic readDefFiles(
         String filePath = '',
         String Function( String, [String] )? readTextFileFunction = readTextFile,
         String stringProcessingQuote = '\'',
-        dynamic Function( String, ParsingContext, int )? processQuotedStringFunction = processDefFileQuotedString,
-        int levelSpaceCount = 4
+        dynamic Function( String, ParsingContext, int )? processQuotedStringFunction = processDefQuotedString,
+        int levelSpaceCount = 4,
+        bool hasImportCommands = true,
+        String Function( String )? getImportedPathFunction = getImportedPath,
+        List<String> Function( String )? getImportedFilePathArrayFunction = getImportedFilePathArray
     }
     )
 {
@@ -143,7 +354,10 @@ dynamic readDefFiles(
                         readTextFileFunction: readTextFileFunction,
                         stringProcessingQuote: stringProcessingQuote,
                         processQuotedStringFunction: processQuotedStringFunction,
-                        levelSpaceCount: levelSpaceCount
+                        levelSpaceCount: levelSpaceCount,
+                        hasImportCommands: hasImportCommands,
+                        getImportedPathFunction: getImportedPathFunction,
+                        getImportedFilePathArrayFunction: getImportedFilePathArrayFunction
                         )
                     );
             }
@@ -157,7 +371,10 @@ dynamic readDefFiles(
                     readTextFileFunction: readTextFileFunction,
                     stringProcessingQuote: stringProcessingQuote,
                     processQuotedStringFunction: processQuotedStringFunction,
-                    levelSpaceCount: levelSpaceCount
+                    levelSpaceCount: levelSpaceCount,
+                    hasImportCommands: hasImportCommands,
+                    getImportedPathFunction: getImportedPathFunction,
+                    getImportedFilePathArrayFunction: getImportedFilePathArrayFunction
                     );
 
             if ( pathArray.length == 1 )
@@ -172,87 +389,4 @@ dynamic readDefFiles(
     }
 
     return valueArray;
-}
-
-// ~~
-
-dynamic readDefFile(
-    String filePath,
-    {
-        String baseFolderPath = '',
-        String Function( String, [String] )? readTextFileFunction = readTextFile,
-        String stringProcessingQuote = '\'',
-        dynamic Function( String, ParsingContext, int )? processQuotedStringFunction = processDefFileQuotedString,
-        int levelSpaceCount = 4
-    }
-    )
-{
-    var text = readTextFile( filePath );
-
-    return (
-        parseDefText(
-            text,
-            baseFolderPath: baseFolderPath,
-            filePath: filePath,
-            readTextFileFunction: readTextFileFunction,
-            stringProcessingQuote: stringProcessingQuote,
-            processQuotedStringFunction: processQuotedStringFunction,
-            levelSpaceCount: levelSpaceCount
-            )
-        );
-}
-
-// ~~
-
-dynamic processDefFileQuotedString(
-    String string,
-    ParsingContext context,
-    int level
-    )
-{
-    if ( string.startsWith( '@' ) )
-    {
-        return (
-            readDefFiles(
-                string.substring( 1 ).split( '\n@' ),
-                baseFolderPath: context.baseFolderPath,
-                filePath: context.filePath,
-                readTextFileFunction: context.readTextFileFunction,
-                stringProcessingQuote: context.stringProcessingQuote,
-                processQuotedStringFunction: context.processQuotedStringFunction,
-                levelSpaceCount: context.levelSpaceCount
-                )
-            );
-    }
-    else
-    {
-        return processDefQuotedString( string, context, level );
-    }
-}
-
-// ~~
-
-dynamic parseDefFileText(
-    String text,
-    {
-        String baseFolderPath = '',
-        String filePath = '',
-        String Function( String, [String] )? readTextFileFunction = readTextFile,
-        String stringProcessingQuote = '\'',
-        dynamic Function( String, ParsingContext, int )? processQuotedStringFunction = processDefFileQuotedString,
-        int levelSpaceCount = 4
-    }
-    )
-{
-    return (
-        parseDefText(
-            text,
-            baseFolderPath: baseFolderPath,
-            filePath: filePath,
-            readTextFileFunction: readTextFileFunction,
-            stringProcessingQuote: stringProcessingQuote,
-            processQuotedStringFunction: processQuotedStringFunction,
-            levelSpaceCount: levelSpaceCount
-            )
-        );
 }

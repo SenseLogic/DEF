@@ -10,6 +10,32 @@ import {
 
 // -- FUNCTIONS
 
+export function getImportedPath(
+    trimmedLine
+    )
+{
+    if ( trimmedLine.startsWith( '\'@' )
+         && trimmedLine.endsWith( '\'' ) )
+    {
+        return trimmedLine.slice( 2, -1 );
+    }
+    else
+    {
+        return '';
+    }
+}
+
+// ~~
+
+export function getImportedFilePathArray(
+    importedFileFilter
+    )
+{
+    return getDefFilePathArray( importedFileFilter );
+}
+
+// ~~
+
 export function getPhysicalFilePath(
     filePath,
     baseFolderPath = ''
@@ -109,6 +135,200 @@ export function getDefFilePathArray(
 
 // ~~
 
+export function processDefFileText(
+    fileText,
+    {
+        baseFolderPath = '',
+        filePath = '',
+        readTextFileFunction = readTextFile,
+        hasImportCommands = true,
+        getImportedPathFunction = getImportedPath,
+        getImportedFilePathArrayFunction = getImportedFilePathArray
+    } = {}
+    )
+{
+    if ( hasImportCommands )
+    {
+        let folderPath = filePath.slice( 0, filePath.lastIndexOf( '/' ) + 1 );
+        let lineArray = fileText.split( '\n' );
+
+        for ( let lineIndex = 0;
+              lineIndex < lineArray.length;
+              ++lineIndex )
+        {
+            let line = lineArray[ lineIndex ];
+            let trimmedLine = line.trim();
+            let importedFileFilter = getImportedPathFunction( trimmedLine );
+
+            if ( importedFileFilter.length > 0 )
+            {
+                lineArray.splice( lineIndex, 1 );
+                let importedFilePathArray = getImportedFilePathArrayFunction( folderPath + importedFileFilter );
+
+                for ( let importedFilePath of importedFilePathArray )
+                {
+                    let importedFileText =
+                        readDefFileText(
+                            importedFilePath,
+                            {
+                                baseFolderPath,
+                                readTextFileFunction,
+                                hasImportCommands,
+                                getImportedPathFunction,
+                                getImportedFilePathArrayFunction
+                            }
+                            );
+
+                    let indentation = line.slice( 0, line.length - line.trimStart().length );
+                    let indentedLineArray = importedFileText.split( '\n' );
+
+                    for ( let indentedLineIndex = 0;
+                          indentedLineIndex < indentedLineArray.length;
+                          ++indentedLineIndex )
+                    {
+                        indentedLineArray[ indentedLineIndex ] = indentation + indentedLineArray[ indentedLineIndex ];
+                    }
+
+                    lineArray.splice( lineIndex, 0, ...indentedLineArray );
+                    lineIndex += indentedLineArray.length;
+                }
+
+                --lineIndex;
+            }
+        }
+
+        fileText = lineArray.join( '\n' );
+    }
+
+    return fileText;
+}
+
+// ~~
+
+export function parseDefFileText(
+    fileText,
+    {
+        baseFolderPath = '',
+        filePath = '',
+        readTextFileFunction = readTextFile,
+        hasImportCommands = true,
+        stringProcessingQuote = '\'',
+        processQuotedStringFunction = processDefQuotedString,
+        levelSpaceCount = 4,
+        getImportedPathFunction = getImportedPath,
+        getImportedFilePathArrayFunction = getImportedFilePathArray
+    } = {}
+    )
+{
+    if ( hasImportCommands )
+    {
+        fileText =
+            processDefFileText(
+                fileText,
+                {
+                    baseFolderPath,
+                    filePath,
+                    readTextFileFunction,
+                    hasImportCommands,
+                    getImportedPathFunction,
+                    getImportedFilePathArrayFunction
+                }
+                );
+    }
+
+    return (
+        parseDefText(
+            fileText,
+            {
+                baseFolderPath,
+                filePath,
+                readTextFileFunction,
+                stringProcessingQuote,
+                processQuotedStringFunction,
+                levelSpaceCount
+            }
+            )
+        );
+}
+
+// ~~
+
+export function readDefFileText(
+    filePath,
+    {
+        baseFolderPath = '',
+        readTextFileFunction = readTextFile,
+        hasImportCommands = true,
+        getImportedPathFunction = getImportedPath,
+        getImportedFilePathArrayFunction = getImportedFilePathArray
+    } = {}
+    )
+{
+    let fileText = readTextFileFunction( filePath, baseFolderPath ).trimEnd();
+
+    if ( hasImportCommands )
+    {
+        fileText =
+            processDefFileText(
+                fileText,
+                {
+                    baseFolderPath,
+                    filePath,
+                    readTextFileFunction,
+                    hasImportCommands,
+                    getImportedPathFunction,
+                    getImportedFilePathArrayFunction
+                }
+                );
+    }
+
+    return fileText;
+}
+
+// ~~
+
+export function readDefFile(
+    filePath,
+    {
+        baseFolderPath = '',
+        readTextFileFunction = readTextFile,
+        stringProcessingQuote = '\'',
+        processQuotedStringFunction = processDefFileQuotedString,
+        levelSpaceCount = 4,
+        hasImportCommands = true,
+        getImportedPathFunction = getImportedPath,
+        getImportedFilePathArrayFunction = getImportedFilePathArray
+    } = {}
+    )
+{
+    let text = readDefFileText(
+        filePath,
+        {
+            baseFolderPath,
+            readTextFileFunction,
+            hasImportCommands,
+            getImportedPathFunction,
+            getImportedFilePathArrayFunction
+        }
+        );
+
+    return (
+        parseDefText(
+            text,
+            {
+                baseFolderPath,
+                filePath,
+                readTextFileFunction,
+                stringProcessingQuote,
+                processQuotedStringFunction,
+                levelSpaceCount
+            }
+            )
+        );
+}
+
+// ~~
+
 export function readDefFiles(
     pathArray,
     {
@@ -117,7 +337,10 @@ export function readDefFiles(
         readTextFileFunction = readTextFile,
         stringProcessingQuote = '\'',
         processQuotedStringFunction = processDefFileQuotedString,
-        levelSpaceCount = 4
+        levelSpaceCount = 4,
+        hasImportCommands = true,
+        getImportedPathFunction = getImportedPath,
+        getImportedFilePathArrayFunction = getImportedFilePathArray
     } = {}
     )
 {
@@ -142,7 +365,10 @@ export function readDefFiles(
                             readTextFileFunction,
                             stringProcessingQuote,
                             processQuotedStringFunction,
-                            levelSpaceCount
+                            levelSpaceCount,
+                            hasImportCommands,
+                            getImportedPathFunction,
+                            getImportedFilePathArrayFunction
                         }
                         )
                     );
@@ -158,7 +384,10 @@ export function readDefFiles(
                         readTextFileFunction,
                         stringProcessingQuote,
                         processQuotedStringFunction,
-                        levelSpaceCount
+                        levelSpaceCount,
+                        hasImportCommands,
+                        getImportedPathFunction,
+                        getImportedFilePathArrayFunction
                     }
                     );
 
@@ -174,93 +403,4 @@ export function readDefFiles(
     }
 
     return valueArray;
-}
-
-// ~~
-
-export function readDefFile(
-    filePath,
-    {
-        baseFolderPath = '',
-        readTextFileFunction = readTextFile,
-        stringProcessingQuote = '\'',
-        processQuotedStringFunction = processDefFileQuotedString,
-        levelSpaceCount = 4
-    } = {}
-    )
-{
-    let text = readTextFileFunction( filePath, baseFolderPath );
-
-    return (
-        parseDefText(
-            text,
-            {
-                baseFolderPath,
-                filePath,
-                readTextFileFunction,
-                stringProcessingQuote,
-                processQuotedStringFunction,
-                levelSpaceCount
-            }
-            )
-        );
-}
-
-// ~~
-
-export function processDefFileQuotedString(
-    string,
-    context,
-    level
-    )
-{
-    if ( string.startsWith( '@' ) )
-    {
-        return (
-            readDefFiles(
-                string.slice( 1 ).split( '\n@' ),
-                {
-                    baseFolderPath: context.baseFolderPath,
-                    filePath: context.filePath,
-                    readTextFileFunction: context.readTextFileFunction,
-                    stringProcessingQuote: context.stringProcessingQuote,
-                    processQuotedStringFunction: context.processQuotedStringFunction,
-                    levelSpaceCount: context.levelSpaceCount
-                }
-                )
-            );
-    }
-    else
-    {
-        return processDefQuotedString( string, context, level );
-    }
-}
-
-// ~~
-
-export function parseDefFileText(
-    text,
-    {
-        baseFolderPath = '',
-        filePath = '',
-        readTextFileFunction = readTextFile,
-        stringProcessingQuote = '\'',
-        processQuotedStringFunction = processDefFileQuotedString,
-        levelSpaceCount = 4
-    } = {}
-    )
-{
-    return (
-        parseDefText(
-            text,
-            {
-                baseFolderPath,
-                filePath,
-                readTextFileFunction,
-                stringProcessingQuote,
-                processQuotedStringFunction,
-                levelSpaceCount
-            }
-            )
-        );
 }
