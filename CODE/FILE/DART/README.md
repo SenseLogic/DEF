@@ -8,8 +8,8 @@ Data Exchange Format file processing.
 
 *   Can load DEF files from disk.
 *   Can execute custom commands to :
-    *   Load a DEF file as a value : '@file.def'
-    *   Load several DEF files as an array of values : '@folder/*.def'
+    *   Load a DEF file : '@file.def'
+    *   Load several DEF files : '@folder/*.def'
 
 ```
 {

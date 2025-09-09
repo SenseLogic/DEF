@@ -1,3 +1,7 @@
+## 0.1.16
+
+* Updated readme.
+
 ## 0.1.15
 
 * Updated imports.
