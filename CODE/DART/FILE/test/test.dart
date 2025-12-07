@@ -27,7 +27,7 @@ void parseText(
         var parsedValue =
             parseDefFileText(
                 defText,
-                filePath: '../DATA/test.def'
+                filePath: '../../../DATA/FILE/test.def'
                 );
         print( 'parsedValue:' );
         print( getDumpText( parsedValue ) );
@@ -76,7 +76,7 @@ void runTest(
 void main(
     )
 {
-    testDataArray = readTextFile( '../DATA/test.txt' ).split( '\n~~~\n' );
+    testDataArray = readTextFile( '../../../DATA/FILE/test.txt' ).split( '\n~~~\n' );
 
     runTest(
         {

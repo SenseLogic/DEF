@@ -27,7 +27,7 @@ void parseText(
         var parsedValue =
             parseDefText(
                 defText,
-                filePath: '../DATA/test.def'
+                filePath: '../../../DATA/TEXT/test.def'
                 );
         print( 'parsedValue:' );
         print( getDumpText( parsedValue ) );
@@ -78,7 +78,7 @@ Future<void> runImportTest(
 {
     try
     {
-        var defText = await fetchDefFile( '../DATA/imported.def' );
+        var defText = await fetchDefFile( '../../../DATA/TEXT/imported.def' );
         parseText( defText, expectedValue );
     }
     catch ( error )
@@ -93,7 +93,7 @@ Future<void> runImportTest(
 void main(
     ) async
 {
-    testDataArray = File( '../DATA/test.txt' ).readAsStringSync().split( '\n~~~\n' );
+    testDataArray = File( '../../../DATA/TEXT/test.txt' ).readAsStringSync().split( '\n~~~\n' );
 
     runTest(
         undefined

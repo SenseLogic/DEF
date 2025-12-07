@@ -38,7 +38,7 @@ function parseText(
             parseDefText(
                 defText,
                 {
-                    filePath: '../DATA/test.def'
+                    filePath: '../../../../DATA/TEXT/test.def'
                 }
                 );
         console.log( 'parsedValue:' );
@@ -91,7 +91,7 @@ async function runImportTest(
 {
     try
     {
-        let defText = await fetchDefFile( '../DATA/imported.def', { fetchTextFileFunction: fetchTextFile } );
+        let defText = await fetchDefFile( '../../../../DATA/TEXT/imported.def', { fetchTextFileFunction: fetchTextFile } );
         parseText( defText, expectedValue );
     }
     catch ( error )
@@ -103,7 +103,7 @@ async function runImportTest(
 
 // -- STATEMENTS
 
-testDataArray = readFileSync( '../DATA/test.txt', 'utf8' ).split( '\n~~~\n' );
+testDataArray = readFileSync( '../../../../DATA/TEXT/test.txt', 'utf8' ).split( '\n~~~\n' );
 
 runTest(
     undefined

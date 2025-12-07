@@ -29,7 +29,7 @@ function parseText(
             parseDefFileText(
                 defText,
                 {
-                    filePath: '../DATA/test.def'
+                    filePath: '../../../../DATA/FILE/test.def'
                 }
                 );
         console.log( 'parsedValue:' );
@@ -76,7 +76,7 @@ function runTest(
 
 // -- STATEMENTS
 
-testDataArray = readTextFile( '../DATA/test.txt' ).split( '\n~~~\n' );
+testDataArray = readTextFile( '../../../../DATA/FILE/test.txt' ).split( '\n~~~\n' );
 
 runTest(
     {
