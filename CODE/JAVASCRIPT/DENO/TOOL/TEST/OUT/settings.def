@@ -1,0 +1,28 @@
+{
+    settings
+        {
+            theme
+                dark
+            fontSize
+                16
+            features
+                [
+                    search
+                    filter
+                    sort
+                ]
+            version
+                2.0¨
+            metrics
+                {
+                    cpuUsage
+                        0.75
+                    memoryUsage
+                        0.6
+                    networkTraffic
+                        1234567890
+                }
+            logging
+                true
+        }
+}

@@ -1,0 +1,15 @@
+{
+    "users":
+        [
+            {
+                "name": "John Doe",
+                "role": "administrator",
+                "email": "john@example.com"
+            },
+            {
+                "name": "Jane Smith",
+                "role": "publisher",
+                "email": "jane@example.com"
+            }
+        ]
+}
